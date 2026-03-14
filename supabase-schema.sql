@@ -57,6 +57,17 @@ CREATE TABLE IF NOT EXISTS notification_contacts (
 );
 
 -- ============================================================
+-- Twilio – columnas en config y call_enabled en contacts
+-- (ejecutar solo si es primera vez; si ya existen, ignorar errores)
+-- ============================================================
+ALTER TABLE config ADD COLUMN IF NOT EXISTS twilio_account_sid  TEXT NOT NULL DEFAULT '';
+ALTER TABLE config ADD COLUMN IF NOT EXISTS twilio_auth_token   TEXT NOT NULL DEFAULT '';
+ALTER TABLE config ADD COLUMN IF NOT EXISTS twilio_from_number  TEXT NOT NULL DEFAULT '';
+ALTER TABLE config ADD COLUMN IF NOT EXISTS calls_enabled       BOOLEAN NOT NULL DEFAULT false;
+
+ALTER TABLE notification_contacts ADD COLUMN IF NOT EXISTS call_enabled BOOLEAN NOT NULL DEFAULT false;
+
+-- ============================================================
 -- Zona por defecto (se pueden crear más desde /zones)
 -- ============================================================
 INSERT INTO zones (zone_number, name, is_enabled, trigger_local_alarm)

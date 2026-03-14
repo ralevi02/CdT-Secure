@@ -50,8 +50,11 @@ INSERT INTO device_status (id, is_online) VALUES (1, false)
 ON CONFLICT (id) DO NOTHING;
 
 -- ============================================================
--- Las zonas se crean desde la interfaz web (página /zones)
+-- Zona por defecto (se pueden crear más desde la interfaz web)
 -- ============================================================
+INSERT INTO zones (zone_number, name, is_enabled, trigger_local_alarm)
+VALUES (1, 'Zona 1', true, false)
+ON CONFLICT (zone_number) DO NOTHING;
 
 -- ============================================================
 -- Row Level Security (RLS) — recommended for production

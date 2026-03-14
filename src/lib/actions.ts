@@ -13,6 +13,7 @@ const revalidateAll = () => {
   revalidatePath("/");
   revalidatePath("/zones");
   revalidatePath("/notifications");
+  revalidatePath("/llamadas");
   revalidatePath("/config");
 };
 
@@ -202,6 +203,47 @@ export async function toggleContact(id: string, is_enabled: boolean): Promise<Ac
     .from("notification_contacts")
     .update({ is_enabled })
     .eq("id", id);
+  if (error) return { success: false, error: error.message };
+  revalidateAll();
+  return { success: true };
+}
+
+export async function toggleContactCall(id: string, call_enabled: boolean): Promise<ActionResult> {
+  const { error } = await supabaseAdmin
+    .from("notification_contacts")
+    .update({ call_enabled })
+    .eq("id", id);
+  if (error) return { success: false, error: error.message };
+  revalidateAll();
+  return { success: true };
+}
+
+// ─── Twilio Config ────────────────────────────────────────────────────────────
+
+const twilioSchema = z.object({
+  twilio_account_sid:  z.string().min(1, "Account SID requerido"),
+  twilio_auth_token:   z.string().min(1, "Auth Token requerido"),
+  twilio_from_number:  z.string().min(5, "Número origen requerido"),
+  calls_enabled:       z.boolean(),
+});
+
+export async function updateTwilioConfig(formData: FormData): Promise<ActionResult> {
+  const raw = {
+    twilio_account_sid:  formData.get("twilio_account_sid") as string,
+    twilio_auth_token:   formData.get("twilio_auth_token")  as string,
+    twilio_from_number:  formData.get("twilio_from_number") as string,
+    calls_enabled:       formData.get("calls_enabled") === "true",
+  };
+
+  const parsed = twilioSchema.safeParse(raw);
+  if (!parsed.success) {
+    return { success: false, error: parsed.error.issues[0].message };
+  }
+
+  const { error } = await supabaseAdmin
+    .from("config")
+    .upsert({ id: 1, ...parsed.data });
+
   if (error) return { success: false, error: error.message };
   revalidateAll();
   return { success: true };

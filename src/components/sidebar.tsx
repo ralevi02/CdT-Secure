@@ -13,6 +13,7 @@ import {
   Settings,
   Terminal,
   History,
+  Phone,
   ChevronLeft,
   ChevronRight,
   X,
@@ -23,6 +24,7 @@ const MAIN_NAV = [
   { href: "/",              label: "Dashboard",      icon: LayoutDashboard },
   { href: "/zones",         label: "Zonas",          icon: MapPin },
   { href: "/notifications", label: "Notificaciones", icon: Bell },
+  { href: "/llamadas",      label: "Llamadas",       icon: Phone },
   { href: "/activity",      label: "Actividad",      icon: History },
 ];
 

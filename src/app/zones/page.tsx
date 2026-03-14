@@ -1,7 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { CreateZoneForm } from "@/components/create-zone-form";
-import { DeleteZoneButton } from "@/components/delete-zone-button";
-import { ZoneEditor } from "@/components/zone-editor";
+import { ZoneCard } from "@/components/zone-card";
 import type { Zone } from "@/lib/supabase";
 import { MapPin } from "lucide-react";
 
@@ -22,7 +21,6 @@ export default async function ZonesPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Header */}
       <div>
         <h1 className="text-xl font-bold">Zonas</h1>
         <p className="text-sm text-muted-foreground mt-0.5">
@@ -30,10 +28,8 @@ export default async function ZonesPage() {
         </p>
       </div>
 
-      {/* Create form */}
       <CreateZoneForm />
 
-      {/* Zone list */}
       <div className="flex flex-col gap-3">
         <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
           Zonas configuradas ({zones.length})
@@ -47,14 +43,7 @@ export default async function ZonesPage() {
             </p>
           </div>
         ) : (
-          zones.map((zone) => (
-            <div key={zone.id} className="relative">
-              <ZoneEditor zone={zone} />
-              <div className="absolute top-3 right-3">
-                <DeleteZoneButton id={zone.id} zoneName={zone.name} />
-              </div>
-            </div>
-          ))
+          zones.map((zone) => <ZoneCard key={zone.id} zone={zone} />)
         )}
       </div>
     </div>

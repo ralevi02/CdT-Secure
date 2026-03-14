@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { ZoneEditor } from "@/components/zone-editor";
+import { ZoneCard } from "@/components/zone-card";
 import { ConfigForm } from "@/components/config-form";
 import { Separator } from "@/components/ui/separator";
 import type { Zone, Config } from "@/lib/supabase";
@@ -58,13 +58,13 @@ export default async function ConfigPage() {
         </div>
         {zones.length === 0 ? (
           <div className="rounded-lg border border-dashed p-8 text-center text-sm text-muted-foreground">
-            No hay zonas. Insértalas directamente en Supabase con la tabla{" "}
-            <code className="font-mono text-xs bg-muted px-1 rounded">zones</code>.
+            No hay zonas. Créalas desde la página{" "}
+            <a href="/zones" className="underline text-primary">Zonas</a>.
           </div>
         ) : (
           <div className="flex flex-col gap-3">
             {zones.map((zone) => (
-              <ZoneEditor key={zone.id} zone={zone} />
+              <ZoneCard key={zone.id} zone={zone} />
             ))}
           </div>
         )}

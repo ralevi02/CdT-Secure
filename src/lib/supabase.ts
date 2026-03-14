@@ -24,6 +24,10 @@ export type Config = {
   id: number;
   notifications_enabled: boolean;
   heartbeat_timeout_mins: number;
+  twilio_account_sid: string;
+  twilio_auth_token: string;
+  twilio_from_number: string;
+  calls_enabled: boolean;
 };
 
 export type NotificationContact = {
@@ -32,6 +36,7 @@ export type NotificationContact = {
   phone_number: string;
   callmebot_api_key: string;
   is_enabled: boolean;
+  call_enabled: boolean;
   created_at: string;
 };
 

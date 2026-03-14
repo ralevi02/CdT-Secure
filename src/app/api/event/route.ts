@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { sendWhatsAppNotification } from "@/lib/callmebot";
+import { makeAlarmCall } from "@/lib/twilio";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -39,19 +40,55 @@ export async function POST(req: NextRequest) {
 
     if (status === true && zone.is_enabled) {
       const [configRes, contactsRes] = await Promise.all([
-        supabaseAdmin.from("config").select("notifications_enabled").eq("id", 1).single(),
-        supabaseAdmin.from("notification_contacts").select("phone_number, callmebot_api_key").eq("is_enabled", true),
+        supabaseAdmin
+          .from("config")
+          .select("notifications_enabled, calls_enabled, twilio_account_sid, twilio_auth_token, twilio_from_number")
+          .eq("id", 1)
+          .single(),
+        supabaseAdmin
+          .from("notification_contacts")
+          .select("phone_number, callmebot_api_key, is_enabled, call_enabled")
+          .or("is_enabled.eq.true,call_enabled.eq.true"),
       ]);
 
-      if (configRes.data?.notifications_enabled && contactsRes.data?.length) {
-        const stateLabel = "🚨 ABIERTO";
-        const message = `[CdT Secure] Zona ${zone_id} (${zone.name}) - ${stateLabel}`;
-        await Promise.all(
-          contactsRes.data.map((c) =>
-            sendWhatsAppNotification(c.phone_number, c.callmebot_api_key, message)
+      const config   = configRes.data;
+      const contacts = contactsRes.data ?? [];
+
+      const whatsappTargets = contacts.filter((c) => c.is_enabled);
+      const callTargets     = contacts.filter((c) => c.call_enabled);
+
+      const whatsappMsg = `🚨 [CdT Secure] Zona ${zone_id} (${zone.name}) - ABIERTO`;
+
+      const tasks: Promise<unknown>[] = [];
+
+      if (config?.notifications_enabled && whatsappTargets.length) {
+        whatsappTargets.forEach((c) =>
+          tasks.push(sendWhatsAppNotification(c.phone_number, c.callmebot_api_key, whatsappMsg))
+        );
+      }
+
+      if (
+        config?.calls_enabled &&
+        config.twilio_account_sid &&
+        config.twilio_auth_token &&
+        config.twilio_from_number &&
+        callTargets.length
+      ) {
+        callTargets.forEach((c) =>
+          tasks.push(
+            makeAlarmCall(
+              config.twilio_account_sid,
+              config.twilio_auth_token,
+              config.twilio_from_number,
+              c.phone_number,
+              zone_id,
+              zone.name
+            )
           )
         );
       }
+
+      await Promise.allSettled(tasks);
     }
 
     return NextResponse.json({ should_alarm: shouldAlarm });

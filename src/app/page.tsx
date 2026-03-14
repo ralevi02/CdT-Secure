@@ -65,21 +65,25 @@ export default async function DashboardPage() {
 
       {/* Alert banner */}
       {activeAlerts.length > 0 ? (
-        <div className="flex items-center gap-3 rounded-xl border-2 border-red-400 dark:border-red-700 bg-red-500 p-4">
-          <Activity className="h-5 w-5 text-white shrink-0 animate-pulse" />
+        <div className="flex items-center gap-3 rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/50 p-4">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-500">
+            <Activity className="h-4 w-4 text-white animate-pulse" />
+          </div>
           <div>
-            <p className="text-sm font-bold text-white">
+            <p className="text-sm font-semibold text-red-800 dark:text-red-200">
               {activeAlerts.length === 1 ? "¡Sensor abierto!" : `${activeAlerts.length} sensores abiertos`}
             </p>
-            <p className="text-xs text-red-100">
+            <p className="text-xs text-red-600 dark:text-red-400">
               {activeAlerts.map((z) => z.name).join(", ")}
             </p>
           </div>
         </div>
       ) : (
-        <div className="flex items-center gap-3 rounded-xl border-2 border-emerald-400 dark:border-emerald-700 bg-emerald-500 p-4">
-          <ShieldCheck className="h-5 w-5 text-white shrink-0" />
-          <p className="text-sm font-semibold text-white">
+        <div className="flex items-center gap-3 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/50 p-4">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500">
+            <ShieldCheck className="h-4 w-4 text-white" />
+          </div>
+          <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-200">
             Todos los sensores en estado normal
           </p>
         </div>

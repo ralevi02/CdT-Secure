@@ -77,7 +77,7 @@ export function DashboardClient({
         "postgres_changes",
         { event: "*", schema: "public", table: "device_status" },
         (payload) => {
-          setDevice((prev) => ({ ...(prev ?? { id: "1", is_online: false }), ...payload.new }));
+          setDevice((prev) => ({ ...(prev ?? { id: "1", is_online: false, last_seen: null }), ...payload.new }) as DeviceStatus);
         }
       )
 

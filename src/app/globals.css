@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Tell Tailwind v4 to use the .dark CLASS (not media query) for dark: utilities */
+@variant dark (&:where(.dark, .dark *));
+
 /* ── Light mode ─────────────────────────────────────────── */
 :root {
   --background:            #f8fafc;

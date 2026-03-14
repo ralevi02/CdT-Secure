@@ -101,10 +101,10 @@ export function ArmPanel({ zones }: Props) {
               className={cn(
                 "relative flex flex-col gap-1.5 rounded-lg border-2 p-3 text-left transition-all duration-150 focus:outline-none",
                 isSelected
-                  ? "border-blue-500 bg-blue-100 dark:bg-blue-950/60 shadow-sm"
+                  ? "border-blue-500 bg-blue-50 dark:bg-blue-900/40 shadow-sm ring-2 ring-blue-500/20"
                   : zone.is_enabled
-                  ? "border-blue-300 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/20 hover:border-blue-400"
-                  : "border-border bg-card hover:border-slate-300 dark:hover:border-slate-600"
+                  ? "border-blue-200 dark:border-blue-700 bg-white dark:bg-blue-950/20 hover:border-blue-300"
+                  : "border-slate-200 dark:border-slate-700 bg-white dark:bg-card hover:border-slate-300"
               )}
             >
               {/* Checkmark overlay */}
@@ -127,8 +127,8 @@ export function ArmPanel({ zones }: Props) {
               <span className={cn(
                 "self-start rounded-full px-2 py-0.5 text-[10px] font-semibold",
                 zone.is_enabled
-                  ? "bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
+                  ? "bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300"
+                  : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400"
               )}>
                 {zone.is_enabled ? "Armada" : "Desarmada"}
               </span>

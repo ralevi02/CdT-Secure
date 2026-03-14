@@ -79,3 +79,12 @@
     color: var(--foreground);
   }
 }
+
+@keyframes pulse-once {
+  0%   { background-color: color-mix(in srgb, var(--primary) 12%, transparent); }
+  100% { background-color: transparent; }
+}
+
+.animate-pulse-once {
+  animation: pulse-once 0.8s ease-out forwards;
+}

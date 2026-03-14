@@ -71,3 +71,11 @@ ALTER TABLE sensor_logs            ENABLE ROW LEVEL SECURITY;
 ALTER TABLE config                 ENABLE ROW LEVEL SECURITY;
 ALTER TABLE device_status          ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notification_contacts  ENABLE ROW LEVEL SECURITY;
+
+-- ============================================================
+-- Supabase Realtime – publicar cambios en tiempo real
+-- (Ejecutar para activar las suscripciones del dashboard)
+-- ============================================================
+ALTER PUBLICATION supabase_realtime ADD TABLE sensor_logs;
+ALTER PUBLICATION supabase_realtime ADD TABLE device_status;
+ALTER PUBLICATION supabase_realtime ADD TABLE zones;

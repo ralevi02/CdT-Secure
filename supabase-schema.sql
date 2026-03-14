@@ -74,8 +74,28 @@ ALTER TABLE notification_contacts  ENABLE ROW LEVEL SECURITY;
 
 -- ============================================================
 -- Supabase Realtime – publicar cambios en tiempo real
--- (Ejecutar para activar las suscripciones del dashboard)
 -- ============================================================
 ALTER PUBLICATION supabase_realtime ADD TABLE sensor_logs;
 ALTER PUBLICATION supabase_realtime ADD TABLE device_status;
 ALTER PUBLICATION supabase_realtime ADD TABLE zones;
+
+-- ============================================================
+-- RLS – Políticas de lectura pública (necesarias para Realtime)
+-- Las escrituras solo ocurren vía service_role key (API routes)
+-- ============================================================
+
+-- zones
+CREATE POLICY "anon can read zones"
+  ON zones FOR SELECT TO anon USING (true);
+
+-- sensor_logs
+CREATE POLICY "anon can read sensor_logs"
+  ON sensor_logs FOR SELECT TO anon USING (true);
+
+-- device_status
+CREATE POLICY "anon can read device_status"
+  ON device_status FOR SELECT TO anon USING (true);
+
+-- config
+CREATE POLICY "anon can read config"
+  ON config FOR SELECT TO anon USING (true);

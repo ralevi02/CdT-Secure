@@ -47,9 +47,10 @@ export function DashboardClient({
   const [zones, setZones]   = useState<Zone[]>(initialZones);
   const [device, setDevice] = useState<DeviceStatus | null>(initialDevice);
   const [logs, setLogs]     = useState<RecentLog[]>(initialLogs);
-  const [pulse, setPulse]   = useState(false); // flash on new event
-  const zonesRef            = useRef(zones);
-  zonesRef.current          = zones;
+  const [pulse, setPulse]         = useState(false);
+  const [rtStatus, setRtStatus]   = useState<"connecting" | "live" | "error">("connecting");
+  const zonesRef                   = useRef(zones);
+  zonesRef.current                 = zones;
 
   useEffect(() => {
     const supabase = createClient(
@@ -76,7 +77,6 @@ export function DashboardClient({
             zone_number: zone?.zone_number ?? 0,
           };
           setLogs((prev) => [newLog, ...prev].slice(0, 20));
-          // brief pulse animation
           setPulse(true);
           setTimeout(() => setPulse(false), 800);
         }
@@ -102,7 +102,11 @@ export function DashboardClient({
         }
       )
 
-      .subscribe();
+      .subscribe((status) => {
+        if (status === "SUBSCRIBED") setRtStatus("live");
+        else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") setRtStatus("error");
+        else setRtStatus("connecting");
+      });
 
     return () => { supabase.removeChannel(channel); };
   }, []);
@@ -120,11 +124,24 @@ export function DashboardClient({
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-bold">Dashboard</h1>
-            {/* Realtime indicator */}
-            <span className="flex items-center gap-1 rounded-full bg-emerald-100 dark:bg-emerald-900/40 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">
-              <Wifi className="h-2.5 w-2.5" />
-              En vivo
-            </span>
+            {rtStatus === "live" && (
+              <span className="flex items-center gap-1 rounded-full bg-emerald-100 dark:bg-emerald-900/40 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">
+                <Wifi className="h-2.5 w-2.5" />
+                En vivo
+              </span>
+            )}
+            {rtStatus === "connecting" && (
+              <span className="flex items-center gap-1 rounded-full bg-amber-100 dark:bg-amber-900/40 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-300">
+                <Wifi className="h-2.5 w-2.5 animate-pulse" />
+                Conectando…
+              </span>
+            )}
+            {rtStatus === "error" && (
+              <span className="flex items-center gap-1 rounded-full bg-red-100 dark:bg-red-900/40 px-2 py-0.5 text-[10px] font-semibold text-red-700 dark:text-red-300">
+                <Wifi className="h-2.5 w-2.5" />
+                Sin tiempo real
+              </span>
+            )}
           </div>
           <p className="text-sm text-muted-foreground mt-0.5">Estado en tiempo real</p>
         </div>

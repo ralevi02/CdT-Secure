@@ -12,6 +12,16 @@ import type { Zone, DeviceStatus } from "@/lib/supabase";
 
 const PREVIEW_COUNT = 5;
 
+/** Format a date string consistently on both server and client */
+function fmtDateTime(iso: string) {
+  const d = new Date(iso);
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mo = String(d.getMonth() + 1).padStart(2, "0");
+  return { time: `${hh}:${mm}`, date: `${dd}/${mo}` };
+}
+
 export type RecentLog = {
   id: string;
   zone_id: string;
@@ -185,9 +195,7 @@ function RecentActivityPreview({ logs, pulse }: { logs: RecentLog[]; pulse: bool
         <div className="relative">
           <div className="flex flex-col divide-y divide-border px-4">
             {visible.map((log, i) => {
-              const d    = new Date(log.created_at);
-              const time = d.toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit" });
-              const date = d.toLocaleDateString("es-CL", { day: "2-digit", month: "2-digit" });
+              const { time, date } = fmtDateTime(log.created_at);
 
               return (
                 <div
@@ -215,7 +223,7 @@ function RecentActivityPreview({ logs, pulse }: { logs: RecentLog[]; pulse: bool
                   )}>
                     {log.status ? "Abierto" : "Cerrado"}
                   </span>
-                  <span className="text-xs text-muted-foreground tabular-nums shrink-0">
+                  <span suppressHydrationWarning className="text-xs text-muted-foreground tabular-nums shrink-0">
                     {time} {date}
                   </span>
                 </div>

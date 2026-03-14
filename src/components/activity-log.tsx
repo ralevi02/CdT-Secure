@@ -1,6 +1,23 @@
 "use client";
 
 import { useTransition } from "react";
+
+function fmtTime(iso: string) {
+  const d  = new Date(iso);
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  const ss = String(d.getSeconds()).padStart(2, "0");
+  return `${hh}:${mm}:${ss}`;
+}
+
+function fmtDateLabel(iso: string) {
+  const d   = new Date(iso);
+  const day = d.getDate();
+  const mo  = d.toLocaleString("es", { month: "long" });
+  const yr  = d.getFullYear();
+  const wd  = d.toLocaleString("es", { weekday: "long" });
+  return `${wd}, ${day} de ${mo} de ${yr}`;
+}
 import { useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DoorOpen, DoorClosed, ChevronLeft, ChevronRight, Loader2, Filter, RefreshCw } from "lucide-react";
@@ -46,9 +63,7 @@ export function ActivityLog({ initialLogs, zones, currentZone, currentPage, hasM
   const groupByDate = (entries: Log[]) => {
     const groups: Record<string, Log[]> = {};
     for (const log of entries) {
-      const label = new Date(log.created_at).toLocaleDateString("es-CL", {
-        weekday: "long", day: "numeric", month: "long", year: "numeric",
-      });
+      const label = fmtDateLabel(log.created_at);
       if (!groups[label]) groups[label] = [];
       groups[label].push(log);
     }
@@ -136,10 +151,7 @@ export function ActivityLog({ initialLogs, zones, currentZone, currentPage, hasM
               {/* Entry rows */}
               <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
                 {entries.map((log, i) => {
-                  const d    = new Date(log.created_at);
-                  const time = d.toLocaleTimeString("es-CL", {
-                    hour: "2-digit", minute: "2-digit", second: "2-digit",
-                  });
+                  const time = fmtTime(log.created_at);
                   return (
                     <div
                       key={log.id}
@@ -178,7 +190,7 @@ export function ActivityLog({ initialLogs, zones, currentZone, currentPage, hasM
                         {log.status ? "Abierto" : "Cerrado"}
                       </span>
 
-                      <span className="text-xs text-muted-foreground font-mono tabular-nums shrink-0">
+                      <span suppressHydrationWarning className="text-xs text-muted-foreground font-mono tabular-nums shrink-0">
                         {time}
                       </span>
                     </div>

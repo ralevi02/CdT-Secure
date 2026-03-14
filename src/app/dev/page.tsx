@@ -322,6 +322,7 @@ function EndpointCard({ endpoint }: { endpoint: Endpoint }) {
 // ─── ESP32 Quick Reference ────────────────────────────────────────────────────
 
 function Esp32Reference() {
+  const [open, setOpen]     = useState(false);
   const [copied, setCopied] = useState<string | null>(null);
 
   const copy = (key: string, text: string) => {
@@ -375,16 +376,20 @@ http.end();`,
   ];
 
   return (
-    <div className="flex flex-col gap-4 rounded-xl border bg-card shadow-sm overflow-hidden">
-      <div className="flex items-center gap-3 px-4 py-3 border-b">
+    <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center gap-3 px-4 py-3 hover:bg-muted/40 transition-colors text-left"
+      >
         <span className="text-lg">🔧</span>
-        <div>
+        <div className="flex-1">
           <p className="text-sm font-semibold">ESP32 — Referencia rápida</p>
           <p className="text-xs text-muted-foreground">Snippets de Arduino para integrar con la API</p>
         </div>
-      </div>
+        {open ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+      </button>
 
-      <div className="flex flex-col gap-4 px-4 pb-4">
+      {open && <div className="flex flex-col gap-4 px-4 pb-4 border-t">
         {snippets.map((s) => (
           <div key={s.id} className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
@@ -419,7 +424,7 @@ http.end();`,
             ))}
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

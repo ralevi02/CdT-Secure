@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
-import { ConfigForm } from "@/components/config-form";
+import { HeartbeatForm } from "@/components/config-form";
 import type { Config } from "@/lib/supabase";
-import { Settings } from "lucide-react";
+import { Timer } from "lucide-react";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -23,16 +23,15 @@ export default async function ConfigPage() {
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="text-xl font-bold">Configuración</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">
-          Ajustes globales del sistema
-        </p>
+        <p className="text-sm text-muted-foreground mt-0.5">Ajustes del dispositivo</p>
       </div>
-      <section className="flex flex-col gap-4">
+
+      <section className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
-          <Settings className="h-4 w-4 text-muted-foreground" />
-          <h2 className="font-semibold text-sm">Sistema</h2>
+          <Timer className="h-4 w-4 text-muted-foreground" />
+          <h2 className="text-sm font-semibold">Dispositivo</h2>
         </div>
-        <ConfigForm config={config} />
+        <HeartbeatForm config={config} />
       </section>
     </div>
   );

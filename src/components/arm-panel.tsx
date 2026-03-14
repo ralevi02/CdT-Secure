@@ -101,10 +101,10 @@ export function ArmPanel({ zones }: Props) {
               className={cn(
                 "relative flex flex-col gap-1.5 rounded-lg border-2 p-3 text-left transition-all duration-150 focus:outline-none",
                 isSelected
-                  ? "border-blue-500 bg-blue-50 dark:bg-blue-950/50 shadow-md"
+                  ? "border-blue-500 bg-blue-100 dark:bg-blue-950/60 shadow-sm"
                   : zone.is_enabled
-                  ? "border-blue-200 dark:border-blue-800 bg-blue-50/40 dark:bg-blue-950/20 hover:border-blue-300"
-                  : "border-border bg-background hover:border-slate-300 dark:hover:border-slate-600"
+                  ? "border-blue-300 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/20 hover:border-blue-400"
+                  : "border-border bg-card hover:border-slate-300 dark:hover:border-slate-600"
               )}
             >
               {/* Checkmark overlay */}
@@ -112,7 +112,7 @@ export function ArmPanel({ zones }: Props) {
                 "absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full border-2 transition-all",
                 isSelected
                   ? "border-blue-500 bg-blue-500"
-                  : "border-slate-300 dark:border-slate-600"
+                  : "border-slate-300 dark:border-slate-600 bg-white dark:bg-transparent"
               )}>
                 {isSelected && <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />}
               </span>

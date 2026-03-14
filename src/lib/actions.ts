@@ -25,6 +25,11 @@ const zoneUpdateSchema = z.object({
   is_enabled: z.boolean(),
 });
 
+const zoneCreateSchema = z.object({
+  zone_number: z.number().int().min(1).max(99, "Máximo 99 zonas"),
+  name: z.string().min(1, "Nombre requerido").max(50),
+});
+
 // ─── Actions ────────────────────────────────────────────────────────────────
 
 export type ActionResult = { success: boolean; error?: string };
@@ -49,6 +54,53 @@ export async function updateConfig(formData: FormData): Promise<ActionResult> {
   if (error) return { success: false, error: error.message };
 
   revalidatePath("/");
+  revalidatePath("/config");
+  return { success: true };
+}
+
+export async function createZone(formData: FormData): Promise<ActionResult> {
+  const raw = {
+    zone_number: Number(formData.get("zone_number")),
+    name: formData.get("name") as string,
+  };
+
+  const parsed = zoneCreateSchema.safeParse(raw);
+  if (!parsed.success) {
+    return { success: false, error: parsed.error.issues[0].message };
+  }
+
+  const { error } = await supabaseAdmin.from("zones").insert({
+    zone_number: parsed.data.zone_number,
+    name: parsed.data.name,
+    is_enabled: true,
+    trigger_local_alarm: false,
+  });
+
+  if (error) {
+    if (error.code === "23505") {
+      return { success: false, error: `El ID ${parsed.data.zone_number} ya existe` };
+    }
+    return { success: false, error: error.message };
+  }
+
+  revalidatePath("/");
+  revalidatePath("/zones");
+  revalidatePath("/config");
+  return { success: true };
+}
+
+export async function deleteZone(id: string): Promise<ActionResult> {
+  if (!id) return { success: false, error: "ID inválido" };
+
+  const { error } = await supabaseAdmin
+    .from("zones")
+    .delete()
+    .eq("id", id);
+
+  if (error) return { success: false, error: error.message };
+
+  revalidatePath("/");
+  revalidatePath("/zones");
   revalidatePath("/config");
   return { success: true };
 }
@@ -78,6 +130,7 @@ export async function updateZone(formData: FormData): Promise<ActionResult> {
   if (error) return { success: false, error: error.message };
 
   revalidatePath("/");
+  revalidatePath("/zones");
   revalidatePath("/config");
   return { success: true };
 }

@@ -50,7 +50,7 @@ export default async function DashboardPage() {
   );
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 pb-28 md:pb-0">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>

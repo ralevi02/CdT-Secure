@@ -149,9 +149,9 @@ export function ArmPanel({ zones }: Props) {
         </p>
       )}
 
-      {/* ── Sticky action bar ──────────────────────────── */}
-      <div className="sticky bottom-0 z-30 -mx-4 px-4 pb-4 pt-2 bg-gradient-to-t from-background via-background to-transparent">
-        <div className="flex gap-2 rounded-2xl border bg-card/90 backdrop-blur-sm p-2 shadow-lg shadow-black/10">
+      {/* ── Action bar — fixed on mobile, sticky on desktop ── */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 px-4 pb-4 pt-2 md:sticky md:bottom-0 md:left-auto md:right-auto md:z-30 md:-mx-4 md:px-4 bg-gradient-to-t from-background via-background/95 to-transparent">
+        <div className="flex gap-2 rounded-2xl border bg-card/95 backdrop-blur-md p-2 shadow-xl shadow-black/15 md:shadow-lg md:shadow-black/10">
           {/* Armar todo */}
           <button
             onClick={handleArmAll}

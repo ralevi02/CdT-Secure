@@ -28,7 +28,7 @@ async function getDashboardData() {
     .limit(20);
 
   const logs: RecentLog[] = (rawLogs ?? []).map((l) => {
-    const z = l.zones as { name: string; zone_number: number } | null;
+    const z = (Array.isArray(l.zones) ? l.zones[0] : l.zones) as { name: string; zone_number: number } | null;
     return {
       id: l.id,
       zone_id: l.zone_id,

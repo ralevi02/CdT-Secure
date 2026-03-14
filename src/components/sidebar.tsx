@@ -9,15 +9,17 @@ import {
   Shield,
   LayoutDashboard,
   MapPin,
+  Bell,
   Settings,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 
 const NAV_ITEMS = [
-  { href: "/",       label: "Dashboard", icon: LayoutDashboard },
-  { href: "/zones",  label: "Zonas",     icon: MapPin },
-  { href: "/config", label: "Config",    icon: Settings },
+  { href: "/",              label: "Dashboard",      icon: LayoutDashboard },
+  { href: "/zones",         label: "Zonas",          icon: MapPin },
+  { href: "/notifications", label: "Notificaciones", icon: Bell },
+  { href: "/config",        label: "Config",         icon: Settings },
 ];
 
 export function Sidebar() {

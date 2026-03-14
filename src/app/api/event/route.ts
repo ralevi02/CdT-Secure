@@ -30,11 +30,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Zone not found" }, { status: 404 });
     }
 
-    await supabaseAdmin.from("sensor_logs").insert({
-      zone_id: zone.id,
-      status,
-    });
-
+    await supabaseAdmin.from("sensor_logs").insert({ zone_id: zone.id, status });
     await supabaseAdmin
       .from("device_status")
       .upsert({ id: 1, last_seen: new Date().toISOString(), is_online: true });
@@ -42,16 +38,19 @@ export async function POST(req: NextRequest) {
     const shouldAlarm = status === true && zone.trigger_local_alarm === true;
 
     if (status === true && zone.is_enabled) {
-      const { data: config } = await supabaseAdmin
-        .from("config")
-        .select("phone_number, callmebot_api_key, notifications_enabled")
-        .eq("id", 1)
-        .single();
+      const [configRes, contactsRes] = await Promise.all([
+        supabaseAdmin.from("config").select("notifications_enabled").eq("id", 1).single(),
+        supabaseAdmin.from("notification_contacts").select("phone_number, callmebot_api_key").eq("is_enabled", true),
+      ]);
 
-      if (config?.notifications_enabled && config.phone_number && config.callmebot_api_key) {
-        const stateLabel = status ? "🚨 ABIERTO" : "✅ CERRADO";
+      if (configRes.data?.notifications_enabled && contactsRes.data?.length) {
+        const stateLabel = "🚨 ABIERTO";
         const message = `[CdT Secure] Zona ${zone_id} (${zone.name}) - ${stateLabel}`;
-        await sendWhatsAppNotification(config.phone_number, config.callmebot_api_key, message);
+        await Promise.all(
+          contactsRes.data.map((c) =>
+            sendWhatsAppNotification(c.phone_number, c.callmebot_api_key, message)
+          )
+        );
       }
     }
 

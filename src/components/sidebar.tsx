@@ -11,6 +11,7 @@ import {
   MapPin,
   Bell,
   Settings,
+  Terminal,
   ChevronLeft,
   ChevronRight,
   X,
@@ -22,6 +23,7 @@ const NAV_ITEMS = [
   { href: "/zones",         label: "Zonas",          icon: MapPin },
   { href: "/notifications", label: "Notificaciones", icon: Bell },
   { href: "/config",        label: "Config",         icon: Settings },
+  { href: "/dev",           label: "Developer",      icon: Terminal },
 ];
 
 /* ─────────────────────────────────────────────────────────────

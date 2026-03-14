@@ -12,7 +12,7 @@ export function DeleteZoneButton({ id, zoneName }: Props) {
 
   const handleDelete = () => {
     if (!confirm(`¿Eliminar la zona "${zoneName}"? Se borrarán también todos sus registros.`)) return;
-    startTransition(() => deleteZone(id));
+    startTransition(async () => { await deleteZone(id); });
   };
 
   return (

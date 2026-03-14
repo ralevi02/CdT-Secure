@@ -22,10 +22,17 @@ export type SensorLog = {
 
 export type Config = {
   id: number;
-  phone_number: string;
-  callmebot_api_key: string;
   notifications_enabled: boolean;
   heartbeat_timeout_mins: number;
+};
+
+export type NotificationContact = {
+  id: string;
+  name: string;
+  phone_number: string;
+  callmebot_api_key: string;
+  is_enabled: boolean;
+  created_at: string;
 };
 
 export type DeviceStatus = {

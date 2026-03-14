@@ -27,14 +27,11 @@ CREATE INDEX IF NOT EXISTS idx_sensor_logs_zone_created
 -- 3. Config (single row, id = 1)
 CREATE TABLE IF NOT EXISTS config (
   id                     INT PRIMARY KEY DEFAULT 1,
-  phone_number           TEXT NOT NULL DEFAULT '',
-  callmebot_api_key      TEXT NOT NULL DEFAULT '',
   notifications_enabled  BOOLEAN NOT NULL DEFAULT false,
   heartbeat_timeout_mins INT NOT NULL DEFAULT 5,
   CONSTRAINT config_single_row CHECK (id = 1)
 );
 
--- Insert default config row
 INSERT INTO config (id) VALUES (1)
 ON CONFLICT (id) DO NOTHING;
 
@@ -49,27 +46,28 @@ CREATE TABLE IF NOT EXISTS device_status (
 INSERT INTO device_status (id, is_online) VALUES (1, false)
 ON CONFLICT (id) DO NOTHING;
 
+-- 5. Notification Contacts (multiple phone numbers with individual toggles)
+CREATE TABLE IF NOT EXISTS notification_contacts (
+  id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name             TEXT NOT NULL DEFAULT '',
+  phone_number     TEXT NOT NULL,
+  callmebot_api_key TEXT NOT NULL DEFAULT '',
+  is_enabled       BOOLEAN NOT NULL DEFAULT true,
+  created_at       TIMESTAMPTZ DEFAULT now()
+);
+
 -- ============================================================
--- Zona por defecto (se pueden crear más desde la interfaz web)
+-- Zona por defecto (se pueden crear más desde /zones)
 -- ============================================================
 INSERT INTO zones (zone_number, name, is_enabled, trigger_local_alarm)
 VALUES (1, 'Zona 1', true, false)
 ON CONFLICT (zone_number) DO NOTHING;
 
 -- ============================================================
--- Row Level Security (RLS) — recommended for production
+-- Row Level Security (RLS)
 -- ============================================================
--- Enable RLS on all tables
-ALTER TABLE zones          ENABLE ROW LEVEL SECURITY;
-ALTER TABLE sensor_logs    ENABLE ROW LEVEL SECURITY;
-ALTER TABLE config         ENABLE ROW LEVEL SECURITY;
-ALTER TABLE device_status  ENABLE ROW LEVEL SECURITY;
-
--- Allow service role full access (used by server-side Next.js)
--- The anon key should NOT have direct access in production.
--- If you want the dashboard to work with anon key for reads, add:
--- CREATE POLICY "Allow read zones"        ON zones         FOR SELECT USING (true);
--- CREATE POLICY "Allow read sensor_logs"  ON sensor_logs   FOR SELECT USING (true);
--- CREATE POLICY "Allow read device_status" ON device_status FOR SELECT USING (true);
--- CREATE POLICY "Allow read config"       ON config        FOR SELECT USING (true);
--- But since we use service_role on the server, RLS is bypassed server-side.
+ALTER TABLE zones                  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE sensor_logs            ENABLE ROW LEVEL SECURITY;
+ALTER TABLE config                 ENABLE ROW LEVEL SECURITY;
+ALTER TABLE device_status          ENABLE ROW LEVEL SECURITY;
+ALTER TABLE notification_contacts  ENABLE ROW LEVEL SECURITY;

@@ -17,10 +17,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geist.className} min-h-screen bg-background antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {/* Mobile: stacked layout with top bar */}
-          <div className="flex min-h-screen flex-col md:flex-row">
+          <div className="flex h-screen flex-col md:flex-row overflow-hidden">
             <MobileNav />
             <DesktopSidebar />
-            <main className="flex-1 overflow-y-auto">
+            <main className="flex-1 overflow-y-auto h-full">
               <div className="mx-auto max-w-2xl px-4 py-6">
                 {children}
               </div>

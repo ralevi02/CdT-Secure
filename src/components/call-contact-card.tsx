@@ -49,7 +49,7 @@ export function CallContactCard({ contact }: Props) {
   }
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border bg-card p-3 shadow-sm">
+    <div data-glass="card" className="flex items-center gap-3 rounded-xl border bg-card p-3 shadow-sm relative">
       {/* Icon */}
       <div className={cn(
         "flex h-9 w-9 shrink-0 items-center justify-center rounded-full",

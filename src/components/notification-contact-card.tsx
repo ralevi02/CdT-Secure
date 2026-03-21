@@ -55,7 +55,7 @@ export function NotificationContactCard({ contact }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-0 rounded-xl border bg-card shadow-sm overflow-hidden">
+    <div data-glass="card" className="flex flex-col gap-0 rounded-xl border bg-card shadow-sm overflow-hidden relative">
       {/* Main row */}
       <div className="flex items-center gap-3 px-4 py-3">
         <div className={cn(

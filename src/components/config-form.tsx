@@ -30,7 +30,7 @@ export function NotificationsToggleForm({ config }: { config: Config }) {
   };
 
   return (
-    <div className="flex items-center justify-between rounded-xl border bg-card px-4 py-3 shadow-sm">
+    <div data-glass="card" className="flex items-center justify-between rounded-xl border bg-card px-4 py-3 shadow-sm relative">
       <div className="flex items-center gap-3">
         {enabled
           ? <Bell className="h-4 w-4 text-primary" />
@@ -74,7 +74,7 @@ export function HeartbeatForm({ config }: { config: Config }) {
   };
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border bg-card p-4 shadow-sm">
+    <div data-glass="card" className="flex flex-col gap-3 rounded-xl border bg-card p-4 shadow-sm relative">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Timer className="h-4 w-4 text-muted-foreground" />

@@ -44,7 +44,7 @@ export function CreateContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-xl border bg-card p-4 shadow-sm">
+    <form onSubmit={handleSubmit} data-glass="card" className="flex flex-col gap-4 rounded-xl border bg-card p-4 shadow-sm relative">
       <p className="text-sm font-semibold">Nuevo contacto</p>
 
       {/* Fields */}

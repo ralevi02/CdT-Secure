@@ -29,7 +29,7 @@ export default async function LlamadasPage() {
     <div className="flex flex-col gap-6 pb-8">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/40">
+        <div data-glass="item" className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/40 relative">
           <Phone className="h-5 w-5 text-blue-600 dark:text-blue-400" />
         </div>
         <div>
@@ -57,7 +57,7 @@ export default async function LlamadasPage() {
       )}
 
       {contacts.length === 0 && (
-        <div className="rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground">
+        <div data-glass="item-dim" className="rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground relative">
           Agrega contactos en{" "}
           <a href="/notifications" className="text-primary underline underline-offset-4">
             Notificaciones
@@ -74,7 +74,7 @@ export default async function LlamadasPage() {
 
 function HowToGetTwilio() {
   return (
-    <div className="rounded-xl border bg-muted/30 p-4 flex flex-col gap-3">
+    <div data-glass="card" className="rounded-xl border bg-muted/30 p-4 flex flex-col gap-3 relative">
       <p className="text-sm font-semibold">¿Cómo obtener credenciales Twilio?</p>
       <ol className="flex flex-col gap-2 text-xs text-muted-foreground list-none">
         <li className="flex gap-2">

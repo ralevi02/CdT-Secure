@@ -36,7 +36,7 @@ export default async function ZonesPage() {
         </p>
 
         {zones.length === 0 ? (
-          <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed p-10 text-center">
+          <div data-glass="item-dim" className="flex flex-col items-center gap-2 rounded-xl border border-dashed p-10 text-center relative">
             <MapPin className="h-8 w-8 text-muted-foreground/40" />
             <p className="text-sm text-muted-foreground">
               No hay zonas. Crea la primera arriba.

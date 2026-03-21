@@ -101,7 +101,7 @@ export default function DevPage() {
     <div className="flex flex-col gap-6 pb-8">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/40">
+        <div data-glass="item" className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/40 relative">
           <Terminal className="h-5 w-5 text-amber-600 dark:text-amber-400" />
         </div>
         <div>
@@ -187,7 +187,7 @@ function EndpointCard({ endpoint }: { endpoint: Endpoint }) {
   );
 
   return (
-    <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
+    <div data-glass="card" className="rounded-xl border bg-card shadow-sm overflow-hidden relative">
       {/* Header row */}
       <button
         className="flex w-full items-center gap-3 px-4 py-3 hover:bg-muted/40 transition-colors text-left"
@@ -376,7 +376,7 @@ http.end();`,
   ];
 
   return (
-    <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
+    <div data-glass="card" className="rounded-xl border bg-card shadow-sm overflow-hidden relative">
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center gap-3 px-4 py-3 hover:bg-muted/40 transition-colors text-left"

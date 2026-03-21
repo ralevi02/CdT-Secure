@@ -35,7 +35,8 @@ export function CreateZoneForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-3 rounded-xl border bg-card p-4"
+      data-glass="card"
+      className="flex flex-col gap-3 rounded-xl border bg-card p-4 relative"
     >
       <p className="text-sm font-semibold">Nueva zona</p>
       <div className="flex gap-3">

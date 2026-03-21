@@ -127,7 +127,7 @@ export function ActivityLog({ initialLogs, zones, currentZone, currentPage, hasM
 
       {/* ── Log list ─────────────────────────────────── */}
       {initialLogs.length === 0 ? (
-        <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed py-12 text-center">
+        <div data-glass="item-dim" className="flex flex-col items-center gap-2 rounded-xl border border-dashed py-12 text-center relative">
           <p className="text-sm text-muted-foreground">No hay eventos registrados</p>
           {currentZone !== "all" && (
             <button onClick={() => navigate("all", 1)} className="text-xs text-primary underline underline-offset-4">
@@ -149,7 +149,7 @@ export function ActivityLog({ initialLogs, zones, currentZone, currentPage, hasM
               </div>
 
               {/* Entry rows */}
-              <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
+              <div data-glass="card" className="rounded-xl border bg-card shadow-sm overflow-hidden relative">
                 {entries.map((log, i) => {
                   const time = fmtTime(log.created_at);
                   return (

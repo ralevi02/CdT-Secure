@@ -38,26 +38,14 @@ export function ArmPanel({ zones }: Props) {
     <>
       <div data-glass="card" className="relative overflow-hidden rounded-[22px] border bg-card">
         {/* Header */}
-        <div className="flex items-center justify-between px-[18px] py-[14px] border-b border-border/50 relative overflow-hidden">
-          <div className="absolute top-0 left-[10%] w-[80%] h-full bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.03),transparent_80%)]" />
-          <div className="flex items-center gap-3 relative z-10">
-            <div className={cn("flex h-[38px] w-[38px] items-center justify-center rounded-[12px] relative overflow-hidden", "bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/[0.18]")}>
-              <div className="absolute top-0 left-[10%] w-[80%] h-[50%] bg-[radial-gradient(ellipse_at_top,rgba(134,239,172,0.12),transparent)]" />
-              <Shield className={cn("relative z-10 h-4 w-4", armedCount > 0 ? "text-emerald-600 dark:text-[#22C55E]" : "text-muted-foreground")} />
-            </div>
-            <div>
-              <p className="text-sm font-medium">Estado de la alarma</p>
-              <p className="text-[11px] text-muted-foreground">{armedCount} de {zones.length} armadas</p>
-            </div>
+        <div className="flex items-center gap-3 px-[18px] py-[14px] border-b border-border/50 relative overflow-hidden">
+          <div className={cn("flex h-[38px] w-[38px] items-center justify-center rounded-[12px] shrink-0", "bg-emerald-50 dark:bg-emerald-500/10")}>
+            <Shield className={cn("h-4 w-4", armedCount > 0 ? "text-emerald-600 dark:text-[#22C55E]" : "text-muted-foreground")} />
           </div>
-          <button
-            data-glass="green-strong"
-            onClick={handleArmAll}
-            disabled={isPending}
-            className={cn("relative overflow-hidden px-[18px] py-[9px] text-[13px] font-semibold z-10 transition-all active:scale-95", "bg-emerald-500 text-white rounded-[12px] dark:text-[#86EFAC] disabled:opacity-50")}
-          >
-            <span className="relative z-10">{isArming ? "Armando…" : "Armar todo"}</span>
-          </button>
+          <div>
+            <p className="text-sm font-medium">Estado de la alarma</p>
+            <p className="text-[11px] text-muted-foreground">{armedCount} de {zones.length} armadas</p>
+          </div>
         </div>
 
         {/* Zone list */}
@@ -90,23 +78,28 @@ export function ArmPanel({ zones }: Props) {
           ))}
         </div>
 
-        {/* Bottom buttons */}
+        {/* Action buttons — all three in one row */}
         <div className="flex gap-2 px-4 pb-3">
           <button
-            data-glass={selected.size > 0 ? "green" : "btn"}
-            onClick={handleArmSelected}
-            disabled={isPending || selected.size === 0}
-            className={cn("relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 border bg-card disabled:opacity-60", selected.size > 0 ? "text-emerald-600 dark:text-[#86EFAC]" : "text-muted-foreground")}
+            onClick={handleArmAll}
+            disabled={isPending}
+            className="relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 disabled:opacity-50 bg-emerald-500 text-white dark:bg-emerald-600 dark:text-white"
           >
-            <span className="relative z-10">Armar seleccionadas{selected.size > 0 ? ` (${selected.size})` : ""}</span>
+            {isArming ? "Armando…" : "Armar todo"}
           </button>
           <button
-            data-glass="btn"
+            onClick={handleArmSelected}
+            disabled={isPending || selected.size === 0}
+            className={cn("relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 disabled:opacity-40 border-2", selected.size > 0 ? "border-emerald-500 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10" : "border-border text-muted-foreground bg-transparent")}
+          >
+            Selección{selected.size > 0 ? ` (${selected.size})` : ""}
+          </button>
+          <button
             onClick={handleDisarm}
             disabled={isPending || armedCount === 0}
-            className={cn("relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 border bg-card disabled:opacity-60", armedCount > 0 ? "text-muted-foreground" : "text-muted-foreground/40")}
+            className="relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 disabled:opacity-40 bg-red-500 text-white dark:bg-red-600 dark:text-white"
           >
-            <span className="relative z-10">{isDisarming ? "Desarmando…" : "Desarmar todo"}</span>
+            {isDisarming ? "…" : "Desarmar"}
           </button>
         </div>
       </div>

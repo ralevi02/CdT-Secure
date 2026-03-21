@@ -81,11 +81,12 @@ export function ActivityLog({ initialLogs, zones, currentZone, currentPage, hasM
         <div className="flex gap-1.5 flex-wrap flex-1">
           <button
             onClick={() => navigate("all", 1)}
+            data-glass={currentZone === "all" ? "green-strong" : "btn"}
             className={cn(
-              "rounded-full px-3 py-1 text-xs font-medium transition-colors",
+              "rounded-full px-3 py-1 text-xs font-medium transition-all active:scale-[0.97] relative overflow-hidden",
               currentZone === "all"
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted text-muted-foreground hover:bg-muted/80"
+                ? "text-emerald-700 dark:text-emerald-300"
+                : "text-muted-foreground"
             )}
           >
             Todas
@@ -94,11 +95,12 @@ export function ActivityLog({ initialLogs, zones, currentZone, currentPage, hasM
             <button
               key={z.id}
               onClick={() => navigate(z.id, 1)}
+              data-glass={currentZone === z.id ? "green-strong" : "btn"}
               className={cn(
-                "rounded-full px-3 py-1 text-xs font-medium transition-colors",
+                "rounded-full px-3 py-1 text-xs font-medium transition-all active:scale-[0.97] relative overflow-hidden",
                 currentZone === z.id
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  ? "text-emerald-700 dark:text-emerald-300"
+                  : "text-muted-foreground"
               )}
             >
               #{z.zone_number} {z.name}
@@ -111,7 +113,8 @@ export function ActivityLog({ initialLogs, zones, currentZone, currentPage, hasM
           onClick={handleRefresh}
           disabled={isPending}
           title="Recargar eventos actuales"
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors disabled:opacity-50"
+          data-glass="btn"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl text-muted-foreground hover:text-foreground transition-all active:scale-[0.95] disabled:opacity-50 relative overflow-hidden"
         >
           <RefreshCw className={cn("h-3.5 w-3.5", isPending && "animate-spin")} />
         </button>

@@ -74,12 +74,12 @@ export function DashboardClient({ initialZones, initialDevice, initialLogs, hear
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>
             {rtStatus === "live" && (
-              <span className={cn("flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold", "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/[0.06] dark:border dark:border-emerald-500/15 dark:text-emerald-300")}>
+              <span data-glass="green" className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300 relative overflow-hidden">
                 <Wifi className="h-2.5 w-2.5" /> En vivo
               </span>
             )}
             {rtStatus === "connecting" && (
-              <span className={cn("flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold", "bg-amber-100 text-amber-700 dark:bg-amber-500/[0.06] dark:border dark:border-amber-500/15 dark:text-amber-300")}>
+              <span data-glass="btn" className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-300 relative overflow-hidden">
                 <Wifi className="h-2.5 w-2.5 animate-pulse" /> Conectando…
               </span>
             )}
@@ -172,7 +172,7 @@ function RecentActivityPreview({ logs, pulse }: { logs: RecentLog[]; pulse: bool
         </div>
         {hasMore && (
           <div className={cn("absolute bottom-0 left-0 right-0 flex flex-col items-center justify-end pb-2 pt-10", "bg-gradient-to-t from-card via-card/80 to-transparent")}>
-            <button onClick={() => setExpanded(true)} className="flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-xs font-semibold shadow-sm bg-card hover:bg-muted transition-colors">
+            <button onClick={() => setExpanded(true)} data-glass="btn" className="flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition-all active:scale-[0.97] relative overflow-hidden">
               Ver más ({logs.length - PREVIEW_COUNT} más) <ArrowRight className="h-3 w-3" />
             </button>
           </div>

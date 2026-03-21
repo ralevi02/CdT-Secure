@@ -6,11 +6,7 @@ const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
     <div
       ref={ref}
       data-glass="card"
-      className={cn(
-        "relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm",
-        "dark:bg-transparent dark:border-transparent dark:shadow-none dark:rounded-[18px]",
-        className
-      )}
+      className={cn("relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm", className)}
       {...props}
     />
   )

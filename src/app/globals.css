@@ -25,7 +25,7 @@
   --ring:                  #22c55e;
 }
 
-/* ── Dark mode – Liquid Glass base ─────────────────────── */
+/* ── Dark mode ─────────────────────────────────────────── */
 .dark {
   --background:            #020204;
   --foreground:            #E2E8F0;
@@ -48,7 +48,6 @@
   --ring:                  rgba(34,197,94,0.5);
 }
 
-/* ── Tailwind v4 theme tokens ───────────────────────────── */
 @theme inline {
   --color-background:           var(--background);
   --color-foreground:           var(--foreground);
@@ -73,224 +72,120 @@
 
 @layer base {
   * { border-color: var(--border); }
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-  }
+  body { background-color: var(--background); color: var(--foreground); }
 }
 
-/* ── Animations ───────────────────────────────────────── */
 @keyframes pulse-once {
   0%   { background-color: color-mix(in srgb, var(--primary) 12%, transparent); }
   100% { background-color: transparent; }
 }
-.animate-pulse-once {
-  animation: pulse-once 0.8s ease-out forwards;
-}
+.animate-pulse-once { animation: pulse-once 0.8s ease-out forwards; }
 
-/* ── Liquid Glass: applied via data attributes ──────────── */
+/* ════════════════════════════════════════════════════════════
+   LIQUID GLASS — only active inside .dark
+   ════════════════════════════════════════════════════════════ */
 
-/* Panel – outermost container (sidebar, main) */
-[data-glass="panel"] {
-  background: rgba(255,255,255,0.03);
+.dark [data-glass="panel"] {
+  background: rgba(255,255,255,0.03) !important;
   border: 1px solid rgba(255,255,255,0.06) !important;
   border-top-color: rgba(255,255,255,0.10) !important;
   border-left-color: rgba(255,255,255,0.08) !important;
-  border-radius: 22px;
-}
-[data-glass="panel"]::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 14px;
-  right: 14px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
-  pointer-events: none;
-  z-index: 5;
+  border-radius: 22px !important;
 }
 
-/* Card */
-[data-glass="card"] {
+.dark [data-glass="card"] {
   background: rgba(255,255,255,0.025) !important;
   border: 1px solid rgba(255,255,255,0.06) !important;
   border-top-color: rgba(255,255,255,0.10) !important;
-  border-radius: 22px;
-}
-[data-glass="card"]::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 16px;
-  right: 16px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
-  pointer-events: none;
-  z-index: 5;
+  border-radius: 22px !important;
 }
 
-/* Item (zone row, list item) */
-[data-glass="item"] {
+.dark [data-glass="item"] {
   background: rgba(255,255,255,0.025) !important;
   border: 1px solid rgba(255,255,255,0.05) !important;
   border-top-color: rgba(255,255,255,0.07) !important;
-  border-radius: 14px;
-}
-[data-glass="item"]::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 10px;
-  right: 10px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.035), transparent);
-  pointer-events: none;
-  z-index: 5;
+  border-radius: 14px !important;
 }
 
-/* Item dimmed (disabled zone) */
-[data-glass="item-dim"] {
+.dark [data-glass="item-dim"] {
   background: rgba(255,255,255,0.015) !important;
   border: 1px solid rgba(255,255,255,0.04) !important;
   border-top-color: rgba(255,255,255,0.06) !important;
-  border-radius: 14px;
-}
-[data-glass="item-dim"]::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 10px;
-  right: 10px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.025), transparent);
-  pointer-events: none;
-  z-index: 5;
+  border-radius: 14px !important;
 }
 
-/* Green button */
-[data-glass="green"] {
-  background: rgba(34,197,94,0.08) !important;
-  border: 1px solid rgba(34,197,94,0.18) !important;
-  border-top-color: rgba(34,197,94,0.25) !important;
-  border-radius: 12px;
-}
-[data-glass="green"]::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 8px;
-  right: 8px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(134,239,172,0.10), transparent);
-  pointer-events: none;
-  z-index: 5;
-}
-
-/* Green strong (header button) */
-[data-glass="green-strong"] {
+.dark [data-glass="green-strong"] {
   background: rgba(34,197,94,0.12) !important;
   border: 1px solid rgba(34,197,94,0.25) !important;
   border-top-color: rgba(34,197,94,0.38) !important;
-  border-radius: 12px;
-}
-[data-glass="green-strong"]::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 8px;
-  right: 8px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(134,239,172,0.15), transparent);
-  pointer-events: none;
-  z-index: 5;
+  border-radius: 12px !important;
 }
 
-/* Neutral button */
-[data-glass="btn"] {
+.dark [data-glass="green"] {
+  background: rgba(34,197,94,0.08) !important;
+  border: 1px solid rgba(34,197,94,0.18) !important;
+  border-top-color: rgba(34,197,94,0.25) !important;
+  border-radius: 12px !important;
+}
+
+.dark [data-glass="btn"] {
   background: rgba(255,255,255,0.025) !important;
   border: 1px solid rgba(255,255,255,0.05) !important;
   border-top-color: rgba(255,255,255,0.07) !important;
-  border-radius: 12px;
-}
-[data-glass="btn"]::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 8px;
-  right: 8px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-  pointer-events: none;
-  z-index: 5;
+  border-radius: 12px !important;
 }
 
-/* Sensor banner green */
-[data-glass="banner-ok"] {
+.dark [data-glass="banner-ok"] {
   background: rgba(34,197,94,0.04) !important;
   border: 1px solid rgba(34,197,94,0.08) !important;
   border-top-color: rgba(34,197,94,0.13) !important;
-  border-radius: 16px;
+  border-radius: 16px !important;
 }
 
-/* Sensor banner alert */
-[data-glass="banner-alert"] {
+.dark [data-glass="banner-alert"] {
   background: rgba(239,68,68,0.06) !important;
   border: 1px solid rgba(239,68,68,0.12) !important;
   border-top-color: rgba(239,68,68,0.18) !important;
-  border-radius: 16px;
+  border-radius: 16px !important;
 }
 
-/* Nav active item */
-[data-glass="nav"] {
+.dark [data-glass="nav"] {
   background: rgba(255,255,255,0.05) !important;
   border: 1px solid rgba(255,255,255,0.07) !important;
   border-top-color: rgba(255,255,255,0.10) !important;
-  border-radius: 10px;
+  border-radius: 10px !important;
 }
 
-/* Widget card (notificaciones, llamadas) */
-[data-glass="widget"] {
+.dark [data-glass="widget"] {
   background: rgba(255,255,255,0.025) !important;
   border: 1px solid rgba(255,255,255,0.06) !important;
   border-top-color: rgba(255,255,255,0.09) !important;
-  border-radius: 18px;
+  border-radius: 18px !important;
 }
-[data-glass="widget"]::before {
+
+.dark [data-glass="activity"] {
+  background: rgba(255,255,255,0.02) !important;
+  border: 1px solid rgba(255,255,255,0.05) !important;
+  border-top-color: rgba(255,255,255,0.07) !important;
+  border-radius: 18px !important;
+}
+
+/* ── Shine lines (pseudo-elements) ─────────────────────── */
+.dark [data-glass]::before {
   content: '';
   position: absolute;
   top: 0;
   left: 12px;
   right: 12px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
   pointer-events: none;
   z-index: 5;
 }
-
-/* Activity card */
-[data-glass="activity"] {
-  background: rgba(255,255,255,0.02) !important;
-  border: 1px solid rgba(255,255,255,0.05) !important;
-  border-top-color: rgba(255,255,255,0.07) !important;
-  border-radius: 18px;
+.dark [data-glass="green-strong"]::before,
+.dark [data-glass="green"]::before {
+  background: linear-gradient(90deg, transparent, rgba(134,239,172,0.12), transparent);
 }
-[data-glass="activity"]::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 14px;
-  right: 14px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
-  pointer-events: none;
-  z-index: 5;
-}
-
-/* Only apply glass in dark mode */
-:root [data-glass] {
-  background: unset !important;
-  border-color: var(--border) !important;
-}
-:root [data-glass]::before {
-  display: none;
+.dark [data-glass="banner-ok"]::before {
+  background: linear-gradient(90deg, transparent, rgba(134,239,172,0.08), transparent);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useTransition, useState } from "react";
 import { armZones, disarmAllZones, toggleZoneArm } from "@/lib/actions";
 import type { Zone } from "@/lib/supabase";
 import { Shield, Volume2, Loader2 } from "lucide-react";
@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 type Props = { zones: Zone[] };
 
 export function ArmPanel({ zones }: Props) {
-  const [selected, setSelected] = useState<Set<string>>(new Set());
   const [isArming, startArm] = useTransition();
   const [isDisarming, startDisarm] = useTransition();
   const [isToggling, startToggle] = useTransition();
@@ -17,15 +16,11 @@ export function ArmPanel({ zones }: Props) {
 
   const handleArmAll = () => {
     setError(null);
-    startArm(async () => { const r = await armZones("all", []); if (!r.success) setError(r.error ?? "Error"); else setSelected(new Set()); });
-  };
-  const handleArmSelected = () => {
-    setError(null);
-    startArm(async () => { const r = await armZones("selected", Array.from(selected)); if (!r.success) setError(r.error ?? "Error"); else setSelected(new Set()); });
+    startArm(async () => { const r = await armZones("all", []); if (!r.success) setError(r.error ?? "Error"); });
   };
   const handleDisarm = () => {
     setError(null);
-    startDisarm(async () => { const r = await disarmAllZones(); if (!r.success) setError(r.error ?? "Error"); else setSelected(new Set()); });
+    startDisarm(async () => { const r = await disarmAllZones(); if (!r.success) setError(r.error ?? "Error"); });
   };
   const handleToggleZone = (zone: Zone) => {
     startToggle(async () => { await toggleZoneArm(zone.id, !zone.is_enabled); });
@@ -78,28 +73,23 @@ export function ArmPanel({ zones }: Props) {
           ))}
         </div>
 
-        {/* Action buttons — all three in one row */}
+        {/* Action buttons */}
         <div className="flex gap-2 px-4 pb-3">
           <button
+            data-glass="green-strong"
             onClick={handleArmAll}
             disabled={isPending}
-            className="relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 disabled:opacity-50 bg-emerald-500 text-white dark:bg-emerald-600 dark:text-white"
+            className="relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 disabled:opacity-50 text-emerald-700 dark:text-emerald-300"
           >
-            {isArming ? "Armando…" : "Armar todo"}
+            <span className="relative z-10">{isArming ? "Armando…" : "Armar todo"}</span>
           </button>
           <button
-            onClick={handleArmSelected}
-            disabled={isPending || selected.size === 0}
-            className={cn("relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 disabled:opacity-40 border-2", selected.size > 0 ? "border-emerald-500 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10" : "border-border text-muted-foreground bg-transparent")}
-          >
-            Selección{selected.size > 0 ? ` (${selected.size})` : ""}
-          </button>
-          <button
+            data-glass="btn-red"
             onClick={handleDisarm}
             disabled={isPending || armedCount === 0}
-            className="relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 disabled:opacity-40 bg-red-500 text-white dark:bg-red-600 dark:text-white"
+            className="relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 disabled:opacity-40 text-red-700 dark:text-red-300"
           >
-            {isDisarming ? "…" : "Desarmar"}
+            <span className="relative z-10">{isDisarming ? "Desarmando…" : "Desarmar"}</span>
           </button>
         </div>
       </div>

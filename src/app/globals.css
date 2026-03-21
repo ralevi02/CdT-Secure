@@ -256,33 +256,32 @@
 
 /* ── Toggle / switch glass track ── */
 :root [data-glass="toggle-track"] {
-  background: rgba(255,255,255,0.45) !important;
-  border: 1px solid rgba(255,255,255,0.40) !important;
+  background: rgba(120,130,150,0.18) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
   box-shadow:
-    1px 1px 1px 0 rgba(255,255,255,0.50) inset,
-    -1px -1px 1px 0 rgba(255,255,255,0.20) inset,
-    0 1px 4px rgba(0,0,0,0.05) !important;
+    0 1px 3px rgba(0,0,0,0.10) inset,
+    0 1px 2px rgba(0,0,0,0.06) !important;
 }
 .dark [data-glass="toggle-track"] {
-  background: rgba(255,255,255,0.06) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
+  background: rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
   box-shadow:
     1px 1px 1px 0 rgba(255,255,255,0.08) inset,
     -1px -1px 1px 0 rgba(255,255,255,0.04) inset,
     0 1px 4px rgba(0,0,0,0.15) !important;
 }
 :root [data-glass="toggle-thumb"] {
-  background: rgba(255,255,255,0.90) !important;
-  border: 1px solid rgba(255,255,255,0.60) !important;
+  background: #ffffff !important;
+  border: none !important;
   box-shadow:
-    1px 1px 1px 0 rgba(255,255,255,0.80) inset,
-    0 2px 6px rgba(0,0,0,0.08) !important;
+    0 1px 4px rgba(0,0,0,0.14),
+    0 0 1px rgba(0,0,0,0.10) !important;
 }
 .dark [data-glass="toggle-thumb"] {
-  background: rgba(255,255,255,0.18) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: rgba(255,255,255,0.22) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
   box-shadow:
-    1px 1px 1px 0 rgba(255,255,255,0.20) inset,
+    1px 1px 1px 0 rgba(255,255,255,0.22) inset,
     0 2px 6px rgba(0,0,0,0.25) !important;
 }
 

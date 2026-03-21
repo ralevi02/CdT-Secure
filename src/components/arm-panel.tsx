@@ -80,32 +80,32 @@ export function ArmPanel({ zones }: Props) {
         {/* Action buttons — iOS style */}
         <div className="grid grid-cols-2 gap-2 px-4 pb-3">
           <button
-            data-glass="green-strong"
+            data-glass="btn"
             onClick={handleArmAll}
             disabled={isPending}
             className="relative overflow-hidden flex flex-col items-center justify-center gap-1.5 rounded-2xl py-4 transition-all active:scale-[0.96] disabled:opacity-50"
           >
             <span className="relative z-10">
               {isArming
-                ? <Loader2 className="h-5 w-5 text-emerald-600 dark:text-emerald-300 animate-spin" />
-                : <ShieldCheck className="h-5 w-5 text-emerald-600 dark:text-emerald-300" />}
+                ? <Loader2 className="h-5 w-5 text-emerald-500 animate-spin" />
+                : <ShieldCheck className="h-5 w-5 text-emerald-500" />}
             </span>
-            <span className="relative z-10 text-[12px] font-semibold text-emerald-700 dark:text-emerald-300">
+            <span className="relative z-10 text-[12px] font-semibold text-foreground/80">
               {isArming ? "Armando…" : "Armar todo"}
             </span>
           </button>
           <button
-            data-glass="btn-red"
+            data-glass="btn"
             onClick={handleDisarm}
             disabled={isPending || armedCount === 0}
             className="relative overflow-hidden flex flex-col items-center justify-center gap-1.5 rounded-2xl py-4 transition-all active:scale-[0.96] disabled:opacity-40"
           >
             <span className="relative z-10">
               {isDisarming
-                ? <Loader2 className="h-5 w-5 text-red-600 dark:text-red-300 animate-spin" />
-                : <ShieldOff className="h-5 w-5 text-red-600 dark:text-red-300" />}
+                ? <Loader2 className="h-5 w-5 text-red-500 animate-spin" />
+                : <ShieldOff className="h-5 w-5 text-red-500" />}
             </span>
-            <span className="relative z-10 text-[12px] font-semibold text-red-700 dark:text-red-300">
+            <span className="relative z-10 text-[12px] font-semibold text-foreground/80">
               {isDisarming ? "Desarmando…" : "Desarmar"}
             </span>
           </button>

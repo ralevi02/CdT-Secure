@@ -110,7 +110,7 @@ export function MobileNav() {
 
   return (
     <>
-      <header className="md:hidden flex h-14 items-center justify-between px-4 sticky top-0 z-40 border-b bg-[rgba(232,238,246,0.80)] backdrop-blur-xl dark:bg-[rgba(2,2,4,0.80)] dark:backdrop-blur-xl">
+      <header data-glass="panel" className="md:hidden flex h-14 items-center justify-between px-4 z-40 shrink-0">
         <Link href="/" className="flex items-center gap-2">
           <GlassLogo />
           <span className="font-semibold text-sm">CdT Secure</span>

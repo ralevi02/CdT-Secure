@@ -47,6 +47,15 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
   );
 }
 
+function GlassLogo() {
+  return (
+    <div className={cn("flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[9px] relative overflow-hidden", "bg-emerald-50 dark:bg-emerald-500/[0.15] border border-emerald-200 dark:border-emerald-500/[0.25]")}>
+      <div className="absolute top-0 left-[15%] w-[70%] h-[50%] bg-[radial-gradient(ellipse_at_top,rgba(134,239,172,0.15),transparent_80%)]" />
+      <Shield className="relative z-10 h-[13px] w-[13px] text-emerald-600 dark:text-emerald-400" />
+    </div>
+  );
+}
+
 export function DesktopSidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -59,55 +68,37 @@ export function DesktopSidebar() {
     setCollapsed((prev) => { localStorage.setItem("sidebar-collapsed", String(!prev)); return !prev; });
 
   return (
-    <aside
-      data-glass="panel"
-      className={cn(
-        "relative hidden md:flex flex-col shrink-0 transition-all duration-300 ease-in-out overflow-hidden",
-        "bg-card border-r",
-        collapsed ? "w-16" : "w-52"
-      )}
-    >
-      {/* Logo */}
-      <div className={cn(
-        "flex h-14 items-center gap-2 overflow-hidden px-[10px]",
-        "border-b border-border/50",
-        collapsed && "justify-center px-0"
-      )}>
-        <div className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[9px] relative overflow-hidden
-          bg-emerald-50 dark:bg-emerald-500/[0.15]
-          border border-emerald-200 dark:border-emerald-500/[0.25]">
-          <div className="absolute top-0 left-[15%] w-[70%] h-[50%] bg-[radial-gradient(ellipse_at_top,rgba(134,239,172,0.15),transparent_80%)]" />
-          <Shield className="relative z-10 h-[13px] w-[13px] text-emerald-600 dark:text-emerald-400" />
+    <div className={cn("relative hidden md:flex shrink-0 transition-all duration-300 ease-in-out", collapsed ? "w-16" : "w-52")}>
+      <aside
+        data-glass="panel"
+        className="flex flex-col w-full h-full bg-card border-r overflow-hidden"
+      >
+        <div className={cn("flex h-14 items-center gap-2 overflow-hidden px-[10px] border-b border-border/50", collapsed && "justify-center px-0")}>
+          <GlassLogo />
+          {!collapsed && <span className="font-semibold text-sm">CdT Secure</span>}
         </div>
-        {!collapsed && <span className="font-semibold text-sm">CdT Secure</span>}
-      </div>
 
-      {/* Nav */}
-      <nav className="flex flex-col gap-[2px] p-[10px] flex-1">
-        {MAIN_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
-        <div className={cn("my-3 border-t border-border/50", collapsed && "mx-1")} />
-        {SETTINGS_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
-      </nav>
+        <nav className="flex flex-col gap-[2px] p-[10px] flex-1">
+          {MAIN_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
+          <div className={cn("my-3 border-t border-border/50", collapsed && "mx-1")} />
+          {SETTINGS_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
+        </nav>
 
-      {/* Theme */}
-      <div className={cn(
-        "flex items-center border-t border-border/50 p-2",
-        collapsed ? "justify-center" : "justify-between px-[10px]"
-      )}>
-        {!collapsed && <span className="text-xs text-muted-foreground">Tema</span>}
-        <ThemeToggle />
-      </div>
+        <div className={cn("flex items-center border-t border-border/50 p-2", collapsed ? "justify-center" : "justify-between px-[10px]")}>
+          {!collapsed && <span className="text-xs text-muted-foreground">Tema</span>}
+          <ThemeToggle />
+        </div>
+      </aside>
 
-      {/* Collapse */}
+      {/* Collapse button — outside aside so overflow:hidden doesn't clip it */}
       <button
         onClick={toggle}
         aria-label={collapsed ? "Expandir" : "Colapsar"}
-        className="absolute -right-3 top-16 z-10 flex h-6 w-6 items-center justify-center rounded-full
-          border bg-background shadow-sm hover:bg-accent transition-colors"
+        className="absolute -right-3 top-16 z-20 flex h-6 w-6 items-center justify-center rounded-full border bg-background shadow-sm hover:bg-accent transition-colors"
       >
         {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
       </button>
-    </aside>
+    </div>
   );
 }
 
@@ -118,20 +109,14 @@ export function MobileNav() {
 
   return (
     <>
-      <header className="md:hidden flex h-14 items-center justify-between px-4 sticky top-0 z-40
-        border-b bg-card dark:bg-[rgba(2,2,4,0.85)] dark:backdrop-blur-xl">
+      <header className={cn("md:hidden flex h-14 items-center justify-between px-4 sticky top-0 z-40 border-b bg-card", "dark:bg-[rgba(2,2,4,0.85)] dark:backdrop-blur-xl")}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-[9px]
-            bg-emerald-50 dark:bg-emerald-500/[0.15] border border-emerald-200 dark:border-emerald-500/[0.25] relative overflow-hidden">
-            <div className="absolute top-0 left-[15%] w-[70%] h-[50%] bg-[radial-gradient(ellipse_at_top,rgba(134,239,172,0.15),transparent)]" />
-            <Shield className="relative z-10 h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-          </div>
+          <GlassLogo />
           <span className="font-semibold text-sm">CdT Secure</span>
         </Link>
         <div className="flex items-center gap-1">
           <ThemeToggle />
-          <button onClick={() => setOpen(true)} className="flex h-9 w-9 items-center justify-center rounded-md
-            hover:bg-accent transition-colors" aria-label="Abrir menú">
+          <button onClick={() => setOpen(true)} className="flex h-9 w-9 items-center justify-center rounded-md hover:bg-accent transition-colors" aria-label="Abrir menú">
             <Menu className="h-5 w-5" />
           </button>
         </div>
@@ -146,11 +131,7 @@ export function MobileNav() {
       )}>
         <div className="flex h-14 items-center justify-between border-b px-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-[9px]
-              bg-emerald-50 dark:bg-emerald-500/[0.15] border border-emerald-200 dark:border-emerald-500/[0.25] relative overflow-hidden">
-              <div className="absolute top-0 left-[15%] w-[70%] h-[50%] bg-[radial-gradient(ellipse_at_top,rgba(134,239,172,0.15),transparent)]" />
-              <Shield className="relative z-10 h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-            </div>
+            <GlassLogo />
             <span className="font-semibold text-sm">CdT Secure</span>
           </div>
           <button onClick={() => setOpen(false)} className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent">

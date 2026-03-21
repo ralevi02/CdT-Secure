@@ -18,16 +18,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           {/* Background orbs (dark) */}
           <div className="pointer-events-none fixed inset-0 overflow-hidden hidden dark:block">
-            <div className="absolute rounded-full" style={{ top: "5%", left: "25%", width: 500, height: 500, background: "radial-gradient(circle, rgba(100,160,255,0.04), transparent 50%)" }} />
-            <div className="absolute rounded-full" style={{ bottom: 0, right: "10%", width: 400, height: 400, background: "radial-gradient(circle, rgba(34,197,94,0.03), transparent 50%)" }} />
-            <div className="absolute rounded-full" style={{ top: "60%", left: "15%", width: 250, height: 250, background: "radial-gradient(circle, rgba(180,130,255,0.025), transparent 50%)" }} />
+            <div className="absolute rounded-full" style={{ top: "-5%", left: "15%", width: 700, height: 700, background: "radial-gradient(circle, rgba(56,130,255,0.10), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ bottom: "-10%", right: "5%", width: 600, height: 600, background: "radial-gradient(circle, rgba(34,197,94,0.08), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "45%", left: "5%", width: 500, height: 500, background: "radial-gradient(circle, rgba(168,85,247,0.07), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "20%", right: "15%", width: 400, height: 400, background: "radial-gradient(circle, rgba(236,72,153,0.05), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ bottom: "20%", left: "40%", width: 350, height: 350, background: "radial-gradient(circle, rgba(14,165,233,0.06), transparent 55%)" }} />
           </div>
 
           {/* Background orbs (light) */}
           <div className="pointer-events-none fixed inset-0 overflow-hidden dark:hidden">
-            <div className="absolute rounded-full" style={{ top: "5%", left: "25%", width: 500, height: 500, background: "radial-gradient(circle, rgba(100,160,255,0.08), transparent 50%)" }} />
-            <div className="absolute rounded-full" style={{ bottom: 0, right: "10%", width: 400, height: 400, background: "radial-gradient(circle, rgba(34,197,94,0.06), transparent 50%)" }} />
-            <div className="absolute rounded-full" style={{ top: "60%", left: "15%", width: 250, height: 250, background: "radial-gradient(circle, rgba(180,130,255,0.05), transparent 50%)" }} />
+            <div className="absolute rounded-full" style={{ top: "-5%", left: "15%", width: 700, height: 700, background: "radial-gradient(circle, rgba(56,130,255,0.15), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ bottom: "-10%", right: "5%", width: 600, height: 600, background: "radial-gradient(circle, rgba(34,197,94,0.12), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "45%", left: "5%", width: 500, height: 500, background: "radial-gradient(circle, rgba(168,85,247,0.10), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "20%", right: "15%", width: 400, height: 400, background: "radial-gradient(circle, rgba(236,72,153,0.08), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ bottom: "20%", left: "40%", width: 350, height: 350, background: "radial-gradient(circle, rgba(14,165,233,0.10), transparent 55%)" }} />
           </div>
 
           <div className="flex h-screen overflow-hidden flex-col md:flex-row gap-3 p-3">

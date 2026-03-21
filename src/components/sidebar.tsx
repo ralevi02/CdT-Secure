@@ -94,7 +94,8 @@ export function DesktopSidebar() {
       <button
         onClick={toggle}
         aria-label={collapsed ? "Expandir" : "Colapsar"}
-        className="absolute -right-3 top-16 z-20 flex h-6 w-6 items-center justify-center rounded-full border bg-background shadow-sm hover:bg-accent transition-colors"
+        data-glass="btn"
+        className="absolute -right-3 top-16 z-20 flex h-6 w-6 items-center justify-center rounded-full transition-all hover:scale-105 active:scale-95 relative overflow-hidden"
       >
         {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
       </button>
@@ -116,7 +117,7 @@ export function MobileNav() {
         </Link>
         <div className="flex items-center gap-1">
           <ThemeToggle />
-          <button onClick={() => setOpen(true)} className="flex h-9 w-9 items-center justify-center rounded-md hover:bg-accent transition-colors" aria-label="Abrir menú">
+          <button onClick={() => setOpen(true)} data-glass="btn" className="flex h-9 w-9 items-center justify-center rounded-xl transition-all active:scale-95 relative overflow-hidden" aria-label="Abrir menú">
             <Menu className="h-5 w-5" />
           </button>
         </div>

@@ -74,13 +74,14 @@ export function CallContactCard({ contact }: Props) {
         onClick={handleTestCall}
         disabled={callStatus === "calling" || !callEnabled}
         title={callEnabled ? "Llamada de prueba" : "Activa las llamadas para este contacto"}
+        data-glass="btn"
         className={cn(
-          "flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs font-medium border transition-colors",
+          "flex items-center gap-1 rounded-xl px-2.5 py-1.5 text-xs font-medium transition-all active:scale-[0.97] relative overflow-hidden",
           callEnabled
-            ? "border-blue-200 text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-950/40"
-            : "border-border text-muted-foreground cursor-not-allowed opacity-50",
-          callStatus === "ok"    && "border-emerald-200 text-emerald-600 dark:border-emerald-800 dark:text-emerald-400",
-          callStatus === "error" && "border-red-200 text-red-600 dark:border-red-800 dark:text-red-400"
+            ? "text-blue-600 dark:text-blue-400"
+            : "text-muted-foreground cursor-not-allowed opacity-50",
+          callStatus === "ok"    && "text-emerald-600 dark:text-emerald-400",
+          callStatus === "error" && "text-red-600 dark:text-red-400"
         )}
       >
         {callStatus === "calling" && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
@@ -97,18 +98,20 @@ export function CallContactCard({ contact }: Props) {
         onClick={handleToggle}
         disabled={isPending}
         title={callEnabled ? "Desactivar llamadas para este contacto" : "Activar llamadas para este contacto"}
+        data-glass={!callEnabled ? "toggle-track" : undefined}
         className={cn(
-          "relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 transition-colors focus:outline-none",
-          callEnabled
-            ? "bg-blue-500 border-blue-500"
-            : "bg-muted border-border",
+          "relative inline-flex h-[26px] w-[44px] shrink-0 items-center rounded-full transition-all focus:outline-none cursor-pointer",
+          callEnabled ? "bg-blue-500" : "",
           isPending && "opacity-60 cursor-wait"
         )}
       >
-        <span className={cn(
-          "inline-block h-4 w-4 rounded-full bg-white shadow-sm transition-transform",
-          callEnabled ? "translate-x-5" : "translate-x-0.5"
-        )} />
+        <span
+          data-glass={!callEnabled ? "toggle-thumb" : undefined}
+          className={cn(
+            "absolute top-[2px] h-[22px] w-[22px] rounded-full transition-all",
+            callEnabled ? "right-[2px] bg-white shadow-sm" : "left-[2px]"
+          )}
+        />
       </button>
 
       {/* Error tooltip */}

@@ -4,17 +4,15 @@ import { useState, useEffect, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { DeviceStatusBadge } from "@/components/device-status-badge";
 import { ArmPanel } from "@/components/arm-panel";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, ShieldCheck, DoorOpen, DoorClosed, ArrowRight, Wifi } from "lucide-react";
+import { Activity, ShieldCheck, DoorOpen, DoorClosed, ArrowRight, Wifi, Bell, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import type { Zone, DeviceStatus } from "@/lib/supabase";
 
 const PREVIEW_COUNT = 5;
 
-/** Format a date string consistently on both server and client */
 function fmtDateTime(iso: string) {
-  const d = new Date(iso);
+  const d  = new Date(iso);
   const hh = String(d.getHours()).padStart(2, "0");
   const mm = String(d.getMinutes()).padStart(2, "0");
   const dd = String(d.getDate()).padStart(2, "0");
@@ -44,13 +42,13 @@ export function DashboardClient({
   initialLogs,
   heartbeatTimeout,
 }: Props) {
-  const [zones, setZones]   = useState<Zone[]>(initialZones);
-  const [device, setDevice] = useState<DeviceStatus | null>(initialDevice);
-  const [logs, setLogs]     = useState<RecentLog[]>(initialLogs);
-  const [pulse, setPulse]         = useState(false);
-  const [rtStatus, setRtStatus]   = useState<"connecting" | "live" | "error">("connecting");
-  const zonesRef                   = useRef(zones);
-  zonesRef.current                 = zones;
+  const [zones, setZones]           = useState<Zone[]>(initialZones);
+  const [device, setDevice]         = useState<DeviceStatus | null>(initialDevice);
+  const [logs, setLogs]             = useState<RecentLog[]>(initialLogs);
+  const [pulse, setPulse]           = useState(false);
+  const [rtStatus, setRtStatus]     = useState<"connecting" | "live" | "error">("connecting");
+  const zonesRef                     = useRef(zones);
+  zonesRef.current                   = zones;
 
   useEffect(() => {
     const supabase = createClient(
@@ -60,48 +58,22 @@ export function DashboardClient({
 
     const channel = supabase
       .channel("dashboard-realtime")
-
-      // New sensor event
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "sensor_logs" },
-        (payload) => {
-          const row = payload.new as { id: string; zone_id: string; status: boolean; created_at: string };
-          const zone = zonesRef.current.find((z) => z.id === row.zone_id);
-          const newLog: RecentLog = {
-            id: row.id,
-            zone_id: row.zone_id,
-            status: row.status,
-            created_at: row.created_at,
-            zone_name: zone?.name ?? "Zona desconocida",
-            zone_number: zone?.zone_number ?? 0,
-          };
-          setLogs((prev) => [newLog, ...prev].slice(0, 20));
-          setPulse(true);
-          setTimeout(() => setPulse(false), 800);
-        }
-      )
-
-      // Device status update
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "device_status" },
-        (payload) => {
-          setDevice((prev) => ({ ...(prev ?? { id: "1", is_online: false, last_seen: null }), ...payload.new }) as DeviceStatus);
-        }
-      )
-
-      // Zone arm/disarm update
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "zones" },
-        (payload) => {
-          setZones((prev) =>
-            prev.map((z) => (z.id === payload.new.id ? { ...z, ...payload.new } : z))
-          );
-        }
-      )
-
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "sensor_logs" }, (payload) => {
+        const row = payload.new as { id: string; zone_id: string; status: boolean; created_at: string };
+        const zone = zonesRef.current.find((z) => z.id === row.zone_id);
+        setLogs((prev) => [{
+          id: row.id, zone_id: row.zone_id, status: row.status, created_at: row.created_at,
+          zone_name: zone?.name ?? "Zona desconocida", zone_number: zone?.zone_number ?? 0,
+        }, ...prev].slice(0, 20));
+        setPulse(true);
+        setTimeout(() => setPulse(false), 800);
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "device_status" }, (payload) => {
+        setDevice((prev) => ({ ...(prev ?? { id: "1", is_online: false, last_seen: null }), ...payload.new }) as DeviceStatus);
+      })
+      .on("postgres_changes", { event: "UPDATE", schema: "public", table: "zones" }, (payload) => {
+        setZones((prev) => prev.map((z) => (z.id === payload.new.id ? { ...z, ...payload.new } : z)));
+      })
       .subscribe((status) => {
         if (status === "SUBSCRIBED") setRtStatus("live");
         else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") setRtStatus("error");
@@ -117,33 +89,31 @@ export function DashboardClient({
   });
 
   return (
-    <div className="flex flex-col gap-6 pb-28 md:pb-0">
+    <div className="flex flex-col gap-2.5 pb-28 md:pb-0">
 
-      {/* ── Header ─────────────────────────────────────── */}
+      {/* ── Header ───────────────────────────────── */}
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold">Dashboard</h1>
+            <h1 className="text-xl font-semibold tracking-tight dark:text-[#F1F5F9]">Dashboard</h1>
             {rtStatus === "live" && (
-              <span className="flex items-center gap-1 rounded-full bg-emerald-100 dark:bg-emerald-900/40 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">
-                <Wifi className="h-2.5 w-2.5" />
-                En vivo
+              <span className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold
+                bg-emerald-100 text-emerald-700
+                dark:bg-emerald-500/[0.06] dark:border dark:border-emerald-500/15 dark:text-emerald-300">
+                <Wifi className="h-2.5 w-2.5" /> En vivo
               </span>
             )}
             {rtStatus === "connecting" && (
-              <span className="flex items-center gap-1 rounded-full bg-amber-100 dark:bg-amber-900/40 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-300">
-                <Wifi className="h-2.5 w-2.5 animate-pulse" />
-                Conectando…
-              </span>
-            )}
-            {rtStatus === "error" && (
-              <span className="flex items-center gap-1 rounded-full bg-red-100 dark:bg-red-900/40 px-2 py-0.5 text-[10px] font-semibold text-red-700 dark:text-red-300">
-                <Wifi className="h-2.5 w-2.5" />
-                Sin tiempo real
+              <span className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold
+                bg-amber-100 text-amber-700
+                dark:bg-amber-500/[0.06] dark:border dark:border-amber-500/15 dark:text-amber-300">
+                <Wifi className="h-2.5 w-2.5 animate-pulse" /> Conectando…
               </span>
             )}
           </div>
-          <p className="text-sm text-muted-foreground mt-0.5">Estado en tiempo real</p>
+          <p className="text-xs dark:text-[#334155] text-muted-foreground mt-0.5">
+            Estado en tiempo real
+          </p>
         </div>
         <DeviceStatusBadge
           lastSeen={device?.last_seen ?? null}
@@ -151,48 +121,77 @@ export function DashboardClient({
         />
       </div>
 
-      {/* ── Alert banner ───────────────────────────────── */}
-      <div className={cn("transition-all duration-300", pulse && "scale-[1.01]")}>
+      {/* ── Sensor banner ────────────────────────── */}
+      <div className={cn("transition-all duration-300", pulse && "scale-[1.005]")}>
         {activeAlerts.length > 0 ? (
-          <div className={cn(
-            "flex items-center gap-3 rounded-[16px] p-3.5 relative overflow-hidden",
-            "border border-red-200 bg-red-50 dark:border-red-500/15 dark:border-t-red-400/25",
-            "dark:bg-red-500/[0.06]"
-          )}>
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-400/15 to-transparent dark:via-red-400/20" />
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-500/80 dark:bg-red-500/20 dark:border dark:border-red-500/30">
-              <Activity className="h-4 w-4 text-white dark:text-red-300 animate-pulse" />
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-red-800 dark:text-red-300">
+          <div data-glass="banner-alert"
+            className="relative overflow-hidden flex items-center gap-3 rounded-[16px] p-3 border
+              border-red-200 bg-red-50
+              dark:bg-transparent dark:border-transparent">
+            <div className="absolute top-0 left-[15%] w-[70%] h-[60%] bg-[radial-gradient(ellipse_at_top,rgba(239,68,68,0.06),transparent_70%)]" />
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" className="relative z-10 shrink-0">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <div className="relative z-10">
+              <p className="text-sm font-medium text-red-800 dark:text-[#FCA5A5]">
                 {activeAlerts.length === 1 ? "¡Sensor abierto!" : `${activeAlerts.length} sensores abiertos`}
               </p>
-              <p className="text-xs text-red-600 dark:text-red-500">
+              <p className="text-xs text-red-600 dark:text-[#F87171]">
                 {activeAlerts.map((z) => z.name).join(", ")}
               </p>
             </div>
           </div>
         ) : (
-          <div className={cn(
-            "flex items-center gap-3 rounded-[16px] p-3.5 relative overflow-hidden",
-            "border border-emerald-200 bg-emerald-50 dark:border-emerald-500/15 dark:border-t-emerald-400/25",
-            "dark:bg-emerald-500/[0.04]"
-          )}>
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/15 to-transparent dark:via-emerald-400/15" />
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500/80 dark:bg-emerald-500/15 dark:border dark:border-emerald-500/25">
-              <ShieldCheck className="h-4 w-4 text-white dark:text-emerald-300" />
-            </div>
-            <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">
+          <div data-glass="banner-ok"
+            className="relative overflow-hidden flex items-center gap-3 rounded-[16px] p-3 border
+              border-emerald-200 bg-emerald-50
+              dark:bg-transparent dark:border-transparent">
+            <div className="absolute top-0 left-[15%] w-[70%] h-[60%] bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.05),transparent_70%)]" />
+            <div className="absolute top-px left-[10px] right-[10px] h-px bg-gradient-to-r from-transparent via-emerald-300/[0.08] to-transparent" />
+            <ShieldCheck className="relative z-10 h-4 w-4 text-emerald-600 dark:text-[#22C55E] shrink-0" />
+            <span className="relative z-10 text-[13px] font-medium text-emerald-800 dark:text-[#86EFAC]">
               Todos los sensores en estado normal
-            </p>
+            </span>
           </div>
         )}
       </div>
 
-      {/* ── Arm panel ──────────────────────────────────── */}
+      {/* ── Arm panel (zones + buttons) ──────────── */}
       {zones.length > 0 && <ArmPanel zones={zones} />}
 
-      {/* ── Recent activity preview ─────────────────── */}
+      {/* ── Bottom widgets grid ──────────────────── */}
+      <div className="grid grid-cols-2 gap-2.5">
+        <Link href="/notifications" data-glass="widget"
+          className="relative overflow-hidden flex items-center gap-3 rounded-[18px] p-3.5
+            border bg-card hover:bg-muted/40
+            dark:bg-transparent dark:border-transparent dark:hover:bg-white/[0.04] transition-colors">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px]
+            bg-muted dark:bg-white/[0.04] dark:border dark:border-white/[0.06] dark:border-t-white/[0.09]">
+            <Bell className="h-4 w-4 text-muted-foreground dark:text-[#94A3B8]" />
+          </div>
+          <div>
+            <p className="text-[13px] font-medium dark:text-[#E2E8F0]">Notificaciones</p>
+            <p className="text-[11px] dark:text-[#475569] text-muted-foreground">WhatsApp</p>
+          </div>
+        </Link>
+
+        <Link href="/llamadas" data-glass="widget"
+          className="relative overflow-hidden flex items-center gap-3 rounded-[18px] p-3.5
+            border bg-card hover:bg-muted/40
+            dark:bg-transparent dark:border-transparent dark:hover:bg-white/[0.04] transition-colors">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px]
+            bg-muted dark:bg-white/[0.04] dark:border dark:border-white/[0.06] dark:border-t-white/[0.09]">
+            <Phone className="h-4 w-4 text-muted-foreground dark:text-[#94A3B8]" />
+          </div>
+          <div>
+            <p className="text-[13px] font-medium dark:text-[#E2E8F0]">Llamadas</p>
+            <p className="text-[11px] dark:text-[#475569] text-muted-foreground">Twilio</p>
+          </div>
+        </Link>
+      </div>
+
+      {/* ── Activity preview ─────────────────────── */}
       <RecentActivityPreview logs={logs} pulse={pulse} />
     </div>
   );
@@ -203,81 +202,79 @@ function RecentActivityPreview({ logs, pulse }: { logs: RecentLog[]; pulse: bool
   const [expanded, setExpanded] = useState(false);
   if (logs.length === 0) return null;
 
-  const visible   = expanded ? logs : logs.slice(0, PREVIEW_COUNT);
-  const hasMore   = logs.length > PREVIEW_COUNT && !expanded;
+  const visible = expanded ? logs : logs.slice(0, PREVIEW_COUNT);
+  const hasMore = logs.length > PREVIEW_COUNT && !expanded;
 
   return (
-    <Card className={cn(
-      "transition-all duration-300",
-      pulse && "ring-1 ring-primary/30 dark:ring-emerald-500/20"
-    )}>
-      <CardHeader className="pb-2 flex-row items-center justify-between space-y-0">
-        <CardTitle className="text-sm">Actividad Reciente</CardTitle>
+    <div data-glass="activity"
+      className={cn(
+        "relative overflow-hidden rounded-[18px] p-4 border bg-card dark:bg-transparent dark:border-transparent transition-all duration-300",
+        pulse && "ring-1 ring-primary/20"
+      )}>
+      {/* Header */}
+      <div className="flex justify-between items-center mb-2">
+        <span className="text-[13px] font-medium dark:text-[#E2E8F0]">Actividad Reciente</span>
         <Link
           href="/activity"
-          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
+          className="flex items-center gap-1 text-[11px] dark:text-[#64748B] text-muted-foreground hover:text-primary transition-colors"
         >
           Ver todo <ArrowRight className="h-3 w-3" />
         </Link>
-      </CardHeader>
+      </div>
 
-      <CardContent className="p-0">
-        <div className="relative">
-          <div className="flex flex-col divide-y divide-border px-4">
-            {visible.map((log, i) => {
-              const { time, date } = fmtDateTime(log.created_at);
-
-              return (
-                <div
-                  key={log.id}
-                  className={cn(
-                    "flex items-center gap-2.5 py-2.5 transition-all",
-                    i === 0 && pulse && "animate-pulse-once"
-                  )}
-                >
+      {/* Entries */}
+      <div className="relative">
+        <div className="flex flex-col">
+          {visible.map((log, i) => {
+            const { time, date } = fmtDateTime(log.created_at);
+            return (
+              <div
+                key={log.id}
+                className={cn(
+                  "flex justify-between items-center py-[7px]",
+                  i !== visible.length - 1 && "border-b border-white/[0.025] dark:border-white/[0.025] border-slate-100",
+                  i === 0 && pulse && "animate-pulse-once"
+                )}
+              >
+                <div className="flex items-center gap-2">
                   <div className={cn(
-                    "flex h-7 w-7 shrink-0 items-center justify-center rounded-full",
-                    log.status
-                      ? "bg-red-100 dark:bg-red-900/40"
-                      : "bg-emerald-100 dark:bg-emerald-900/40"
-                  )}>
-                    {log.status
-                      ? <DoorOpen  className="h-3.5 w-3.5 text-red-600 dark:text-red-400" />
-                      : <DoorClosed className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-                    }
-                  </div>
-                  <span className="flex-1 text-sm truncate">{log.zone_name}</span>
+                    "h-[5px] w-[5px] rounded-full shrink-0",
+                    log.status ? "bg-red-500" : "bg-emerald-500"
+                  )} />
+                  <span className="text-xs dark:text-[#94A3B8] text-muted-foreground">{log.zone_name}</span>
+                </div>
+                <div className="flex gap-2 items-center">
                   <span className={cn(
-                    "text-xs font-medium",
-                    log.status ? "text-red-600 dark:text-red-400" : "text-emerald-600 dark:text-emerald-400"
+                    "text-[11px]",
+                    log.status ? "text-red-500 dark:text-[#EF4444]" : "text-emerald-500 dark:text-[#22C55E]"
                   )}>
                     {log.status ? "Abierto" : "Cerrado"}
                   </span>
-                  <span suppressHydrationWarning className="text-xs text-muted-foreground tabular-nums shrink-0">
-                    {time} {date}
+                  <span suppressHydrationWarning className="text-[11px] dark:text-white/[0.08] text-slate-300 tabular-nums">
+                    {time}
                   </span>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Fade + Ver más */}
-          {hasMore && (
-            <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-end pb-3 pt-10 bg-gradient-to-t from-card via-card/80 to-transparent rounded-b-xl">
-              <button
-                onClick={() => setExpanded(true)}
-                className="flex items-center gap-1.5 rounded-full border bg-card px-4 py-1.5 text-xs font-semibold shadow-sm hover:bg-muted transition-colors"
-              >
-                Ver más ({logs.length - PREVIEW_COUNT} más)
-                <ArrowRight className="h-3 w-3" />
-              </button>
-            </div>
-          )}
-
-          {/* Spacer when faded */}
-          {hasMore && <div className="h-12" />}
+              </div>
+            );
+          })}
         </div>
-      </CardContent>
-    </Card>
+
+        {/* Fade + See more */}
+        {hasMore && (
+          <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-end pb-2 pt-10
+            bg-gradient-to-t from-card dark:from-[#020204] via-card/80 dark:via-[#020204]/80 to-transparent">
+            <button
+              onClick={() => setExpanded(true)}
+              className="flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-xs font-semibold shadow-sm
+                bg-card hover:bg-muted transition-colors
+                dark:bg-white/[0.04] dark:border-white/[0.08] dark:hover:bg-white/[0.07] dark:text-[#94A3B8]"
+            >
+              Ver más ({logs.length - PREVIEW_COUNT} más) <ArrowRight className="h-3 w-3" />
+            </button>
+          </div>
+        )}
+        {hasMore && <div className="h-10" />}
+      </div>
+    </div>
   );
 }

@@ -3,7 +3,6 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { DesktopSidebar, MobileNav } from "@/components/sidebar";
-import { GlassEnhancer } from "@/components/glass-enhancer";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -17,8 +16,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" suppressHydrationWarning>
       <body className={`${geist.className} min-h-screen bg-background antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <GlassEnhancer />
-
           {/* Background orbs (dark) */}
           <div className="pointer-events-none fixed inset-0 overflow-hidden hidden dark:block">
             <div className="absolute rounded-full" style={{ top: "5%", left: "25%", width: 500, height: 500, background: "radial-gradient(circle, rgba(100,160,255,0.04), transparent 50%)" }} />

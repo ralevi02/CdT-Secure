@@ -154,6 +154,16 @@ export async function armZones(mode: "all" | "selected", selectedIds: string[]):
   return { success: true };
 }
 
+export async function toggleZoneArm(id: string, is_enabled: boolean): Promise<ActionResult> {
+  const { error } = await supabaseAdmin
+    .from("zones")
+    .update({ is_enabled })
+    .eq("id", id);
+  if (error) return { success: false, error: error.message };
+  revalidateAll();
+  return { success: true };
+}
+
 export async function disarmAllZones(): Promise<ActionResult> {
   const { error } = await supabaseAdmin
     .from("zones")

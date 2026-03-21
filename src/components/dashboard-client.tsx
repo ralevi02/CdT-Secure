@@ -171,13 +171,12 @@ function RecentActivityPreview({ logs, pulse }: { logs: RecentLog[]; pulse: bool
           })}
         </div>
         {hasMore && (
-          <div className={cn("absolute bottom-0 left-0 right-0 flex flex-col items-center justify-end pb-2 pt-10", "bg-gradient-to-t from-card via-card/80 to-transparent")}>
+          <div className="flex justify-center pt-2">
             <button onClick={() => setExpanded(true)} data-glass="btn" className="flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition-all active:scale-[0.97] relative overflow-hidden">
               Ver más ({logs.length - PREVIEW_COUNT} más) <ArrowRight className="h-3 w-3" />
             </button>
           </div>
         )}
-        {hasMore && <div className="h-10" />}
       </div>
     </div>
   );

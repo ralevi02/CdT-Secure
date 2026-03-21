@@ -110,7 +110,7 @@ export function MobileNav() {
 
   return (
     <>
-      <header className={cn("md:hidden flex h-14 items-center justify-between px-4 sticky top-0 z-40 border-b bg-card", "dark:bg-[rgba(2,2,4,0.85)] dark:backdrop-blur-xl")}>
+      <header className="md:hidden flex h-14 items-center justify-between px-4 sticky top-0 z-40 border-b bg-[rgba(232,238,246,0.80)] backdrop-blur-xl dark:bg-[rgba(2,2,4,0.80)] dark:backdrop-blur-xl">
         <Link href="/" className="flex items-center gap-2">
           <GlassLogo />
           <span className="font-semibold text-sm">CdT Secure</span>
@@ -125,17 +125,20 @@ export function MobileNav() {
 
       {open && <div className="md:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)} />}
 
-      <div className={cn(
-        "md:hidden fixed left-0 top-0 z-50 h-full w-72 shadow-xl bg-card border-r",
-        "transform transition-transform duration-300 ease-in-out",
-        open ? "translate-x-0" : "-translate-x-full"
-      )}>
-        <div className="flex h-14 items-center justify-between border-b px-4">
+      <div
+        data-glass="panel"
+        className={cn(
+          "md:hidden fixed left-0 top-0 z-50 h-full w-72 shadow-xl",
+          "transform transition-transform duration-300 ease-in-out",
+          open ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        <div className="flex h-14 items-center justify-between border-b border-border/50 px-4">
           <div className="flex items-center gap-2">
             <GlassLogo />
             <span className="font-semibold text-sm">CdT Secure</span>
           </div>
-          <button onClick={() => setOpen(false)} className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent">
+          <button onClick={() => setOpen(false)} data-glass="btn" className="flex h-8 w-8 items-center justify-center rounded-xl transition-all active:scale-95 relative overflow-hidden">
             <X className="h-4 w-4" />
           </button>
         </div>

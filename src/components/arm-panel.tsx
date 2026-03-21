@@ -3,7 +3,7 @@
 import { useTransition, useState } from "react";
 import { armZones, disarmAllZones, toggleZoneArm } from "@/lib/actions";
 import type { Zone } from "@/lib/supabase";
-import { Shield, Volume2, Loader2 } from "lucide-react";
+import { Shield, ShieldCheck, ShieldOff, Volume2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Props = { zones: Zone[] };
@@ -77,23 +77,37 @@ export function ArmPanel({ zones }: Props) {
           ))}
         </div>
 
-        {/* Action buttons */}
-        <div className="flex gap-2 px-4 pb-3">
+        {/* Action buttons — iOS style */}
+        <div className="grid grid-cols-2 gap-2 px-4 pb-3">
           <button
             data-glass="green-strong"
             onClick={handleArmAll}
             disabled={isPending}
-            className="relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 disabled:opacity-50 text-emerald-700 dark:text-emerald-300"
+            className="relative overflow-hidden flex flex-col items-center justify-center gap-1.5 rounded-2xl py-4 transition-all active:scale-[0.96] disabled:opacity-50"
           >
-            <span className="relative z-10">{isArming ? "Armando…" : "Armar todo"}</span>
+            <span className="relative z-10">
+              {isArming
+                ? <Loader2 className="h-5 w-5 text-emerald-600 dark:text-emerald-300 animate-spin" />
+                : <ShieldCheck className="h-5 w-5 text-emerald-600 dark:text-emerald-300" />}
+            </span>
+            <span className="relative z-10 text-[12px] font-semibold text-emerald-700 dark:text-emerald-300">
+              {isArming ? "Armando…" : "Armar todo"}
+            </span>
           </button>
           <button
             data-glass="btn-red"
             onClick={handleDisarm}
             disabled={isPending || armedCount === 0}
-            className="relative overflow-hidden flex-1 text-center rounded-[12px] py-[10px] text-[13px] font-semibold transition-all active:scale-95 disabled:opacity-40 text-red-700 dark:text-red-300"
+            className="relative overflow-hidden flex flex-col items-center justify-center gap-1.5 rounded-2xl py-4 transition-all active:scale-[0.96] disabled:opacity-40"
           >
-            <span className="relative z-10">{isDisarming ? "Desarmando…" : "Desarmar"}</span>
+            <span className="relative z-10">
+              {isDisarming
+                ? <Loader2 className="h-5 w-5 text-red-600 dark:text-red-300 animate-spin" />
+                : <ShieldOff className="h-5 w-5 text-red-600 dark:text-red-300" />}
+            </span>
+            <span className="relative z-10 text-[12px] font-semibold text-red-700 dark:text-red-300">
+              {isDisarming ? "Desarmando…" : "Desarmar"}
+            </span>
           </button>
         </div>
       </div>

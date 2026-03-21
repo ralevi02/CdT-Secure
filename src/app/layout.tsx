@@ -33,11 +33,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="absolute rounded-full" style={{ top: "60%", left: "15%", width: 250, height: 250, background: "radial-gradient(circle, rgba(180,130,255,0.05), transparent 50%)" }} />
           </div>
 
-          <div className="flex h-screen overflow-hidden flex-col md:flex-row gap-3 p-2 md:gap-4 md:p-4">
+          <div className="flex h-screen overflow-hidden flex-col md:flex-row gap-3 p-3">
             <MobileNav />
             <DesktopSidebar />
             <main data-glass="panel" className="flex-1 overflow-y-auto h-full relative">
-              <div className="mx-auto max-w-2xl px-5 py-8">
+              <div className="mx-auto max-w-2xl px-4 py-6">
                 {children}
               </div>
             </main>

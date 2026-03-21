@@ -67,7 +67,7 @@ export function DashboardClient({ initialZones, initialDevice, initialLogs, hear
   });
 
   return (
-    <div className="flex flex-col gap-4 pb-28 md:pb-0">
+    <div className="flex flex-col gap-2.5 pb-28 md:pb-0">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
@@ -113,7 +113,7 @@ export function DashboardClient({ initialZones, initialDevice, initialLogs, hear
       {zones.length > 0 && <ArmPanel zones={zones} />}
 
       {/* Widget grid */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-2.5">
         <Link href="/notifications" data-glass="widget" className="relative overflow-hidden flex items-center gap-3 rounded-[18px] p-3.5 border bg-card hover:bg-muted/40 transition-colors">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-muted border border-border/50">
             <Bell className="h-4 w-4 text-muted-foreground" />

@@ -44,7 +44,7 @@ export function ArmPanel({ zones }: Props) {
         </div>
 
         {/* Zone list */}
-        <div className="flex flex-col gap-2 px-4 py-3">
+        <div className="flex flex-col gap-[6px] px-4 py-[10px]">
           {zones.map((zone) => (
             <div
               key={zone.id}
@@ -74,7 +74,7 @@ export function ArmPanel({ zones }: Props) {
         </div>
 
         {/* Action buttons */}
-        <div className="flex gap-3 px-4 pb-4">
+        <div className="flex gap-2 px-4 pb-3">
           <button
             data-glass="green-strong"
             onClick={handleArmAll}

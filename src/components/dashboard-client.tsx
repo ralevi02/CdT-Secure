@@ -154,25 +154,35 @@ export function DashboardClient({
       {/* ── Alert banner ───────────────────────────────── */}
       <div className={cn("transition-all duration-300", pulse && "scale-[1.01]")}>
         {activeAlerts.length > 0 ? (
-          <div className="flex items-center gap-3 rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/50 p-4">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-500">
-              <Activity className="h-4 w-4 text-white animate-pulse" />
+          <div className={cn(
+            "flex items-center gap-3 rounded-[16px] p-3.5 relative overflow-hidden",
+            "border border-red-200 bg-red-50 dark:border-red-500/15 dark:border-t-red-400/25",
+            "dark:bg-red-500/[0.06]"
+          )}>
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-400/15 to-transparent dark:via-red-400/20" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-500/80 dark:bg-red-500/20 dark:border dark:border-red-500/30">
+              <Activity className="h-4 w-4 text-white dark:text-red-300 animate-pulse" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-red-800 dark:text-red-200">
+              <p className="text-sm font-semibold text-red-800 dark:text-red-300">
                 {activeAlerts.length === 1 ? "¡Sensor abierto!" : `${activeAlerts.length} sensores abiertos`}
               </p>
-              <p className="text-xs text-red-600 dark:text-red-400">
+              <p className="text-xs text-red-600 dark:text-red-500">
                 {activeAlerts.map((z) => z.name).join(", ")}
               </p>
             </div>
           </div>
         ) : (
-          <div className="flex items-center gap-3 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/50 p-4">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500">
-              <ShieldCheck className="h-4 w-4 text-white" />
+          <div className={cn(
+            "flex items-center gap-3 rounded-[16px] p-3.5 relative overflow-hidden",
+            "border border-emerald-200 bg-emerald-50 dark:border-emerald-500/15 dark:border-t-emerald-400/25",
+            "dark:bg-emerald-500/[0.04]"
+          )}>
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/15 to-transparent dark:via-emerald-400/15" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500/80 dark:bg-emerald-500/15 dark:border dark:border-emerald-500/25">
+              <ShieldCheck className="h-4 w-4 text-white dark:text-emerald-300" />
             </div>
-            <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-200">
+            <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">
               Todos los sensores en estado normal
             </p>
           </div>
@@ -197,7 +207,10 @@ function RecentActivityPreview({ logs, pulse }: { logs: RecentLog[]; pulse: bool
   const hasMore   = logs.length > PREVIEW_COUNT && !expanded;
 
   return (
-    <Card className={cn("transition-all duration-300", pulse && "ring-2 ring-primary/30")}>
+    <Card className={cn(
+      "transition-all duration-300",
+      pulse && "ring-1 ring-primary/30 dark:ring-emerald-500/20"
+    )}>
       <CardHeader className="pb-2 flex-row items-center justify-between space-y-0">
         <CardTitle className="text-sm">Actividad Reciente</CardTitle>
         <Link

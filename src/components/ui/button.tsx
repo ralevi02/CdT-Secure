@@ -4,15 +4,25 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline: "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        default:
+          "bg-primary text-primary-foreground shadow hover:bg-primary/90 " +
+          "dark:glass-green dark:text-emerald-300 dark:font-semibold dark:shadow-none dark:hover:bg-emerald-500/15",
+        destructive:
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 " +
+          "dark:glass-red dark:text-red-300 dark:shadow-none",
+        outline:
+          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground " +
+          "dark:glass-btn dark:border-0 dark:text-[#94A3B8] dark:hover:text-foreground dark:shadow-none",
+        secondary:
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 " +
+          "dark:glass-btn dark:border-0 dark:text-[#94A3B8] dark:shadow-none",
+        ghost:
+          "hover:bg-accent hover:text-accent-foreground " +
+          "dark:hover:bg-white/[0.05] dark:text-[#64748B] dark:hover:text-[#E2E8F0]",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

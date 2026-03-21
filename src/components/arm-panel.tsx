@@ -60,44 +60,52 @@ export function ArmPanel({ zones }: Props) {
 
   return (
     <>
-      {/* ── Zone glass widget ───────────────────────────── */}
-      <div className="rounded-[22px] border bg-card overflow-hidden relative">
-        {/* Top shine */}
-        <div className="absolute top-px left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/[0.07] to-transparent pointer-events-none" />
-
+      {/* ── Main widget card ─────────────────────────────── */}
+      <div className={cn(
+        "rounded-xl border bg-card shadow-sm overflow-hidden",
+        "dark:glass-panel dark:shadow-none dark:rounded-[22px]"
+      )}>
         {/* Status header */}
-        <div className="flex items-center justify-between px-4 py-3.5 border-b border-white/[0.04] relative overflow-hidden">
-          <div className="absolute inset-x-[10%] top-0 h-full bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.03),transparent_80%)]" />
-          <div className="flex items-center gap-3 relative z-10">
+        <div className={cn(
+          "flex items-center justify-between px-4 py-3.5 border-b",
+          "dark:border-white/[0.04]"
+        )}>
+          <div className="flex items-center gap-3">
             <div className={cn(
-              "flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[12px]",
-              "border relative overflow-hidden",
-              armedCount > 0
-                ? "bg-emerald-500/10 border-emerald-500/18 border-t-emerald-400/28"
-                : "bg-white/[0.04] border-white/[0.06] border-t-white/[0.09]"
+              "flex h-9 w-9 items-center justify-center rounded-[10px]",
+              "dark:bg-emerald-500/10 dark:border dark:border-emerald-500/20 dark:border-t-emerald-400/32",
+              "bg-primary/10 relative overflow-hidden"
             )}>
-              <div className="absolute inset-x-[10%] top-0 h-1/2 bg-[radial-gradient(ellipse_at_top,rgba(134,239,172,0.1),transparent)]" />
-              <Shield className={cn("h-4 w-4 relative z-10", armedCount > 0 ? "text-emerald-400" : "text-muted-foreground")} />
+              <div className="absolute inset-0 bg-gradient-to-b from-emerald-300/10 to-transparent" />
+              <Shield className={cn(
+                "relative z-10 h-4 w-4",
+                armedCount > 0 ? "text-primary" : "text-muted-foreground"
+              )} />
             </div>
             <div>
-              <p className="text-sm font-medium">Estado de la alarma</p>
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-sm font-medium dark:text-[#E2E8F0]">Estado de la Alarma</p>
+              <p className="text-xs dark:text-[#475569] text-muted-foreground">
                 {armedCount === 0
                   ? "0 de " + zones.length + " armadas"
                   : armedCount === zones.length
-                  ? "Todas las zonas armadas"
+                  ? "Todas armadas"
                   : `${armedCount} de ${zones.length} armadas`}
               </p>
             </div>
           </div>
-          {/* Armar todo — glass green button */}
+
+          {/* Armar todo button in header */}
           <button
             onClick={handleArmAll}
             disabled={isPending}
-            className="glass-btn-green flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={cn(
+              "px-4 py-2 text-xs font-semibold rounded-[10px] transition-all active:scale-95",
+              "bg-emerald-500 text-white hover:bg-emerald-600",
+              "dark:glass-green dark:text-emerald-300 dark:hover:bg-emerald-500/15",
+              "disabled:opacity-50 disabled:cursor-not-allowed"
+            )}
           >
-            {isArming ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <ShieldCheck className="h-3.5 w-3.5" />}
-            Armar todo
+            {isArming ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Armar todo"}
           </button>
         </div>
 
@@ -111,71 +119,115 @@ export function ArmPanel({ zones }: Props) {
                 onClick={() => toggleSelect(zone.id)}
                 disabled={isPending}
                 className={cn(
-                  "relative flex items-center gap-3 rounded-[14px] border p-3 text-left transition-all duration-150 focus:outline-none",
+                  "relative flex items-center gap-3 rounded-[14px] p-3 text-left transition-all duration-150 focus:outline-none",
+                  /* Light mode */
                   isSelected
-                    ? "bg-white/[0.04] border-white/[0.07] border-t-white/[0.1]"
-                    : "bg-white/[0.015] border-white/[0.04] border-t-white/[0.06] hover:bg-white/[0.03]"
+                    ? "border-2 border-blue-400 bg-blue-50 ring-2 ring-blue-300/20"
+                    : zone.is_enabled
+                    ? "border border-emerald-200 bg-emerald-50/60 hover:border-emerald-300"
+                    : "border border-slate-200 bg-white hover:border-slate-300",
+                  /* Dark mode */
+                  isSelected
+                    ? "dark:bg-white/[0.05] dark:border dark:border-white/[0.12]"
+                    : zone.is_enabled
+                    ? "dark:glass-item dark:border-emerald-500/15"
+                    : "dark:glass-item dark:opacity-50"
                 )}
               >
-                {/* Top shine inner */}
-                <div className="absolute top-px left-2.5 right-2.5 h-px bg-gradient-to-r from-transparent via-white/[0.035] to-transparent pointer-events-none" />
-
-                {/* Toggle visual */}
+                {/* Toggle visual (like the mockup) */}
                 <div className={cn(
-                  "w-[44px] h-[26px] rounded-[13px] relative flex-shrink-0 transition-colors",
-                  isSelected ? "bg-emerald-500" : "bg-white/10"
+                  "relative h-6 w-11 shrink-0 rounded-full transition-all",
+                  zone.is_enabled
+                    ? "bg-emerald-500"
+                    : "dark:bg-white/[0.10] bg-slate-200"
                 )}>
                   <div className={cn(
-                    "w-[22px] h-[22px] rounded-full absolute top-[2px] transition-all",
-                    isSelected ? "right-[2px] bg-white" : "left-[2px] bg-white/30"
+                    "absolute top-1 h-4 w-4 rounded-full transition-all",
+                    zone.is_enabled
+                      ? "right-1 bg-white"
+                      : "left-1 dark:bg-white/30 bg-white"
                   )} />
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <div className={cn(
-                    "text-[13px] font-medium truncate",
-                    isSelected ? "text-foreground" : "text-foreground/40"
-                  )}>
-                    #{zone.zone_number} {zone.name}
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-bold dark:text-[#475569] text-muted-foreground">
+                      #{zone.zone_number}
+                    </span>
+                    {zone.trigger_local_alarm && (
+                      <Volume2 className="h-3 w-3 text-amber-500" />
+                    )}
                   </div>
-                  <div className={cn(
-                    "text-[11px]",
-                    isSelected ? "text-muted-foreground" : "text-foreground/20"
+                  <p className={cn(
+                    "text-sm font-medium truncate",
+                    zone.is_enabled
+                      ? "dark:text-[#E2E8F0] text-foreground"
+                      : "dark:text-[#475569] text-muted-foreground"
                   )}>
-                    {zone.is_enabled ? "Armada" : "Desarmada"}
-                    {zone.trigger_local_alarm && " · 🔊"}
-                  </div>
+                    {zone.name}
+                  </p>
                 </div>
 
-                {isSelected && <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0" strokeWidth={2.5} />}
+                {/* Selection indicator */}
+                <div className={cn(
+                  "flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-all",
+                  isSelected
+                    ? "border-blue-500 bg-blue-500"
+                    : "dark:border-white/[0.12] border-slate-300 bg-transparent"
+                )}>
+                  {isSelected && <Check className="h-3 w-3 text-white" strokeWidth={3} />}
+                </div>
               </button>
             );
           })}
         </div>
 
-        {/* Bottom action buttons */}
-        <div className="flex gap-2 p-3 pt-0">
+        {/* Bottom action row */}
+        <div className={cn(
+          "flex gap-2 px-3 pb-3"
+        )}>
           <button
             onClick={handleArmSelected}
             disabled={isPending || selected.size === 0}
-            className={cn("glass-btn-green flex-1 flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed")}
+            className={cn(
+              "flex flex-1 items-center justify-center gap-1.5 rounded-[12px] py-2.5 text-sm font-semibold transition-all active:scale-95",
+              selected.size > 0
+                ? "dark:glass-green dark:text-emerald-300 bg-emerald-500 text-white hover:bg-emerald-600"
+                : "dark:glass-item dark:text-[#64748B] bg-slate-100 text-slate-400 cursor-not-allowed",
+              "disabled:opacity-60"
+            )}
           >
-            {isArming ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Shield className="h-3.5 w-3.5" />}
-            {selected.size > 0 ? `Armar seleccionadas (${selected.size})` : "Armar seleccionadas"}
+            <Shield className="h-3.5 w-3.5" />
+            {selected.size > 0 ? `Armar selección (${selected.size})` : "Armar selección"}
           </button>
+
           <button
             onClick={handleDisarm}
             disabled={isPending || armedCount === 0}
-            className="glass-btn-red flex-1 flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed"
+            className={cn(
+              "flex flex-1 items-center justify-center gap-1.5 rounded-[12px] py-2.5 text-sm font-semibold transition-all active:scale-95",
+              armedCount > 0
+                ? "dark:glass-red dark:text-red-300 bg-red-500 text-white hover:bg-red-600"
+                : "dark:glass-item dark:text-[#64748B] bg-slate-100 text-slate-400 cursor-not-allowed",
+              "disabled:opacity-60"
+            )}
           >
-            {isDisarming ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <ShieldOff className="h-3.5 w-3.5" />}
+            {isDisarming ? (
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            ) : (
+              <ShieldOff className="h-3.5 w-3.5" />
+            )}
             Desarmar todo
           </button>
         </div>
       </div>
 
       {error && (
-        <p className="rounded-xl border border-red-500/20 bg-red-500/[0.06] px-3 py-2 text-xs text-red-400">
+        <p className={cn(
+          "rounded-lg border px-3 py-2 text-xs",
+          "border-red-200 bg-red-50 text-red-600",
+          "dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300"
+        )}>
           {error}
         </p>
       )}

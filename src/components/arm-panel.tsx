@@ -54,9 +54,13 @@ export function ArmPanel({ zones }: Props) {
               <button
                 onClick={(e) => { e.stopPropagation(); handleToggleZone(zone); }}
                 disabled={isPending}
-                className={cn("relative h-[26px] w-[44px] rounded-full shrink-0 transition-all cursor-pointer", zone.is_enabled ? "bg-emerald-500" : "bg-slate-200 dark:bg-white/[0.10]")}
+                data-glass={zone.is_enabled ? undefined : "toggle-track"}
+                className={cn("relative h-[26px] w-[44px] rounded-full shrink-0 transition-all cursor-pointer", zone.is_enabled ? "bg-emerald-500" : "")}
               >
-                <div className={cn("absolute top-[2px] h-[22px] w-[22px] rounded-full transition-all shadow-sm", zone.is_enabled ? "right-[2px] bg-white" : "left-[2px] bg-white dark:bg-white/30")} />
+                <div
+                  data-glass={zone.is_enabled ? undefined : "toggle-thumb"}
+                  className={cn("absolute top-[2px] h-[22px] w-[22px] rounded-full transition-all", zone.is_enabled ? "right-[2px] bg-white shadow-sm" : "left-[2px]")}
+                />
               </button>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">

@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* Tell Tailwind v4 to use the .dark CLASS (not media query) for dark: utilities */
 @variant dark (&:where(.dark, .dark *));
 
 /* ── Light mode ─────────────────────────────────────────── */
@@ -26,21 +25,21 @@
   --ring:                  #22c55e;
 }
 
-/* ── Dark mode – Liquid Glass ──────────────────────────── */
+/* ── Dark mode – Liquid Glass base ─────────────────────── */
 .dark {
   --background:            #020204;
   --foreground:            #E2E8F0;
-  --card:                  rgba(255,255,255,0.025);
+  --card:                  #020204;
   --card-foreground:       #E2E8F0;
   --popover:               #0d1117;
   --popover-foreground:    #E2E8F0;
   --primary:               #22C55E;
   --primary-foreground:    #020204;
-  --secondary:             rgba(255,255,255,0.04);
+  --secondary:             #0d1117;
   --secondary-foreground:  #E2E8F0;
-  --muted:                 rgba(255,255,255,0.04);
+  --muted:                 #0d1117;
   --muted-foreground:      #64748B;
-  --accent:                rgba(255,255,255,0.06);
+  --accent:                #0d1117;
   --accent-foreground:     #E2E8F0;
   --destructive:           #EF4444;
   --destructive-foreground:#ffffff;
@@ -80,176 +79,218 @@
   }
 }
 
-/* ── Liquid Glass utilities ────────────────────────────── */
+/* ── Animations ───────────────────────────────────────── */
+@keyframes pulse-once {
+  0%   { background-color: color-mix(in srgb, var(--primary) 12%, transparent); }
+  100% { background-color: transparent; }
+}
+.animate-pulse-once {
+  animation: pulse-once 0.8s ease-out forwards;
+}
 
-/* Outer floating panel (sidebar, main content area) */
-.glass-panel {
+/* ── Liquid Glass: applied via data attributes ──────────── */
+
+/* Panel – outermost container (sidebar, main) */
+[data-glass="panel"] {
   background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-top-color: rgba(255,255,255,0.12);
-  border-left-color: rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-top-color: rgba(255,255,255,0.10) !important;
+  border-left-color: rgba(255,255,255,0.08) !important;
   border-radius: 22px;
-  position: relative;
-  overflow: hidden;
 }
-.glass-panel::after {
+[data-glass="panel"]::before {
   content: '';
   position: absolute;
-  top: 1px;
+  top: 0;
   left: 14px;
   right: 14px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
   pointer-events: none;
+  z-index: 5;
 }
 
-/* Inner card — slightly more subtle */
-.glass-card {
-  background: rgba(255,255,255,0.025);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-top-color: rgba(255,255,255,0.09);
-  border-radius: 18px;
-  position: relative;
-  overflow: hidden;
+/* Card */
+[data-glass="card"] {
+  background: rgba(255,255,255,0.025) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-top-color: rgba(255,255,255,0.10) !important;
+  border-radius: 22px;
 }
-.glass-card::after {
+[data-glass="card"]::before {
   content: '';
   position: absolute;
-  top: 1px;
-  left: 14px;
-  right: 14px;
+  top: 0;
+  left: 16px;
+  right: 16px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
   pointer-events: none;
+  z-index: 5;
 }
 
-/* Micro card (zone rows, list items) */
-.glass-item {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-top-color: rgba(255,255,255,0.07);
+/* Item (zone row, list item) */
+[data-glass="item"] {
+  background: rgba(255,255,255,0.025) !important;
+  border: 1px solid rgba(255,255,255,0.05) !important;
+  border-top-color: rgba(255,255,255,0.07) !important;
   border-radius: 14px;
-  position: relative;
-  overflow: hidden;
 }
-.glass-item::after {
+[data-glass="item"]::before {
   content: '';
   position: absolute;
-  top: 1px;
+  top: 0;
   left: 10px;
   right: 10px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.035), transparent);
   pointer-events: none;
+  z-index: 5;
 }
 
-/* Glass button */
-.glass-btn {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-top-color: rgba(255,255,255,0.12);
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-  transition: background 0.15s ease;
+/* Item dimmed (disabled zone) */
+[data-glass="item-dim"] {
+  background: rgba(255,255,255,0.015) !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+  border-top-color: rgba(255,255,255,0.06) !important;
+  border-radius: 14px;
 }
-.glass-btn::after {
+[data-glass="item-dim"]::before {
   content: '';
   position: absolute;
-  top: 1px;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.025), transparent);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Green button */
+[data-glass="green"] {
+  background: rgba(34,197,94,0.08) !important;
+  border: 1px solid rgba(34,197,94,0.18) !important;
+  border-top-color: rgba(34,197,94,0.25) !important;
+  border-radius: 12px;
+}
+[data-glass="green"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
   left: 8px;
   right: 8px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  background: linear-gradient(90deg, transparent, rgba(134,239,172,0.10), transparent);
   pointer-events: none;
-}
-.glass-btn:hover {
-  background: rgba(255,255,255,0.07);
+  z-index: 5;
 }
 
-/* Glass green (primary action) */
-.glass-green {
-  background: rgba(34,197,94,0.10);
-  border: 1px solid rgba(34,197,94,0.22);
-  border-top-color: rgba(34,197,94,0.35);
+/* Green strong (header button) */
+[data-glass="green-strong"] {
+  background: rgba(34,197,94,0.12) !important;
+  border: 1px solid rgba(34,197,94,0.25) !important;
+  border-top-color: rgba(34,197,94,0.38) !important;
   border-radius: 12px;
-  position: relative;
-  overflow: hidden;
 }
-.glass-green::after {
+[data-glass="green-strong"]::before {
   content: '';
   position: absolute;
-  top: 1px;
+  top: 0;
   left: 8px;
   right: 8px;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(134,239,172,0.15), transparent);
   pointer-events: none;
+  z-index: 5;
 }
 
-/* Glass red (destructive) */
-.glass-red {
-  background: rgba(239,68,68,0.08);
-  border: 1px solid rgba(239,68,68,0.18);
-  border-top-color: rgba(239,68,68,0.28);
+/* Neutral button */
+[data-glass="btn"] {
+  background: rgba(255,255,255,0.025) !important;
+  border: 1px solid rgba(255,255,255,0.05) !important;
+  border-top-color: rgba(255,255,255,0.07) !important;
   border-radius: 12px;
-  position: relative;
-  overflow: hidden;
 }
-
-/* Nav item active (glass highlight) */
-.glass-nav-active {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-top-color: rgba(255,255,255,0.11);
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-}
-.glass-nav-active::after {
+[data-glass="btn"]::before {
   content: '';
   position: absolute;
-  top: 1px;
+  top: 0;
   left: 8px;
   right: 8px;
   height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Sensor banner green */
+[data-glass="banner-ok"] {
+  background: rgba(34,197,94,0.04) !important;
+  border: 1px solid rgba(34,197,94,0.08) !important;
+  border-top-color: rgba(34,197,94,0.13) !important;
+  border-radius: 16px;
+}
+
+/* Sensor banner alert */
+[data-glass="banner-alert"] {
+  background: rgba(239,68,68,0.06) !important;
+  border: 1px solid rgba(239,68,68,0.12) !important;
+  border-top-color: rgba(239,68,68,0.18) !important;
+  border-radius: 16px;
+}
+
+/* Nav active item */
+[data-glass="nav"] {
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  border-top-color: rgba(255,255,255,0.10) !important;
+  border-radius: 10px;
+}
+
+/* Widget card (notificaciones, llamadas) */
+[data-glass="widget"] {
+  background: rgba(255,255,255,0.025) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-top-color: rgba(255,255,255,0.09) !important;
+  border-radius: 18px;
+}
+[data-glass="widget"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
   pointer-events: none;
+  z-index: 5;
 }
 
-/* Orb backgrounds */
-.orb-blue {
+/* Activity card */
+[data-glass="activity"] {
+  background: rgba(255,255,255,0.02) !important;
+  border: 1px solid rgba(255,255,255,0.05) !important;
+  border-top-color: rgba(255,255,255,0.07) !important;
+  border-radius: 18px;
+}
+[data-glass="activity"]::before {
+  content: '';
   position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(100,160,255,0.04), transparent 50%);
-  border-radius: 50%;
+  top: 0;
+  left: 14px;
+  right: 14px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
   pointer-events: none;
-}
-.orb-green {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(34,197,94,0.035), transparent 50%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.orb-purple {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  background: radial-gradient(circle, rgba(180,130,255,0.025), transparent 50%);
-  border-radius: 50%;
-  pointer-events: none;
+  z-index: 5;
 }
 
-/* ── Animations ───────────────────────────────────────── */
-
-@keyframes pulse-once {
-  0%   { background-color: color-mix(in srgb, var(--primary) 12%, transparent); }
-  100% { background-color: transparent; }
+/* Only apply glass in dark mode */
+:root [data-glass] {
+  background: unset !important;
+  border-color: var(--border) !important;
 }
-
-.animate-pulse-once {
-  animation: pulse-once 0.8s ease-out forwards;
+:root [data-glass]::before {
+  display: none;
 }

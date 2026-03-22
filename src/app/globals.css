@@ -140,11 +140,43 @@
     0 0 0 0.5px rgba(255,255,255,0.04) !important;
 }
 
-/* ── Inner elements: NO backdrop-filter, just bg + inset glow ── */
+/* ── Shared blur for all inner glass elements ── */
+:root [data-glass="card"],
+:root [data-glass="item"],
+:root [data-glass="item-dim"],
+:root [data-glass="green-strong"],
+:root [data-glass="green"],
+:root [data-glass="btn"],
+:root [data-glass="btn-red"],
+:root [data-glass="toggle-track"],
+:root [data-glass="banner-ok"],
+:root [data-glass="banner-alert"],
+:root [data-glass="nav"],
+:root [data-glass="widget"],
+:root [data-glass="activity"] {
+  -webkit-backdrop-filter: blur(10px) saturate(1.4) !important;
+  backdrop-filter: blur(10px) saturate(1.4) !important;
+}
+.dark [data-glass="card"],
+.dark [data-glass="item"],
+.dark [data-glass="item-dim"],
+.dark [data-glass="green-strong"],
+.dark [data-glass="green"],
+.dark [data-glass="btn"],
+.dark [data-glass="btn-red"],
+.dark [data-glass="toggle-track"],
+.dark [data-glass="banner-ok"],
+.dark [data-glass="banner-alert"],
+.dark [data-glass="nav"],
+.dark [data-glass="widget"],
+.dark [data-glass="activity"] {
+  -webkit-backdrop-filter: blur(10px) saturate(1.4) !important;
+  backdrop-filter: blur(10px) saturate(1.4) !important;
+}
 
 /* card */
 :root [data-glass="card"] {
-  background: rgba(255,255,255,0.50) !important;
+  background: rgba(255,255,255,0.20) !important;
   border: 1px solid rgba(255,255,255,0.45) !important;
   border-radius: 18px !important;
   box-shadow:
@@ -167,7 +199,7 @@
 /* item */
 :root [data-glass="item"],
 :root [data-glass="item-dim"] {
-  background: rgba(255,255,255,0.40) !important;
+  background: rgba(255,255,255,0.15) !important;
   border: 1px solid rgba(255,255,255,0.4) !important;
   border-radius: 12px !important;
   box-shadow:
@@ -192,7 +224,7 @@
 
 /* green buttons */
 :root [data-glass="green-strong"] {
-  background: rgba(34,197,94,0.14) !important;
+  background: rgba(34,197,94,0.10) !important;
   border: 1px solid rgba(34,197,94,0.22) !important;
   border-radius: 12px !important;
   box-shadow:
@@ -201,7 +233,7 @@
     0 2px 8px rgba(34,197,94,0.08) !important;
 }
 .dark [data-glass="green-strong"] {
-  background: rgba(34,197,94,0.16) !important;
+  background: rgba(34,197,94,0.10) !important;
   border: 1px solid rgba(34,197,94,0.30) !important;
   border-radius: 12px !important;
   box-shadow:
@@ -210,13 +242,13 @@
     0 2px 8px rgba(34,197,94,0.10) !important;
 }
 :root [data-glass="green-strong"]:hover {
-  background: rgba(34,197,94,0.22) !important;
+  background: rgba(34,197,94,0.18) !important;
 }
 .dark [data-glass="green-strong"]:hover {
-  background: rgba(34,197,94,0.24) !important;
+  background: rgba(34,197,94,0.18) !important;
 }
 :root [data-glass="green"] {
-  background: rgba(34,197,94,0.10) !important;
+  background: rgba(34,197,94,0.06) !important;
   border: 1px solid rgba(34,197,94,0.18) !important;
   border-radius: 12px !important;
   box-shadow:
@@ -224,7 +256,7 @@
     -1px -1px 1px 0 rgba(134,239,172,0.10) inset !important;
 }
 .dark [data-glass="green"] {
-  background: rgba(34,197,94,0.12) !important;
+  background: rgba(34,197,94,0.08) !important;
   border: 1px solid rgba(34,197,94,0.24) !important;
   border-radius: 12px !important;
   box-shadow:
@@ -234,7 +266,7 @@
 
 /* generic button */
 :root [data-glass="btn"] {
-  background: rgba(255,255,255,0.50) !important;
+  background: rgba(255,255,255,0.18) !important;
   border: 1px solid rgba(255,255,255,0.50) !important;
   border-radius: 12px !important;
   box-shadow:
@@ -243,7 +275,7 @@
     0 2px 8px rgba(0,0,0,0.04) !important;
 }
 .dark [data-glass="btn"] {
-  background: rgba(255,255,255,0.06) !important;
+  background: rgba(255,255,255,0.04) !important;
   border: 1px solid rgba(255,255,255,0.10) !important;
   border-radius: 12px !important;
   box-shadow:
@@ -252,15 +284,15 @@
     0 2px 8px rgba(0,0,0,0.12) !important;
 }
 :root [data-glass="btn"]:hover {
-  background: rgba(255,255,255,0.62) !important;
+  background: rgba(255,255,255,0.30) !important;
 }
 .dark [data-glass="btn"]:hover {
-  background: rgba(255,255,255,0.09) !important;
+  background: rgba(255,255,255,0.08) !important;
 }
 
 /* red button */
 :root [data-glass="btn-red"] {
-  background: rgba(239,68,68,0.10) !important;
+  background: rgba(239,68,68,0.06) !important;
   border: 1px solid rgba(239,68,68,0.20) !important;
   border-radius: 12px !important;
   box-shadow:
@@ -269,7 +301,7 @@
     0 2px 8px rgba(239,68,68,0.06) !important;
 }
 .dark [data-glass="btn-red"] {
-  background: rgba(239,68,68,0.12) !important;
+  background: rgba(239,68,68,0.08) !important;
   border: 1px solid rgba(239,68,68,0.25) !important;
   border-radius: 12px !important;
   box-shadow:
@@ -278,22 +310,22 @@
     0 2px 8px rgba(239,68,68,0.10) !important;
 }
 :root [data-glass="btn-red"]:hover {
-  background: rgba(239,68,68,0.16) !important;
+  background: rgba(239,68,68,0.12) !important;
 }
 .dark [data-glass="btn-red"]:hover {
-  background: rgba(239,68,68,0.18) !important;
+  background: rgba(239,68,68,0.14) !important;
 }
 
 /* ── Toggle / switch glass track ── */
 :root [data-glass="toggle-track"] {
-  background: rgba(120,130,150,0.18) !important;
+  background: rgba(120,130,150,0.14) !important;
   border: 1px solid rgba(0,0,0,0.08) !important;
   box-shadow:
     0 1px 3px rgba(0,0,0,0.10) inset,
     0 1px 2px rgba(0,0,0,0.06) !important;
 }
 .dark [data-glass="toggle-track"] {
-  background: rgba(255,255,255,0.08) !important;
+  background: rgba(255,255,255,0.06) !important;
   border: 1px solid rgba(255,255,255,0.10) !important;
   box-shadow:
     1px 1px 1px 0 rgba(255,255,255,0.08) inset,
@@ -303,6 +335,8 @@
 :root [data-glass="toggle-thumb"] {
   background: #ffffff !important;
   border: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   box-shadow:
     0 1px 4px rgba(0,0,0,0.14),
     0 0 1px rgba(0,0,0,0.10) !important;
@@ -310,6 +344,8 @@
 .dark [data-glass="toggle-thumb"] {
   background: rgba(255,255,255,0.22) !important;
   border: 1px solid rgba(255,255,255,0.14) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   box-shadow:
     1px 1px 1px 0 rgba(255,255,255,0.22) inset,
     0 2px 6px rgba(0,0,0,0.25) !important;
@@ -317,25 +353,25 @@
 
 /* banners */
 :root [data-glass="banner-ok"] {
-  background: rgba(34,197,94,0.06) !important;
+  background: rgba(34,197,94,0.04) !important;
   border: 1px solid rgba(34,197,94,0.12) !important;
   border-radius: 14px !important;
   box-shadow: 1px 1px 0 0 rgba(134,239,172,0.15) inset !important;
 }
 .dark [data-glass="banner-ok"] {
-  background: rgba(34,197,94,0.05) !important;
+  background: rgba(34,197,94,0.04) !important;
   border: 1px solid rgba(34,197,94,0.1) !important;
   border-radius: 16px !important;
   box-shadow: 1px 1px 0 0 rgba(134,239,172,0.08) inset !important;
 }
 :root [data-glass="banner-alert"] {
-  background: rgba(239,68,68,0.06) !important;
+  background: rgba(239,68,68,0.04) !important;
   border: 1px solid rgba(239,68,68,0.12) !important;
   border-radius: 14px !important;
   box-shadow: 1px 1px 0 0 rgba(252,165,165,0.15) inset !important;
 }
 .dark [data-glass="banner-alert"] {
-  background: rgba(239,68,68,0.06) !important;
+  background: rgba(239,68,68,0.04) !important;
   border: 1px solid rgba(239,68,68,0.14) !important;
   border-radius: 16px !important;
   box-shadow: 1px 1px 0 0 rgba(252,165,165,0.08) inset !important;
@@ -343,13 +379,13 @@
 
 /* nav */
 :root [data-glass="nav"] {
-  background: rgba(0,0,0,0.04) !important;
+  background: rgba(0,0,0,0.03) !important;
   border: 1px solid rgba(255,255,255,0.35) !important;
   border-radius: 10px !important;
   box-shadow: 1px 1px 0 0 rgba(255,255,255,0.3) inset !important;
 }
 .dark [data-glass="nav"] {
-  background: rgba(255,255,255,0.06) !important;
+  background: rgba(255,255,255,0.04) !important;
   border: 1px solid rgba(255,255,255,0.09) !important;
   border-radius: 10px !important;
   box-shadow: 1px 1px 0 0 rgba(255,255,255,0.10) inset !important;
@@ -358,7 +394,7 @@
 /* widget / activity */
 :root [data-glass="widget"],
 :root [data-glass="activity"] {
-  background: rgba(255,255,255,0.25) !important;
+  background: rgba(255,255,255,0.15) !important;
   border: 1px solid rgba(255,255,255,0.45) !important;
   border-radius: 16px !important;
   box-shadow:
@@ -368,7 +404,7 @@
 }
 .dark [data-glass="widget"],
 .dark [data-glass="activity"] {
-  background: rgba(255,255,255,0.035) !important;
+  background: rgba(255,255,255,0.025) !important;
   border: 1px solid rgba(255,255,255,0.09) !important;
   border-radius: 18px !important;
   box-shadow:

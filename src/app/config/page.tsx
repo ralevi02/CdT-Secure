@@ -2,7 +2,8 @@ import { createClient } from "@supabase/supabase-js";
 import { HeartbeatForm } from "@/components/config-form";
 import { ThemeToggle } from "@/components/theme-toggle";
 import type { Config } from "@/lib/supabase";
-import { Timer, Palette, Info, Shield } from "lucide-react";
+import { Timer, Palette, Info } from "lucide-react";
+import { CdtLogo } from "@/components/cdt-logo";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -59,9 +60,7 @@ export default async function ConfigPage() {
         </div>
         <div data-glass="card" className="rounded-xl border bg-card shadow-sm overflow-hidden relative">
           <div className="flex items-center gap-3 px-4 py-4 border-b">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
-              <Shield className="h-5 w-5 text-primary-foreground" />
-            </div>
+            <CdtLogo className="h-10 w-10" />
             <div>
               <p className="font-semibold text-sm">CdT Secure</p>
               <p className="text-xs text-muted-foreground">Sistema de Alarma IoT Serverless</p>

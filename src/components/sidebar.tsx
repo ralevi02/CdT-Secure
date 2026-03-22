@@ -6,9 +6,10 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
-  Shield, LayoutDashboard, MapPin, Bell, Settings, Terminal, History, Phone,
+  LayoutDashboard, MapPin, Bell, Settings, Terminal, History, Phone,
   ChevronLeft, ChevronRight, X, Menu,
 } from "lucide-react";
+import { CdtLogo } from "@/components/cdt-logo";
 
 const MAIN_NAV = [
   { href: "/",              label: "Dashboard",      icon: LayoutDashboard },
@@ -48,12 +49,7 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
 }
 
 function GlassLogo() {
-  return (
-    <div className={cn("flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-[8px] relative overflow-hidden", "bg-emerald-50 dark:bg-emerald-500/[0.15] border border-emerald-200 dark:border-emerald-500/[0.25]")}>
-      <div className="absolute top-0 left-[15%] w-[70%] h-[50%] bg-[radial-gradient(ellipse_at_top,rgba(134,239,172,0.15),transparent_80%)]" />
-      <Shield className="relative z-10 h-3 w-3 text-emerald-600 dark:text-emerald-400" />
-    </div>
-  );
+  return <CdtLogo className="h-7 w-7 shrink-0" />;
 }
 
 export function DesktopSidebar() {

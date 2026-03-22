@@ -124,8 +124,8 @@ export function DashboardClient({ initialZones, initialDevice, initialLogs, hear
           </div>
         </Link>
         <Link href="/llamadas" data-glass="widget" className="relative overflow-hidden flex items-center gap-3 rounded-[18px] p-3.5 border bg-card hover:bg-muted/40 transition-colors">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-muted border border-border/50">
-            <Phone className="h-4 w-4 text-muted-foreground" />
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-blue-500/10 border border-blue-500/20">
+            <Phone className="h-4 w-4 text-blue-500" />
           </div>
           <div>
             <p className="text-[13px] font-medium">Llamadas</p>

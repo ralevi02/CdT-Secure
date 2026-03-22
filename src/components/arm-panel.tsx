@@ -67,7 +67,7 @@ export function ArmPanel({ zones }: Props) {
                   <span className={cn("text-[13px] font-medium truncate", !zone.is_enabled && "dark:text-white/[0.35] text-muted-foreground")}>
                     #{zone.zone_number} {zone.name}
                   </span>
-                  {zone.trigger_local_alarm && <Volume2 className="h-3 w-3 text-amber-500 shrink-0" />}
+                  {zone.trigger_local_alarm && <Volume2 className="h-3 w-3 text-blue-500 shrink-0" />}
                 </div>
                 <p className={cn("text-[11px]", zone.is_enabled ? "text-muted-foreground" : "dark:text-white/[0.10] text-muted-foreground/50")}>
                   {zone.is_enabled ? "Armada" : "Desarmada"}

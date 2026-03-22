@@ -34,14 +34,14 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
       onClick={onClick}
       {...(isActive ? { "data-glass": "nav" } : {})}
       className={cn(
-        "relative flex items-center gap-[10px] rounded-[10px] px-[10px] py-[8px] text-xs transition-all overflow-hidden",
-        collapsed && "justify-center px-2",
+        "relative flex items-center gap-2.5 rounded-[10px] px-2.5 py-2 text-xs transition-all overflow-hidden",
+        collapsed && "justify-center px-0 py-2",
         isActive
           ? "font-medium text-foreground bg-primary/10"
           : "text-muted-foreground hover:text-foreground"
       )}
     >
-      <Icon className="h-[15px] w-[15px] shrink-0" />
+      <Icon className={cn("shrink-0", collapsed ? "h-[18px] w-[18px]" : "h-4 w-4")} />
       {!collapsed && <span className="whitespace-nowrap relative z-10">{label}</span>}
     </Link>
   );
@@ -49,9 +49,9 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
 
 function GlassLogo() {
   return (
-    <div className={cn("flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[9px] relative overflow-hidden", "bg-emerald-50 dark:bg-emerald-500/[0.15] border border-emerald-200 dark:border-emerald-500/[0.25]")}>
+    <div className={cn("flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-[8px] relative overflow-hidden", "bg-emerald-50 dark:bg-emerald-500/[0.15] border border-emerald-200 dark:border-emerald-500/[0.25]")}>
       <div className="absolute top-0 left-[15%] w-[70%] h-[50%] bg-[radial-gradient(ellipse_at_top,rgba(134,239,172,0.15),transparent_80%)]" />
-      <Shield className="relative z-10 h-[13px] w-[13px] text-emerald-600 dark:text-emerald-400" />
+      <Shield className="relative z-10 h-3 w-3 text-emerald-600 dark:text-emerald-400" />
     </div>
   );
 }
@@ -68,23 +68,23 @@ export function DesktopSidebar() {
     setCollapsed((prev) => { localStorage.setItem("sidebar-collapsed", String(!prev)); return !prev; });
 
   return (
-    <div className={cn("relative hidden md:flex shrink-0 transition-all duration-300 ease-in-out", collapsed ? "w-16" : "w-52")}>
+    <div className={cn("relative hidden md:flex shrink-0 transition-all duration-300 ease-in-out", collapsed ? "w-[52px]" : "w-52")}>
       <aside
         data-glass="panel"
         className="flex flex-col w-full h-full bg-card border-r overflow-hidden"
       >
-        <div className={cn("flex h-14 items-center gap-2 overflow-hidden px-[10px] border-b border-border/50", collapsed && "justify-center px-0")}>
+        <div className={cn("flex h-12 items-center gap-2 overflow-hidden px-2.5 border-b border-border/50", collapsed && "justify-center px-0")}>
           <GlassLogo />
           {!collapsed && <span className="font-semibold text-sm">CdT Secure</span>}
         </div>
 
-        <nav className="flex flex-col gap-[2px] p-[10px] flex-1">
+        <nav className="flex flex-col gap-[3px] p-2 flex-1">
           {MAIN_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
-          <div className={cn("my-3 border-t border-border/50", collapsed && "mx-1")} />
+          <div className={cn("my-2 border-t border-border/50", collapsed && "mx-1")} />
           {SETTINGS_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
         </nav>
 
-        <div className={cn("flex items-center border-t border-border/50 p-2", collapsed ? "justify-center" : "justify-between px-[10px]")}>
+        <div className={cn("flex items-center border-t border-border/50 p-2", collapsed ? "justify-center" : "justify-between px-2.5")}>
           {!collapsed && <span className="text-xs text-muted-foreground">Tema</span>}
           <ThemeToggle />
         </div>
@@ -95,7 +95,7 @@ export function DesktopSidebar() {
         onClick={toggle}
         aria-label={collapsed ? "Expandir" : "Colapsar"}
         data-glass="btn"
-        className="absolute -right-3 top-16 z-20 flex h-6 w-6 items-center justify-center rounded-full transition-all hover:scale-105 active:scale-95 relative overflow-hidden"
+        className="absolute -right-3 top-14 z-20 flex h-6 w-6 items-center justify-center rounded-full transition-all hover:scale-105 active:scale-95 overflow-hidden"
       >
         {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
       </button>

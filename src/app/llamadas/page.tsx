@@ -1,13 +1,15 @@
 import { createClient } from "@supabase/supabase-js";
 import { Phone } from "lucide-react";
 import type { Config, NotificationContact } from "@/lib/supabase";
-import { TwilioConfigForm } from "@/components/twilio-config-form";
+import { TwilioCallsToggle, TwilioConfigForm } from "@/components/twilio-config-form";
 import { CallContactCard } from "@/components/call-contact-card";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
+
+export const revalidate = 0;
 
 export default async function LlamadasPage() {
   const [configRes, contactsRes] = await Promise.all([
@@ -37,6 +39,9 @@ export default async function LlamadasPage() {
           <p className="text-sm text-muted-foreground">Alertas telefónicas vía Twilio</p>
         </div>
       </div>
+
+      {/* Master toggle */}
+      <TwilioCallsToggle config={config} />
 
       {/* Twilio credentials */}
       <TwilioConfigForm config={config} />

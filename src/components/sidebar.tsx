@@ -34,7 +34,7 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
       onClick={onClick}
       {...(isActive ? { "data-glass": "nav" } : {})}
       className={cn(
-        "relative flex items-center gap-2.5 rounded-[10px] px-2.5 py-2 text-xs transition-all overflow-hidden",
+        "relative flex items-center gap-2.5 rounded-[10px] px-2.5 py-2 text-sm transition-all overflow-hidden",
         collapsed && "justify-center px-0 py-2",
         isActive
           ? "font-medium text-foreground bg-primary/10"

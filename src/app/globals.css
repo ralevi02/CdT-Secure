@@ -140,19 +140,8 @@
     0 0 0 0.5px rgba(255,255,255,0.04) !important;
 }
 
-/* ── Blur only on large containers (perf-safe) ── */
-:root [data-glass="card"],
-:root [data-glass="widget"],
-:root [data-glass="activity"] {
-  -webkit-backdrop-filter: blur(10px) saturate(1.4) !important;
-  backdrop-filter: blur(10px) saturate(1.4) !important;
-}
-.dark [data-glass="card"],
-.dark [data-glass="widget"],
-.dark [data-glass="activity"] {
-  -webkit-backdrop-filter: blur(10px) saturate(1.4) !important;
-  backdrop-filter: blur(10px) saturate(1.4) !important;
-}
+/* ── backdrop-filter only on panel/panel-nav (perf-safe) ── */
+/* Inner elements rely on translucent bg + inset shadows    */
 
 /* card */
 :root [data-glass="card"] {
@@ -315,8 +304,6 @@
 :root [data-glass="toggle-thumb"] {
   background: #ffffff !important;
   border: none !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
   box-shadow:
     0 1px 4px rgba(0,0,0,0.14),
     0 0 1px rgba(0,0,0,0.10) !important;
@@ -324,8 +311,6 @@
 .dark [data-glass="toggle-thumb"] {
   background: rgba(255,255,255,0.22) !important;
   border: 1px solid rgba(255,255,255,0.14) !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
   box-shadow:
     1px 1px 1px 0 rgba(255,255,255,0.22) inset,
     0 2px 6px rgba(0,0,0,0.25) !important;

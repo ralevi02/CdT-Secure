@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { Phone } from "lucide-react";
+import Link from "next/link";
 import type { Config, NotificationContact } from "@/lib/supabase";
 import { TwilioCallsToggle, TwilioConfigForm } from "@/components/twilio-config-form";
 import { CallContactCard } from "@/components/call-contact-card";
@@ -31,9 +32,9 @@ export default async function LlamadasPage() {
     <div className="flex flex-col gap-6 pb-8">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div data-glass="item" className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/40 relative">
+        <Link href="/" data-glass="item" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/40 relative">
           <Phone className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-        </div>
+        </Link>
         <div>
           <h1 className="text-xl font-bold">Llamadas</h1>
           <p className="text-sm text-muted-foreground">Alertas telefónicas vía Twilio</p>

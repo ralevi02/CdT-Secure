@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import {
   Terminal,
   ChevronDown,
@@ -101,9 +102,9 @@ export default function DevPage() {
     <div className="flex flex-col gap-6 pb-8">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div data-glass="item" className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/40 relative">
+        <Link href="/" data-glass="item" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/40 relative">
           <Terminal className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-        </div>
+        </Link>
         <div>
           <h1 className="text-xl font-bold">Developer</h1>
           <p className="text-sm text-muted-foreground">Documentación y tester de API</p>

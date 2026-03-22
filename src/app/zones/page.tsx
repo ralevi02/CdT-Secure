@@ -3,6 +3,7 @@ import { CreateZoneForm } from "@/components/create-zone-form";
 import { ZoneCard } from "@/components/zone-card";
 import type { Zone } from "@/lib/supabase";
 import { MapPin } from "lucide-react";
+import Link from "next/link";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -22,9 +23,9 @@ export default async function ZonesPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
-        <div data-glass="item" className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/40 relative">
+        <Link href="/" data-glass="item" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/40 relative">
           <MapPin className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-        </div>
+        </Link>
         <div>
           <h1 className="text-xl font-bold">Zonas</h1>
           <p className="text-sm text-muted-foreground">Administra las zonas del sistema</p>

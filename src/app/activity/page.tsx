@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { ActivityLog } from "@/components/activity-log";
 import { History } from "lucide-react";
+import Link from "next/link";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -58,9 +59,9 @@ export default async function ActivityPage({
   return (
     <div className="flex flex-col gap-6 pb-8">
       <div className="flex items-center gap-3">
-        <div data-glass="item" className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 relative">
+        <Link href="/" data-glass="item" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 relative">
           <History className="h-5 w-5 text-primary" />
-        </div>
+        </Link>
         <div>
           <h1 className="text-xl font-bold">Actividad</h1>
           <p className="text-sm text-muted-foreground">Historial de eventos del sistema</p>

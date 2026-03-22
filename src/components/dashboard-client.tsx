@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { DeviceStatusBadge } from "@/components/device-status-badge";
 import { ArmPanel } from "@/components/arm-panel";
-import { Activity, ShieldCheck, ArrowRight, Wifi, Phone } from "lucide-react";
+import { Activity, ShieldCheck, ArrowRight, Wifi, Phone, LayoutDashboard } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import type { Zone, DeviceStatus } from "@/lib/supabase";
@@ -70,7 +70,11 @@ export function DashboardClient({ initialZones, initialDevice, initialLogs, hear
     <div className="flex flex-col gap-2.5">
       {/* Header */}
       <div className="flex items-start justify-between">
-        <div>
+        <div className="flex items-center gap-3">
+          <Link href="/" data-glass="item" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/40 relative">
+            <LayoutDashboard className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+          </Link>
+          <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>
             {rtStatus === "live" && (
@@ -85,6 +89,7 @@ export function DashboardClient({ initialZones, initialDevice, initialLogs, hear
             )}
           </div>
           <p className="text-xs text-muted-foreground mt-0.5">Estado en tiempo real</p>
+          </div>
         </div>
         <DeviceStatusBadge lastSeen={device?.last_seen ?? null} heartbeatTimeoutMins={heartbeatTimeout} />
       </div>

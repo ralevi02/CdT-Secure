@@ -114,6 +114,32 @@
     0 0 0 0.5px rgba(255,255,255,0.06) !important;
 }
 
+/* ── Popup / overlay — has blur because it floats over content ── */
+:root [data-glass="popup"] {
+  background: rgba(255,255,255,0.18) !important;
+  border: 1px solid rgba(255,255,255,0.45) !important;
+  border-radius: 18px !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5) !important;
+  backdrop-filter: blur(16px) saturate(1.5) !important;
+  box-shadow:
+    1px 1px 1px 0 rgba(255,255,255,0.55) inset,
+    -1px -1px 1px 0 rgba(255,255,255,0.30) inset,
+    0 8px 32px rgba(0,0,0,0.08),
+    0 0 0 0.5px rgba(255,255,255,0.2) !important;
+}
+.dark [data-glass="popup"] {
+  background: rgba(15,15,25,0.35) !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  border-radius: 18px !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5) !important;
+  backdrop-filter: blur(16px) saturate(1.5) !important;
+  box-shadow:
+    1px 1px 1px 0 rgba(255,255,255,0.12) inset,
+    -1px -1px 1px 0 rgba(255,255,255,0.06) inset,
+    0 8px 32px rgba(0,0,0,0.25),
+    0 0 0 0.5px rgba(255,255,255,0.05) !important;
+}
+
 /* ── Mobile navbar — subtle frosted glass ── */
 :root [data-glass="panel-nav"] {
   background: rgba(255,255,255,0.12) !important;

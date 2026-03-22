@@ -116,11 +116,11 @@
 
 /* ── Mobile navbar — frosted glass with visible blur ── */
 :root [data-glass="panel-nav"] {
-  background: rgba(255, 255, 255, 0.183) !important;
+  background: rgba(255, 255, 255, 0.172) !important;
   border: 1px solid rgba(255,255,255,0.55) !important;
   border-radius: 22px !important;
   -webkit-backdrop-filter: blur(50px) saturate(1.8) brightness(1.1) !important;
-  backdrop-filter: blur(50px) saturate(1.8) brightness(1.1) !important;
+  backdrop-filter: blur(10px) saturate(1.8) brightness(1.1) !important;
   box-shadow:
     1px 1px 1px 0 rgba(255,255,255,0.60) inset,
     -1px -1px 1px 0 rgba(255,255,255,0.35) inset,
@@ -128,11 +128,11 @@
     0 0 0 0.5px rgba(255,255,255,0.30) !important;
 }
 .dark [data-glass="panel-nav"] {
-  background: rgba(15,15,25,0.30) !important;
+  background: rgba(15, 15, 25, 0.172) !important;
   border: 1px solid rgba(255,255,255,0.12) !important;
   border-radius: 22px !important;
   -webkit-backdrop-filter: blur(50px) saturate(1.8) brightness(1.1) !important;
-  backdrop-filter: blur(50px) saturate(1.8) brightness(1.1) !important;
+  backdrop-filter: blur(10px) saturate(1.8) brightness(1.1) !important;
   box-shadow:
     1px 1px 1px 0 rgba(255,255,255,0.12) inset,
     -1px -1px 1px 0 rgba(255,255,255,0.06) inset,

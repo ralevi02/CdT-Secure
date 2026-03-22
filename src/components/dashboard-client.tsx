@@ -71,8 +71,8 @@ export function DashboardClient({ initialZones, initialDevice, initialLogs, hear
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
-          <Link href="/" data-glass="item" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/40 relative">
-            <LayoutDashboard className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+          <Link href="/" data-glass="item" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800/40 relative">
+            <LayoutDashboard className="h-5 w-5 text-slate-600 dark:text-slate-400" />
           </Link>
           <div>
           <div className="flex items-center gap-2">

@@ -35,23 +35,23 @@ export async function sendPushToAll(payload: PushPayload): Promise<PushResult[]>
 
   const body = JSON.stringify(payload);
 
-  const pushOptions: webPush.RequestOptions = {
-    TTL: 60 * 60,
-    urgency: "high",
-    topic: payload.tag || "cdt-alert",
-  };
-
   const results = await Promise.allSettled(
-    subs.map((sub) =>
-      webPush.sendNotification(
+    subs.map((sub) => {
+      const isApple = sub.endpoint.includes("web.push.apple.com");
+      const options: webPush.RequestOptions = {
+        TTL: 60 * 60,
+        urgency: "high",
+        ...(isApple ? {} : { topic: payload.tag || "cdt-alert" }),
+      };
+      return webPush.sendNotification(
         {
           endpoint: sub.endpoint,
           keys: { p256dh: sub.keys_p256dh, auth: sub.keys_auth },
         },
         body,
-        pushOptions
-      )
-    )
+        options
+      );
+    })
   );
 
   const report: PushResult[] = [];

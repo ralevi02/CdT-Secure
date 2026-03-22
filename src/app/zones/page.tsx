@@ -21,11 +21,14 @@ export default async function ZonesPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-xl font-bold">Zonas</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">
-          Administra las zonas del sistema
-        </p>
+      <div className="flex items-center gap-3">
+        <div data-glass="item" className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/40 relative">
+          <MapPin className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+        </div>
+        <div>
+          <h1 className="text-xl font-bold">Zonas</h1>
+          <p className="text-sm text-muted-foreground">Administra las zonas del sistema</p>
+        </div>
       </div>
 
       <CreateZoneForm />

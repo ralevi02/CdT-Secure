@@ -114,32 +114,6 @@
     0 0 0 0.5px rgba(255,255,255,0.06) !important;
 }
 
-/* ── Popup / overlay — has blur because it floats over content ── */
-:root [data-glass="popup"] {
-  background: rgba(255,255,255,0.18) !important;
-  border: 1px solid rgba(255,255,255,0.45) !important;
-  border-radius: 18px !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.5) !important;
-  backdrop-filter: blur(16px) saturate(1.5) !important;
-  box-shadow:
-    1px 1px 1px 0 rgba(255,255,255,0.55) inset,
-    -1px -1px 1px 0 rgba(255,255,255,0.30) inset,
-    0 8px 32px rgba(0,0,0,0.08),
-    0 0 0 0.5px rgba(255,255,255,0.2) !important;
-}
-.dark [data-glass="popup"] {
-  background: rgba(15,15,25,0.35) !important;
-  border: 1px solid rgba(255,255,255,0.10) !important;
-  border-radius: 18px !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.5) !important;
-  backdrop-filter: blur(16px) saturate(1.5) !important;
-  box-shadow:
-    1px 1px 1px 0 rgba(255,255,255,0.12) inset,
-    -1px -1px 1px 0 rgba(255,255,255,0.06) inset,
-    0 8px 32px rgba(0,0,0,0.25),
-    0 0 0 0.5px rgba(255,255,255,0.05) !important;
-}
-
 /* ── Mobile navbar — subtle frosted glass ── */
 :root [data-glass="panel-nav"] {
   background: rgba(255,255,255,0.12) !important;
@@ -166,8 +140,34 @@
     0 0 0 0.5px rgba(255,255,255,0.04) !important;
 }
 
-/* ── backdrop-filter only on panel/panel-nav (perf-safe) ── */
-/* Inner elements rely on translucent bg + inset shadows    */
+/* ── backdrop-filter only on panel/panel-nav + overlays (perf-safe) ── */
+/* Inner scrolling elements rely on translucent bg + inset shadows     */
+
+/* popover — for dropdowns/overlays that float above content */
+:root [data-glass="popover"] {
+  background: rgba(255,255,255,0.18) !important;
+  border: 1px solid rgba(255,255,255,0.45) !important;
+  border-radius: 18px !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5) !important;
+  backdrop-filter: blur(16px) saturate(1.5) !important;
+  box-shadow:
+    1px 1px 1px 0 rgba(255,255,255,0.55) inset,
+    -1px -1px 1px 0 rgba(255,255,255,0.30) inset,
+    0 8px 32px rgba(0,0,0,0.10),
+    0 0 0 0.5px rgba(255,255,255,0.2) !important;
+}
+.dark [data-glass="popover"] {
+  background: rgba(15,15,25,0.40) !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  border-radius: 20px !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.5) !important;
+  backdrop-filter: blur(16px) saturate(1.5) !important;
+  box-shadow:
+    1px 1px 1px 0 rgba(255,255,255,0.12) inset,
+    -1px -1px 1px 0 rgba(255,255,255,0.06) inset,
+    0 8px 32px rgba(0,0,0,0.25),
+    0 0 0 0.5px rgba(255,255,255,0.04) !important;
+}
 
 /* card */
 :root [data-glass="card"] {
@@ -425,6 +425,7 @@
 /* ── Border distortion glow (::after) ── */
 :root [data-glass="panel"]::after,
 :root [data-glass="panel-nav"]::after,
+:root [data-glass="popover"]::after,
 :root [data-glass="card"]::after,
 :root [data-glass="widget"]::after,
 :root [data-glass="activity"]::after {
@@ -441,6 +442,7 @@
 }
 .dark [data-glass="panel"]::after,
 .dark [data-glass="panel-nav"]::after,
+.dark [data-glass="popover"]::after,
 .dark [data-glass="card"]::after,
 .dark [data-glass="widget"]::after,
 .dark [data-glass="activity"]::after {

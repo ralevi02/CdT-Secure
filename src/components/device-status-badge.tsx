@@ -63,7 +63,7 @@ export function DeviceStatusBadge({ lastSeen, heartbeatTimeoutMins }: Props) {
 
       {expanded && (
         <div
-          data-glass="popup"
+          data-glass="popover"
           className="absolute right-0 top-full mt-2 z-30 w-56 rounded-2xl p-3 overflow-hidden"
         >
           <div className="flex items-center justify-between mb-2">

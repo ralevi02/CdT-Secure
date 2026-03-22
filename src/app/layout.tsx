@@ -34,10 +34,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="absolute rounded-full" style={{ bottom: "20%", left: "40%", width: 350, height: 350, background: "radial-gradient(circle, rgba(14,165,233,0.10), transparent 55%)" }} />
           </div>
 
-          <div className="flex h-screen overflow-hidden flex-col md:flex-row gap-3 p-3">
-            <MobileNav />
+          {/* Mobile: natural body scroll. Desktop: fixed sidebar + scrolling main */}
+          <MobileNav />
+
+          <div className="flex min-h-screen flex-col p-3 pt-[72px] md:h-screen md:overflow-hidden md:flex-row md:gap-3 md:p-3 md:pt-3">
             <DesktopSidebar />
-            <main data-glass="panel" className="flex-1 overflow-y-auto h-full relative">
+            <main data-glass="panel" className="flex-1 relative md:overflow-y-auto md:h-full">
               <div className="mx-auto max-w-2xl px-4 py-6">
                 {children}
               </div>

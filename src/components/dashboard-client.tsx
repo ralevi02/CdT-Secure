@@ -67,7 +67,7 @@ export function DashboardClient({ initialZones, initialDevice, initialLogs, hear
   });
 
   return (
-    <div className="flex flex-col gap-2.5 pb-28 md:pb-0">
+    <div className="flex flex-col gap-2.5">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>

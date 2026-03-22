@@ -114,6 +114,32 @@
     0 0 0 0.5px rgba(255,255,255,0.06) !important;
 }
 
+/* ── Mobile navbar — heavier opacity so content doesn't show through ── */
+:root [data-glass="navbar"] {
+  background: rgba(232,238,246,0.88) !important;
+  border: 1px solid rgba(255,255,255,0.50) !important;
+  border-radius: 22px !important;
+  backdrop-filter: blur(30px) saturate(1.6) brightness(1.05) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(1.6) brightness(1.05) !important;
+  box-shadow:
+    1px 1px 1px 0 rgba(255,255,255,0.55) inset,
+    -1px -1px 1px 0 rgba(255,255,255,0.30) inset,
+    0 4px 20px rgba(0,0,0,0.06),
+    0 0 0 0.5px rgba(255,255,255,0.20) !important;
+}
+.dark [data-glass="navbar"] {
+  background: rgba(2,2,4,0.82) !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  border-radius: 22px !important;
+  backdrop-filter: blur(30px) saturate(1.5) brightness(1.05) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(1.5) brightness(1.05) !important;
+  box-shadow:
+    1px 1px 1px 0 rgba(255,255,255,0.10) inset,
+    -1px -1px 1px 0 rgba(255,255,255,0.05) inset,
+    0 4px 20px rgba(0,0,0,0.20),
+    0 0 0 0.5px rgba(255,255,255,0.06) !important;
+}
+
 /* ── Inner elements: NO backdrop-filter, just bg + inset glow ── */
 
 /* card */

@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition, useState, useOptimistic } from "react";
+import { useTransition, useState, useEffect, useRef } from "react";
 import { armZones, disarmAllZones, toggleZoneArm } from "@/lib/actions";
 import type { Zone } from "@/lib/supabase";
 import { Shield, ShieldCheck, ShieldOff, Volume2, Loader2 } from "lucide-react";
@@ -9,44 +9,43 @@ import { cn } from "@/lib/utils";
 type Props = { zones: Zone[] };
 
 export function ArmPanel({ zones }: Props) {
-  const [optimisticZones, setOptimistic] = useOptimistic(
-    zones,
-    (state: Zone[], update: { type: "toggle"; id: string } | { type: "armAll" } | { type: "disarmAll" }) => {
-      if (update.type === "toggle") return state.map((z) => z.id === update.id ? { ...z, is_enabled: !z.is_enabled } : z);
-      if (update.type === "armAll") return state.map((z) => ({ ...z, is_enabled: true }));
-      return state.map((z) => ({ ...z, is_enabled: false }));
-    }
-  );
-
   const [isArming, startArm] = useTransition();
   const [isDisarming, startDisarm] = useTransition();
   const [isToggling, startToggle] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
+  const [optimistic, setOptimistic] = useState<Record<string, boolean>>({});
+  const prevZonesRef = useRef(zones);
+  useEffect(() => {
+    if (prevZonesRef.current !== zones) {
+      setOptimistic({});
+      prevZonesRef.current = zones;
+    }
+  }, [zones]);
+
+  const getEnabled = (zone: Zone) => optimistic[zone.id] ?? zone.is_enabled;
+
   const handleArmAll = () => {
     setError(null);
-    startArm(async () => {
-      setOptimistic({ type: "armAll" });
-      const r = await armZones("all", []);
-      if (!r.success) setError(r.error ?? "Error");
-    });
+    const patch: Record<string, boolean> = {};
+    zones.forEach((z) => { patch[z.id] = true; });
+    setOptimistic(patch);
+    startArm(async () => { const r = await armZones("all", []); if (!r.success) { setError(r.error ?? "Error"); setOptimistic({}); } });
   };
   const handleDisarm = () => {
     setError(null);
-    startDisarm(async () => {
-      setOptimistic({ type: "disarmAll" });
-      const r = await disarmAllZones();
-      if (!r.success) setError(r.error ?? "Error");
-    });
+    const patch: Record<string, boolean> = {};
+    zones.forEach((z) => { patch[z.id] = false; });
+    setOptimistic(patch);
+    startDisarm(async () => { const r = await disarmAllZones(); if (!r.success) { setError(r.error ?? "Error"); setOptimistic({}); } });
   };
   const handleToggleZone = (zone: Zone) => {
-    startToggle(async () => {
-      setOptimistic({ type: "toggle", id: zone.id });
-      await toggleZoneArm(zone.id, !zone.is_enabled);
-    });
+    const next = !getEnabled(zone);
+    setOptimistic((prev) => ({ ...prev, [zone.id]: next }));
+    startToggle(async () => { await toggleZoneArm(zone.id, next); });
   };
 
-  const armedCount = optimisticZones.filter((z) => z.is_enabled).length;
+  const armedCount = zones.filter((z) => getEnabled(z)).length;
   const isPending = isArming || isDisarming || isToggling;
 
   return (
@@ -59,58 +58,48 @@ export function ArmPanel({ zones }: Props) {
           </div>
           <div>
             <p className="text-sm font-medium">Estado de la alarma</p>
-            <p className="text-[11px] text-muted-foreground">{armedCount} de {optimisticZones.length} armadas</p>
+            <p className="text-[11px] text-muted-foreground">{armedCount} de {zones.length} armadas</p>
           </div>
         </div>
 
-        {/* Zone grid */}
-        <div className="grid grid-cols-2 gap-2 px-3 py-3">
-          {optimisticZones.map((zone) => (
-            <button
-              key={zone.id}
-              onClick={() => handleToggleZone(zone)}
-              disabled={isPending}
-              data-glass={zone.is_enabled ? "item" : "item-dim"}
-              className={cn(
-                "relative overflow-hidden flex flex-col items-center gap-2 rounded-[16px] p-3 border bg-card transition-all active:scale-[0.97] cursor-pointer text-center",
-                isPending && "opacity-70"
-              )}
-            >
-              {/* Toggle indicator */}
-              <div className={cn(
-                "flex h-8 w-8 items-center justify-center rounded-full transition-colors",
-                zone.is_enabled
-                  ? "bg-emerald-100 dark:bg-emerald-500/15"
-                  : "bg-muted"
-              )}>
-                <Shield className={cn(
-                  "h-4 w-4 transition-colors",
-                  zone.is_enabled ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground/50"
-                )} />
-              </div>
-              <div className="flex flex-col items-center gap-0.5 min-w-0 w-full">
-                <span className={cn(
-                  "text-[12px] font-semibold truncate w-full",
-                  !zone.is_enabled && "text-muted-foreground"
-                )}>
-                  {zone.name}
-                </span>
-                <div className="flex items-center gap-1">
-                  <span className={cn(
-                    "text-[10px]",
-                    zone.is_enabled ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground/50"
-                  )}>
-                    {zone.is_enabled ? "Armada" : "Desarmada"}
-                  </span>
-                  {zone.trigger_local_alarm && <Volume2 className="h-2.5 w-2.5 text-blue-500 shrink-0" />}
+        {/* Zone list */}
+        <div className="flex flex-col gap-[6px] px-4 py-[10px]">
+          {zones.map((zone) => {
+            const enabled = getEnabled(zone);
+            return (
+              <div
+                key={zone.id}
+                data-glass={enabled ? "item" : "item-dim"}
+                className="relative overflow-hidden flex items-center gap-3 rounded-[14px] p-[11px_14px] border bg-card"
+              >
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleToggleZone(zone); }}
+                  data-glass={enabled ? undefined : "toggle-track"}
+                  className={cn("relative h-[26px] w-[44px] rounded-full shrink-0 transition-all cursor-pointer", enabled ? "bg-emerald-500" : "")}
+                >
+                  <div
+                    data-glass={enabled ? undefined : "toggle-thumb"}
+                    className={cn("absolute top-[2px] h-[22px] w-[22px] rounded-full transition-all", enabled ? "right-[2px] bg-white shadow-sm" : "left-[2px]")}
+                  />
+                </button>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className={cn("text-[13px] font-medium truncate", !enabled && "dark:text-white/[0.35] text-muted-foreground")}>
+                      #{zone.zone_number} {zone.name}
+                    </span>
+                    {zone.trigger_local_alarm && <Volume2 className="h-3 w-3 text-blue-500 shrink-0" />}
+                  </div>
+                  <p className={cn("text-[11px]", enabled ? "text-muted-foreground" : "dark:text-white/[0.10] text-muted-foreground/50")}>
+                    {enabled ? "Armada" : "Desarmada"}
+                  </p>
                 </div>
               </div>
-            </button>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Action buttons */}
-        <div className="grid grid-cols-2 gap-2 px-3 pb-3">
+        {/* Action buttons — iOS style */}
+        <div className="grid grid-cols-2 gap-2 px-4 pb-3">
           <button
             data-glass="btn"
             onClick={handleArmAll}
@@ -129,7 +118,7 @@ export function ArmPanel({ zones }: Props) {
           <button
             data-glass="btn"
             onClick={handleDisarm}
-            disabled={isPending || armedCount === 0}
+            disabled={armedCount === 0}
             className="relative overflow-hidden flex flex-col items-center justify-center gap-1.5 rounded-2xl py-4 transition-all active:scale-[0.96] disabled:opacity-40"
           >
             <span className="relative z-10">

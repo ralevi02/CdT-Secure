@@ -78,37 +78,27 @@ export default async function LlamadasPage() {
 }
 
 function HowToGetTwilio() {
+  const steps = [
+    <>Crea una cuenta gratuita en <a href="https://www.twilio.com/try-twilio" target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">twilio.com</a> (incluye ~$15 USD de crédito de prueba).</>,
+    <>En el dashboard de Twilio, copia el <strong className="text-foreground">Account SID</strong> y el <strong className="text-foreground">Auth Token</strong>.</>,
+    <>Obtén un número de teléfono Twilio gratuito en <strong className="text-foreground">Phone Numbers → Get a number</strong>. Ese es el <em className="text-foreground">número origen</em>.</>,
+    <>Ingresa el número destino en formato E.164: <code className="rounded bg-muted px-1 text-foreground">+56912345678</code> para Chile.</>,
+    <>En cuentas de prueba (Trial) solo puedes llamar a números <strong className="text-foreground">verificados</strong>. Ve a <strong className="text-foreground">Verified Caller IDs</strong> y agrega tu número personal.</>,
+  ];
+
   return (
-    <details data-glass="card" className="rounded-xl border bg-muted/30 relative group">
-      <summary className="flex items-center justify-between cursor-pointer px-4 py-3 text-sm font-semibold select-none list-none [&::-webkit-details-marker]:hidden">
+    <details data-glass="card" className="group rounded-xl border bg-card shadow-sm relative overflow-hidden">
+      <summary className="flex cursor-pointer items-center justify-between px-4 py-3 text-sm font-semibold list-none [&::-webkit-details-marker]:hidden">
         ¿Cómo obtener credenciales Twilio?
         <svg className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
       </summary>
-      <ol className="flex flex-col gap-2 text-xs text-muted-foreground list-none px-4 pb-4">
-        <li className="flex gap-2">
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">1</span>
-          Crea una cuenta gratuita en{" "}
-          <a href="https://www.twilio.com/try-twilio" target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">
-            twilio.com
-          </a>
-          {" "}(incluye ~$15 USD de crédito de prueba).
-        </li>
-        <li className="flex gap-2">
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">2</span>
-          En el dashboard de Twilio, copia el <strong className="text-foreground">Account SID</strong> y el <strong className="text-foreground">Auth Token</strong>.
-        </li>
-        <li className="flex gap-2">
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">3</span>
-          Obtén un número de teléfono Twilio gratuito en <strong className="text-foreground">Phone Numbers → Get a number</strong>. Ese es el <em>número origen</em>.
-        </li>
-        <li className="flex gap-2">
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">4</span>
-          Ingresa el número destino en formato E.164: <code className="rounded bg-muted px-1 text-foreground">+56912345678</code> para Chile.
-        </li>
-        <li className="flex gap-2">
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">5</span>
-          En cuentas de prueba (Trial) solo puedes llamar a números <strong className="text-foreground">verificados</strong>. Ve a <strong className="text-foreground">Verified Caller IDs</strong> y agrega tu número personal.
-        </li>
+      <ol className="flex flex-col gap-3 px-4 pb-4 text-xs text-muted-foreground list-none">
+        {steps.map((content, i) => (
+          <li key={i} className="flex items-start gap-2.5">
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold mt-px">{i + 1}</span>
+            <span className="leading-relaxed">{content}</span>
+          </li>
+        ))}
       </ol>
     </details>
   );

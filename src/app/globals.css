@@ -140,34 +140,14 @@
     0 0 0 0.5px rgba(255,255,255,0.04) !important;
 }
 
-/* ── Shared blur for all inner glass elements ── */
+/* ── Blur only on large containers (perf-safe) ── */
 :root [data-glass="card"],
-:root [data-glass="item"],
-:root [data-glass="item-dim"],
-:root [data-glass="green-strong"],
-:root [data-glass="green"],
-:root [data-glass="btn"],
-:root [data-glass="btn-red"],
-:root [data-glass="toggle-track"],
-:root [data-glass="banner-ok"],
-:root [data-glass="banner-alert"],
-:root [data-glass="nav"],
 :root [data-glass="widget"],
 :root [data-glass="activity"] {
   -webkit-backdrop-filter: blur(10px) saturate(1.4) !important;
   backdrop-filter: blur(10px) saturate(1.4) !important;
 }
 .dark [data-glass="card"],
-.dark [data-glass="item"],
-.dark [data-glass="item-dim"],
-.dark [data-glass="green-strong"],
-.dark [data-glass="green"],
-.dark [data-glass="btn"],
-.dark [data-glass="btn-red"],
-.dark [data-glass="toggle-track"],
-.dark [data-glass="banner-ok"],
-.dark [data-glass="banner-alert"],
-.dark [data-glass="nav"],
 .dark [data-glass="widget"],
 .dark [data-glass="activity"] {
   -webkit-backdrop-filter: blur(10px) saturate(1.4) !important;

@@ -18,20 +18,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           {/* Background orbs (dark) */}
           <div className="pointer-events-none fixed inset-0 overflow-hidden hidden dark:block">
-            <div className="absolute rounded-full" style={{ top: "-5%", left: "15%", width: 700, height: 700, background: "radial-gradient(circle, rgba(56,130,255,0.10), transparent 55%)" }} />
-            <div className="absolute rounded-full" style={{ bottom: "-10%", right: "5%", width: 600, height: 600, background: "radial-gradient(circle, rgba(34,197,94,0.08), transparent 55%)" }} />
-            <div className="absolute rounded-full" style={{ top: "45%", left: "5%", width: 500, height: 500, background: "radial-gradient(circle, rgba(168,85,247,0.07), transparent 55%)" }} />
-            <div className="absolute rounded-full" style={{ top: "20%", right: "15%", width: 400, height: 400, background: "radial-gradient(circle, rgba(236,72,153,0.05), transparent 55%)" }} />
-            <div className="absolute rounded-full" style={{ bottom: "20%", left: "40%", width: 350, height: 350, background: "radial-gradient(circle, rgba(14,165,233,0.06), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "-8%", left: "10%", width: 800, height: 800, background: "radial-gradient(circle, rgba(56,130,255,0.16), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ bottom: "-12%", right: "0%", width: 700, height: 700, background: "radial-gradient(circle, rgba(34,197,94,0.13), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "40%", left: "0%", width: 600, height: 600, background: "radial-gradient(circle, rgba(168,85,247,0.12), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "15%", right: "10%", width: 500, height: 500, background: "radial-gradient(circle, rgba(236,72,153,0.09), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ bottom: "15%", left: "35%", width: 450, height: 450, background: "radial-gradient(circle, rgba(14,165,233,0.11), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "60%", right: "25%", width: 350, height: 350, background: "radial-gradient(circle, rgba(251,191,36,0.07), transparent 55%)" }} />
           </div>
 
           {/* Background orbs (light) */}
           <div className="pointer-events-none fixed inset-0 overflow-hidden dark:hidden">
-            <div className="absolute rounded-full" style={{ top: "-5%", left: "15%", width: 700, height: 700, background: "radial-gradient(circle, rgba(56,130,255,0.15), transparent 55%)" }} />
-            <div className="absolute rounded-full" style={{ bottom: "-10%", right: "5%", width: 600, height: 600, background: "radial-gradient(circle, rgba(34,197,94,0.12), transparent 55%)" }} />
-            <div className="absolute rounded-full" style={{ top: "45%", left: "5%", width: 500, height: 500, background: "radial-gradient(circle, rgba(168,85,247,0.10), transparent 55%)" }} />
-            <div className="absolute rounded-full" style={{ top: "20%", right: "15%", width: 400, height: 400, background: "radial-gradient(circle, rgba(236,72,153,0.08), transparent 55%)" }} />
-            <div className="absolute rounded-full" style={{ bottom: "20%", left: "40%", width: 350, height: 350, background: "radial-gradient(circle, rgba(14,165,233,0.10), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "-8%", left: "10%", width: 800, height: 800, background: "radial-gradient(circle, rgba(56,130,255,0.22), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ bottom: "-12%", right: "0%", width: 700, height: 700, background: "radial-gradient(circle, rgba(34,197,94,0.18), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "40%", left: "0%", width: 600, height: 600, background: "radial-gradient(circle, rgba(168,85,247,0.15), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "15%", right: "10%", width: 500, height: 500, background: "radial-gradient(circle, rgba(236,72,153,0.12), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ bottom: "15%", left: "35%", width: 450, height: 450, background: "radial-gradient(circle, rgba(14,165,233,0.16), transparent 55%)" }} />
+            <div className="absolute rounded-full" style={{ top: "60%", right: "25%", width: 350, height: 350, background: "radial-gradient(circle, rgba(251,191,36,0.10), transparent 55%)" }} />
           </div>
 
           {/* Mobile: natural body scroll. Desktop: fixed sidebar + scrolling main */}

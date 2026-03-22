@@ -75,11 +75,11 @@ export function ArmPanel({ zones }: Props) {
                 <button
                   onClick={(e) => { e.stopPropagation(); handleToggleZone(zone); }}
                   data-glass={enabled ? undefined : "toggle-track"}
-                  className={cn("relative h-[26px] w-[44px] rounded-full shrink-0 transition-all cursor-pointer", enabled ? "bg-emerald-500" : "")}
+                  className={cn("relative h-[26px] w-[44px] rounded-full shrink-0 transition-colors duration-200 cursor-pointer", enabled ? "bg-emerald-500" : "")}
                 >
                   <div
                     data-glass={enabled ? undefined : "toggle-thumb"}
-                    className={cn("absolute top-[2px] h-[22px] w-[22px] rounded-full transition-all", enabled ? "right-[2px] bg-white shadow-sm" : "left-[2px]")}
+                    className={cn("absolute left-[2px] top-[2px] h-[22px] w-[22px] rounded-full transition-transform duration-200 ease-in-out", enabled ? "translate-x-[18px] bg-white shadow-sm" : "translate-x-0")}
                   />
                 </button>
                 <div className="flex-1 min-w-0">

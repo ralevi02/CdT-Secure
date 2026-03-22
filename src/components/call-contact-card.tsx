@@ -100,7 +100,7 @@ export function CallContactCard({ contact }: Props) {
         title={callEnabled ? "Desactivar llamadas para este contacto" : "Activar llamadas para este contacto"}
         data-glass={!callEnabled ? "toggle-track" : undefined}
         className={cn(
-          "relative inline-flex h-[26px] w-[44px] shrink-0 items-center rounded-full transition-all focus:outline-none cursor-pointer",
+          "relative inline-flex h-[26px] w-[44px] shrink-0 items-center rounded-full transition-colors duration-200 focus:outline-none cursor-pointer",
           callEnabled ? "bg-blue-500" : "",
           isPending && "opacity-60 cursor-wait"
         )}
@@ -108,8 +108,8 @@ export function CallContactCard({ contact }: Props) {
         <span
           data-glass={!callEnabled ? "toggle-thumb" : undefined}
           className={cn(
-            "absolute top-[2px] h-[22px] w-[22px] rounded-full transition-all",
-            callEnabled ? "right-[2px] bg-white shadow-sm" : "left-[2px]"
+            "absolute left-[2px] top-[2px] h-[22px] w-[22px] rounded-full transition-transform duration-200 ease-in-out",
+            callEnabled ? "translate-x-[18px] bg-white shadow-sm" : "translate-x-0"
           )}
         />
       </button>

@@ -18,7 +18,7 @@ const Switch = React.forwardRef<
   return (
     <SwitchPrimitives.Root
       className={cn(
-        "peer inline-flex h-[26px] w-[44px] shrink-0 cursor-pointer items-center rounded-full transition-all",
+        "peer inline-flex h-[26px] w-[44px] shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "data-[state=checked]:bg-emerald-500",
@@ -34,7 +34,7 @@ const Switch = React.forwardRef<
     >
       <SwitchPrimitives.Thumb
         className={cn(
-          "pointer-events-none block h-[22px] w-[22px] rounded-full transition-transform",
+          "pointer-events-none block h-[22px] w-[22px] rounded-full transition-transform duration-200 ease-in-out",
           "data-[state=checked]:translate-x-[20px] data-[state=unchecked]:translate-x-[2px]",
           "data-[state=checked]:bg-white data-[state=checked]:shadow-sm",
         )}

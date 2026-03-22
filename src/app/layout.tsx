@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { DesktopSidebar, MobileNav } from "@/components/sidebar";
 import { ServiceWorkerRegister } from "@/components/sw-register";
+import { NavProgress } from "@/components/nav-progress";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geist.className} min-h-screen bg-background antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <ServiceWorkerRegister />
+          <NavProgress />
           {/* Background orbs (dark) */}
           <div className="pointer-events-none fixed inset-0 overflow-hidden hidden dark:block">
             <div className="absolute rounded-full" style={{ top: "-8%", left: "10%", width: 800, height: 800, background: "radial-gradient(circle, rgba(56,130,255,0.16), transparent 55%)" }} />

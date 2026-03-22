@@ -110,7 +110,7 @@ export function MobileNav() {
 
   return (
     <>
-      <header data-glass="navbar" className="md:hidden fixed top-3 left-3 right-3 flex h-14 items-center justify-between px-4 z-40">
+      <header data-glass="panel-nav" className="md:hidden fixed top-3 left-3 right-3 flex h-14 items-center justify-between px-4 z-40">
         <Link href="/" className="flex items-center gap-2">
           <GlassLogo />
           <span className="font-semibold text-sm">CdT Secure</span>

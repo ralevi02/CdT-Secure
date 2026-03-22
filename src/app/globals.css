@@ -114,28 +114,28 @@
     0 0 0 0.5px rgba(255,255,255,0.06) !important;
 }
 
-/* ── Mobile navbar — heavier opacity so content doesn't show through ── */
-:root [data-glass="navbar"] {
-  background: rgba(232,238,246,0.88) !important;
-  border: 1px solid rgba(255,255,255,0.50) !important;
+/* ── Mobile navbar — more opaque + stronger blur ── */
+:root [data-glass="panel-nav"] {
+  background: rgba(232,238,246,0.82) !important;
+  border: 1px solid rgba(255,255,255,0.5) !important;
   border-radius: 22px !important;
-  backdrop-filter: blur(30px) saturate(1.6) brightness(1.05) !important;
-  -webkit-backdrop-filter: blur(30px) saturate(1.6) brightness(1.05) !important;
+  backdrop-filter: blur(40px) saturate(1.6) brightness(1.05) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(1.6) brightness(1.05) !important;
   box-shadow:
-    1px 1px 1px 0 rgba(255,255,255,0.55) inset,
-    -1px -1px 1px 0 rgba(255,255,255,0.30) inset,
+    1px 1px 1px 0 rgba(255,255,255,0.60) inset,
+    -1px -1px 1px 0 rgba(255,255,255,0.35) inset,
     0 4px 20px rgba(0,0,0,0.06),
-    0 0 0 0.5px rgba(255,255,255,0.20) !important;
+    0 0 0 0.5px rgba(255,255,255,0.25) !important;
 }
-.dark [data-glass="navbar"] {
-  background: rgba(2,2,4,0.82) !important;
+.dark [data-glass="panel-nav"] {
+  background: rgba(2,2,4,0.75) !important;
   border: 1px solid rgba(255,255,255,0.10) !important;
   border-radius: 22px !important;
-  backdrop-filter: blur(30px) saturate(1.5) brightness(1.05) !important;
-  -webkit-backdrop-filter: blur(30px) saturate(1.5) brightness(1.05) !important;
+  backdrop-filter: blur(40px) saturate(1.6) brightness(1.1) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(1.6) brightness(1.1) !important;
   box-shadow:
-    1px 1px 1px 0 rgba(255,255,255,0.10) inset,
-    -1px -1px 1px 0 rgba(255,255,255,0.05) inset,
+    1px 1px 1px 0 rgba(255,255,255,0.12) inset,
+    -1px -1px 1px 0 rgba(255,255,255,0.06) inset,
     0 4px 20px rgba(0,0,0,0.20),
     0 0 0 0.5px rgba(255,255,255,0.06) !important;
 }
@@ -397,6 +397,7 @@
 
 /* ── Border distortion glow (::after) ── */
 :root [data-glass="panel"]::after,
+:root [data-glass="panel-nav"]::after,
 :root [data-glass="card"]::after,
 :root [data-glass="widget"]::after,
 :root [data-glass="activity"]::after {
@@ -412,6 +413,7 @@
   -webkit-mask-image: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4));
 }
 .dark [data-glass="panel"]::after,
+.dark [data-glass="panel-nav"]::after,
 .dark [data-glass="card"]::after,
 .dark [data-glass="widget"]::after,
 .dark [data-glass="activity"]::after {

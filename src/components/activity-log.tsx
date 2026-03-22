@@ -20,7 +20,7 @@ function fmtDateLabel(iso: string) {
 }
 import { useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { DoorOpen, DoorClosed, ChevronLeft, ChevronRight, Loader2, Filter, RefreshCw } from "lucide-react";
+import { DoorOpen, DoorClosed, ChevronLeft, ChevronRight, Loader2, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type ZoneRef = { id: string; zone_number: number; name: string };
@@ -77,7 +77,6 @@ export function ActivityLog({ initialLogs, zones, currentZone, currentPage, hasM
 
       {/* ── Filters + refresh bar ─────────────────────── */}
       <div className="flex items-start gap-2">
-        <Filter className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
         <div className="flex gap-1.5 flex-wrap flex-1">
           <button
             onClick={() => navigate("all", 1)}

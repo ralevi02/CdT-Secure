@@ -141,16 +141,14 @@ export function DashboardClient({ initialZones, initialDevice, initialLogs, hear
 }
 
 function RecentActivityPreview({ logs, pulse }: { logs: RecentLog[]; pulse: boolean }) {
-  const [expanded, setExpanded] = useState(false);
   if (logs.length === 0) return null;
-  const visible = expanded ? logs : logs.slice(0, PREVIEW_COUNT);
-  const hasMore = logs.length > PREVIEW_COUNT && !expanded;
+  const visible = logs.slice(0, PREVIEW_COUNT);
+  const hasMore = logs.length > PREVIEW_COUNT;
 
   return (
     <div data-glass="activity" className={cn("relative overflow-hidden rounded-[18px] p-4 border bg-card transition-all duration-300", pulse && "ring-1 ring-primary/20")}>
       <div className="flex justify-between items-center mb-2">
         <span className="text-[13px] font-medium">Actividad reciente</span>
-        <Link href="/activity" className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-primary transition-colors">Ver todo <ArrowRight className="h-3 w-3" /></Link>
       </div>
       <div className="relative">
         <div className="flex flex-col">
@@ -172,9 +170,9 @@ function RecentActivityPreview({ logs, pulse }: { logs: RecentLog[]; pulse: bool
         </div>
         {hasMore && (
           <div className="flex justify-center pt-2">
-            <button onClick={() => setExpanded(true)} data-glass="btn" className="flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition-all active:scale-[0.97] relative overflow-hidden">
-              Ver más ({logs.length - PREVIEW_COUNT} más) <ArrowRight className="h-3 w-3" />
-            </button>
+            <Link href="/activity" data-glass="btn" className="flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition-all active:scale-[0.97] relative overflow-hidden">
+              Ver todo <ArrowRight className="h-3 w-3" />
+            </Link>
           </div>
         )}
       </div>

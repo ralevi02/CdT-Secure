@@ -64,7 +64,7 @@ export function DeviceStatusBadge({ lastSeen, heartbeatTimeoutMins }: Props) {
       {expanded && (
         <div
           data-glass="card"
-          className="absolute right-0 top-full mt-2 z-30 w-56 rounded-2xl p-3 relative overflow-hidden"
+          className="absolute right-0 top-full mt-2 z-30 w-56 rounded-2xl p-3 overflow-hidden"
         >
           <div className="flex items-center justify-between mb-2">
             <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">ESP32</span>

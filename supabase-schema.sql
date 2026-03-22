@@ -67,6 +67,20 @@ ALTER TABLE config ADD COLUMN IF NOT EXISTS calls_enabled       BOOLEAN NOT NULL
 
 ALTER TABLE notification_contacts ADD COLUMN IF NOT EXISTS call_enabled BOOLEAN NOT NULL DEFAULT false;
 
+-- 6. Push Subscriptions (Web Push / PWA)
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  endpoint    TEXT UNIQUE NOT NULL,
+  keys_p256dh TEXT NOT NULL,
+  keys_auth   TEXT NOT NULL,
+  created_at  TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE push_subscriptions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "anon can read push_subscriptions"
+  ON push_subscriptions FOR SELECT TO anon USING (true);
+
 -- ============================================================
 -- Zona por defecto (se pueden crear más desde /zones)
 -- ============================================================

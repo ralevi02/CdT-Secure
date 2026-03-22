@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { sendWhatsAppNotification } from "@/lib/callmebot";
 import { makeAlarmCall } from "@/lib/twilio";
+import { sendPushToAll } from "@/lib/web-push";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -87,6 +88,15 @@ export async function POST(req: NextRequest) {
           )
         );
       }
+
+      tasks.push(
+        sendPushToAll({
+          title: "🚨 Alarma activada",
+          body: `Zona ${zone_id} (${zone.name}) — sensor abierto`,
+          tag: `alarm-${zone.id}`,
+          url: "/",
+        })
+      );
 
       await Promise.allSettled(tasks);
     }

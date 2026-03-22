@@ -4,8 +4,9 @@ import { CreateContactForm } from "@/components/create-contact-form";
 import { NotificationContactCard } from "@/components/notification-contact-card";
 import { Separator } from "@/components/ui/separator";
 import type { NotificationContact, Config } from "@/lib/supabase";
-import { Bell, Users } from "lucide-react";
+import { Bell, Users, Smartphone } from "lucide-react";
 import Link from "next/link";
+import { PushNotificationToggle } from "@/components/push-toggle";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -43,6 +44,7 @@ export default async function NotificationsPage() {
           <h2 className="text-sm font-semibold">Ajuste global</h2>
         </div>
         <NotificationsToggleForm config={config} />
+        <PushNotificationToggle />
       </section>
 
       <Separator />

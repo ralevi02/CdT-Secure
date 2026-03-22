@@ -1,14 +1,25 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { DesktopSidebar, MobileNav } from "@/components/sidebar";
+import { ServiceWorkerRegister } from "@/components/sw-register";
 
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CdT Secure – Sistema de Alarma IoT",
   description: "Panel de control para sistema de alarma residencial IoT",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "CdT Secure",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#22C55E",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -16,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" suppressHydrationWarning>
       <body className={`${geist.className} min-h-screen bg-background antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <ServiceWorkerRegister />
           {/* Background orbs (dark) */}
           <div className="pointer-events-none fixed inset-0 overflow-hidden hidden dark:block">
             <div className="absolute rounded-full" style={{ top: "-8%", left: "10%", width: 800, height: 800, background: "radial-gradient(circle, rgba(56,130,255,0.16), transparent 55%)" }} />

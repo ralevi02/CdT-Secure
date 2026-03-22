@@ -48,7 +48,7 @@ export function ZoneStatusCard({ zone, latestLog }: Props) {
         </div>
         <div className="flex items-center gap-2">
           {zone.trigger_local_alarm ? (
-            <Volume2 className="h-4 w-4 text-amber-500" aria-label="Activa parlante" />
+            <Volume2 className="h-4 w-4 text-blue-500" aria-label="Activa parlante" />
           ) : (
             <VolumeX className="h-4 w-4 text-muted-foreground/40" aria-label="Sin parlante" />
           )}

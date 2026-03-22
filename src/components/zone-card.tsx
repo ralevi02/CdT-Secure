@@ -68,7 +68,7 @@ export function ZoneCard({ zone }: Props) {
           title={triggerLocal ? "Parlante activo" : "Parlante inactivo"}
         >
           {triggerLocal ? (
-            <Volume2 className="h-4 w-4 text-amber-500" />
+            <Volume2 className="h-4 w-4 text-blue-500" />
           ) : (
             <VolumeX className="h-4 w-4 text-muted-foreground/40" />
           )}

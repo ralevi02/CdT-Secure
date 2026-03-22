@@ -79,9 +79,12 @@ export default async function LlamadasPage() {
 
 function HowToGetTwilio() {
   return (
-    <div data-glass="card" className="rounded-xl border bg-muted/30 p-4 flex flex-col gap-3 relative">
-      <p className="text-sm font-semibold">¿Cómo obtener credenciales Twilio?</p>
-      <ol className="flex flex-col gap-2 text-xs text-muted-foreground list-none">
+    <details data-glass="card" className="rounded-xl border bg-muted/30 relative group">
+      <summary className="flex items-center justify-between cursor-pointer px-4 py-3 text-sm font-semibold select-none list-none [&::-webkit-details-marker]:hidden">
+        ¿Cómo obtener credenciales Twilio?
+        <svg className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+      </summary>
+      <ol className="flex flex-col gap-2 text-xs text-muted-foreground list-none px-4 pb-4">
         <li className="flex gap-2">
           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-bold">1</span>
           Crea una cuenta gratuita en{" "}
@@ -107,6 +110,6 @@ function HowToGetTwilio() {
           En cuentas de prueba (Trial) solo puedes llamar a números <strong className="text-foreground">verificados</strong>. Ve a <strong className="text-foreground">Verified Caller IDs</strong> y agrega tu número personal.
         </li>
       </ol>
-    </div>
+    </details>
   );
 }

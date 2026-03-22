@@ -14,6 +14,7 @@ import {
   Wifi,
   MessageCircle,
   AlertTriangle,
+  Smartphone,
 } from "lucide-react";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -91,6 +92,21 @@ const ENDPOINTS: Endpoint[] = [
       "El contact_id es el UUID de la fila en notification_contacts.",
       "Usa la phone_number y callmebot_api_key almacenadas en la DB.",
       "No requiere ALARM_TOKEN — es un endpoint interno.",
+    ],
+  },
+  {
+    id: "test-push",
+    method: "POST",
+    path: "/api/test-push",
+    description: "Envía una notificación push de prueba a todos los dispositivos suscritos. Útil para verificar que la PWA y el service worker están funcionando.",
+    icon: <Smartphone className="h-4 w-4" />,
+    fields: [],
+    responseExample: { ok: true, subscriptions: 1 },
+    notes: [
+      "No requiere parámetros — envía a todas las suscripciones activas.",
+      "Si no hay suscripciones, retorna error 404 con mensaje explicativo.",
+      "Muestra los endpoints registrados para depuración.",
+      "Primero activa el toggle 'Notificaciones push' en /notifications.",
     ],
   },
 ];
@@ -226,7 +242,7 @@ function EndpointCard({ endpoint }: { endpoint: Endpoint }) {
 
           {/* Fields */}
           <div className="flex flex-col gap-3 px-4 py-4 border-t">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Request body</p>
+            {endpoint.fields.length > 0 && <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Request body</p>}
             {endpoint.fields.map((field) => (
               <div key={field.key} className="flex flex-col gap-1">
                 <label className="flex items-center gap-2 text-xs font-mono font-medium">
@@ -265,9 +281,11 @@ function EndpointCard({ endpoint }: { endpoint: Endpoint }) {
             ))}
 
             {/* Body preview */}
-            <div className="rounded-lg bg-slate-900 dark:bg-slate-950 p-3 font-mono text-xs text-slate-300 whitespace-pre">
-              {bodyPreview}
-            </div>
+            {endpoint.fields.length > 0 && (
+              <div className="rounded-lg bg-slate-900 dark:bg-slate-950 p-3 font-mono text-xs text-slate-300 whitespace-pre">
+                {bodyPreview}
+              </div>
+            )}
 
             {/* Run button */}
             <button

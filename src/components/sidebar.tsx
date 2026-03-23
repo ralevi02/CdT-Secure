@@ -35,7 +35,7 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
       onClick={onClick}
       {...(isActive ? { "data-glass": "nav" } : {})}
       className={cn(
-        "relative flex items-center gap-2.5 rounded-[10px] px-3 py-3 text-sm overflow-hidden",
+        "relative flex items-center gap-2.5 rounded-[10px] px-3.5 py-2 text-sm overflow-hidden",
         "transition-colors duration-200",
         isActive
           ? "font-medium text-foreground bg-primary/10"
@@ -70,10 +70,10 @@ export function DesktopSidebar() {
         className={cn(
           "flex flex-col h-full bg-card border-r overflow-hidden",
           "transition-[width] duration-300 ease-in-out",
-          collapsed ? "w-[52px]" : "w-48"
+          collapsed ? "w-14" : "w-48"
         )}
       >
-        <div className="flex h-12 items-center gap-2 px-3 border-b border-border/50 overflow-hidden">
+        <div className="flex h-12 items-center gap-2.5 px-3.5 border-b border-border/50 overflow-hidden">
           <GlassLogo />
           <span className={cn(
             "font-semibold text-sm whitespace-nowrap transition-opacity duration-200",
@@ -87,7 +87,7 @@ export function DesktopSidebar() {
           {SETTINGS_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
         </nav>
 
-        <div className="flex items-center justify-between border-t border-border/50 py-2 px-3 overflow-hidden">
+        <div className="flex items-center justify-between border-t border-border/50 py-2 px-3.5 overflow-hidden">
           <span className={cn(
             "text-xs text-muted-foreground whitespace-nowrap transition-opacity duration-200",
             collapsed ? "opacity-0" : "opacity-100"

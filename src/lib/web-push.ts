@@ -47,7 +47,7 @@ export async function sendPushToAll(payload: PushPayload): Promise<PushResult[]>
       const options: webPush.RequestOptions = {
         TTL: 60 * 60,
         urgency: "high",
-        ...(isApple ? {} : { topic: payload.tag || "cdt-alert" }),
+        ...(isApple ? {} : { topic: (payload.tag || "cdt-alert").slice(0, 32) }),
       };
       return webPush.sendNotification(
         {

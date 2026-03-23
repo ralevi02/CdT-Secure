@@ -89,18 +89,21 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      tasks.push(
-        sendPushToAll({
+      await Promise.allSettled(tasks);
+
+      try {
+        const pushResults = await sendPushToAll({
           title: "🚨 Alarma activada",
           body: `Zona ${zone_id} (${zone.name}) — sensor abierto`,
           tag: `alarm-${zone.id}`,
           url: "/",
           alarm: true,
           zoneId: zone_id,
-        })
-      );
-
-      await Promise.allSettled(tasks);
+        });
+        console.log("[API /event] Push results:", JSON.stringify(pushResults));
+      } catch (pushErr) {
+        console.error("[API /event] Push error:", pushErr);
+      }
     }
 
     return NextResponse.json({ should_alarm: shouldAlarm });

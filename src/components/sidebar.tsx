@@ -35,9 +35,8 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
       onClick={onClick}
       {...(isActive ? { "data-glass": "nav" } : {})}
       className={cn(
-        "relative flex items-center rounded-[10px] px-3.5 py-2 text-sm overflow-hidden",
+        "relative flex items-center gap-2.5 rounded-[10px] px-[13px] py-2 text-sm overflow-hidden",
         "transition-colors duration-200",
-        collapsed ? "gap-0" : "gap-2.5",
         isActive
           ? "font-medium text-foreground bg-primary/10"
           : "text-muted-foreground hover:text-foreground"
@@ -46,7 +45,7 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
       <Icon className="h-4 w-4 shrink-0" />
       <span className={cn(
         "whitespace-nowrap relative z-10 transition-opacity duration-200",
-        collapsed ? "w-0 opacity-0 overflow-hidden" : "opacity-100"
+        collapsed ? "opacity-0" : "opacity-100"
       )}>{label}</span>
     </Link>
   );
@@ -69,12 +68,12 @@ export function DesktopSidebar() {
       <aside
         data-glass="panel"
         className={cn(
-          "flex flex-col h-full bg-card border-r overflow-hidden",
+          "flex flex-col h-full bg-card overflow-hidden",
           "transition-[width] duration-300 ease-in-out",
           collapsed ? "w-14" : "w-48"
         )}
       >
-        <div className="flex h-12 items-center gap-2.5 px-3.5 border-b border-border/50 overflow-hidden">
+        <div className="flex h-12 items-center gap-2.5 px-[13px] border-b border-border/50 overflow-hidden">
           <GlassLogo />
           <span className={cn(
             "font-semibold text-sm whitespace-nowrap transition-opacity duration-200",
@@ -88,7 +87,7 @@ export function DesktopSidebar() {
           {SETTINGS_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
         </nav>
 
-        <div className="flex items-center justify-between border-t border-border/50 py-2 px-3.5 overflow-hidden">
+        <div className="flex items-center justify-between border-t border-border/50 py-2 px-[13px] overflow-hidden">
           <span className={cn(
             "text-xs text-muted-foreground whitespace-nowrap transition-opacity duration-200",
             collapsed ? "opacity-0" : "opacity-100"

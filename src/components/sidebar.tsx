@@ -35,15 +35,19 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
       onClick={onClick}
       {...(isActive ? { "data-glass": "nav" } : {})}
       className={cn(
-        "relative flex items-center rounded-[10px] px-3.5 py-2 text-sm",
+        "relative flex items-center rounded-[10px] px-3.5 py-2 text-sm overflow-hidden",
         "transition-colors duration-200",
+        collapsed ? "gap-0" : "gap-2.5",
         isActive
           ? "font-medium text-foreground bg-primary/10"
           : "text-muted-foreground hover:text-foreground"
       )}
     >
       <Icon className="h-4 w-4 shrink-0" />
-      {!collapsed && <span className="whitespace-nowrap ml-2.5">{label}</span>}
+      <span className={cn(
+        "whitespace-nowrap relative z-10 transition-opacity duration-200",
+        collapsed ? "w-0 opacity-0 overflow-hidden" : "opacity-100"
+      )}>{label}</span>
     </Link>
   );
 }
@@ -70,9 +74,12 @@ export function DesktopSidebar() {
           collapsed ? "w-14" : "w-48"
         )}
       >
-        <div className="flex h-12 items-center px-3.5 border-b border-border/50">
+        <div className="flex h-12 items-center gap-2.5 px-3.5 border-b border-border/50 overflow-hidden">
           <GlassLogo />
-          {!collapsed && <span className="font-semibold text-sm whitespace-nowrap ml-2.5">CdT Secure</span>}
+          <span className={cn(
+            "font-semibold text-sm whitespace-nowrap transition-opacity duration-200",
+            collapsed ? "opacity-0" : "opacity-100"
+          )}>CdT Secure</span>
         </div>
 
         <nav className="flex flex-col gap-[3px] p-1.5 flex-1">
@@ -81,11 +88,11 @@ export function DesktopSidebar() {
           {SETTINGS_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
         </nav>
 
-        <div className={cn(
-          "flex items-center border-t border-border/50 py-2 px-3.5",
-          collapsed ? "justify-center" : "justify-between"
-        )}>
-          {!collapsed && <span className="text-xs text-muted-foreground whitespace-nowrap">Tema</span>}
+        <div className="flex items-center justify-between border-t border-border/50 py-2 px-3.5 overflow-hidden">
+          <span className={cn(
+            "text-xs text-muted-foreground whitespace-nowrap transition-opacity duration-200",
+            collapsed ? "opacity-0" : "opacity-100"
+          )}>Tema</span>
           <ThemeToggle />
         </div>
       </aside>

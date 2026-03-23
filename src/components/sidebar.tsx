@@ -35,18 +35,19 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
       onClick={onClick}
       {...(isActive ? { "data-glass": "nav" } : {})}
       className={cn(
-        "relative flex items-center gap-2.5 rounded-[10px] px-2.5 py-2 text-sm overflow-hidden",
-        "transition-colors duration-200",
+        "relative flex items-center rounded-[10px] py-2 text-sm overflow-hidden",
+        "transition-all duration-300 ease-in-out",
+        collapsed ? "justify-center px-2" : "gap-2.5 px-2.5",
         isActive
           ? "font-medium text-foreground bg-primary/10"
           : "text-muted-foreground hover:text-foreground"
       )}
     >
       <Icon className="h-4 w-4 shrink-0" />
-      <span className={cn(
-        "whitespace-nowrap relative z-10 transition-opacity duration-200",
-        collapsed ? "opacity-0" : "opacity-100"
-      )}>{label}</span>
+      <span
+        className="whitespace-nowrap relative z-10 overflow-hidden transition-all duration-300 ease-in-out"
+        style={{ maxWidth: collapsed ? 0 : 140, opacity: collapsed ? 0 : 1 }}
+      >{label}</span>
     </Link>
   );
 }
@@ -67,35 +68,34 @@ export function DesktopSidebar() {
     >
       <aside
         data-glass="panel"
-        className={cn(
-          "flex flex-col h-full bg-card border-r overflow-hidden",
-          "transition-[width] duration-300 ease-in-out",
-          collapsed ? "w-[52px]" : "w-48"
-        )}
+        className="flex flex-col h-full bg-card border-r"
       >
-        {/* Inner content always at expanded width so text never wraps */}
-        <div className="flex flex-col h-full w-48">
-          <div className="flex h-12 items-center gap-2 px-2.5 border-b border-border/50">
-            <GlassLogo />
-            <span className={cn(
-              "font-semibold text-sm whitespace-nowrap transition-opacity duration-200",
-              collapsed ? "opacity-0" : "opacity-100"
-            )}>CdT Secure</span>
-          </div>
+        <div className={cn(
+          "flex h-12 items-center border-b border-border/50 overflow-hidden transition-all duration-300 ease-in-out",
+          collapsed ? "justify-center px-2" : "gap-2 px-2.5"
+        )}>
+          <GlassLogo />
+          <span
+            className="font-semibold text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out"
+            style={{ maxWidth: collapsed ? 0 : 120, opacity: collapsed ? 0 : 1 }}
+          >CdT Secure</span>
+        </div>
 
-          <nav className="flex flex-col gap-[3px] p-2 flex-1">
-            {MAIN_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
-            <div className="my-2 border-t border-border/50" />
-            {SETTINGS_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
-          </nav>
+        <nav className="flex flex-col gap-[3px] p-2 flex-1">
+          {MAIN_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
+          <div className="my-2 border-t border-border/50" />
+          {SETTINGS_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
+        </nav>
 
-          <div className="flex items-center justify-between border-t border-border/50 px-2.5 py-2">
-            <span className={cn(
-              "text-xs text-muted-foreground whitespace-nowrap transition-opacity duration-200",
-              collapsed ? "opacity-0" : "opacity-100"
-            )}>Tema</span>
-            <ThemeToggle />
-          </div>
+        <div className={cn(
+          "flex items-center border-t border-border/50 py-2 overflow-hidden transition-all duration-300 ease-in-out",
+          collapsed ? "justify-center px-2" : "justify-between px-2.5"
+        )}>
+          <span
+            className="text-xs text-muted-foreground whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out"
+            style={{ maxWidth: collapsed ? 0 : 40, opacity: collapsed ? 0 : 1 }}
+          >Tema</span>
+          <ThemeToggle />
         </div>
       </aside>
     </div>

@@ -2,8 +2,9 @@ import { createClient } from "@supabase/supabase-js";
 import { HeartbeatForm } from "@/components/config-form";
 import { ThemeToggle } from "@/components/theme-toggle";
 import type { Config } from "@/lib/supabase";
-import { Timer, Palette, Info, Settings } from "lucide-react";
+import { Timer, Palette, Info, Settings, Vibrate } from "lucide-react";
 import { CdtLogo } from "@/components/cdt-logo";
+import { VibrationSelector } from "@/components/vibration-selector";
 import Link from "next/link";
 
 const supabase = createClient(
@@ -47,6 +48,16 @@ export default async function ConfigPage() {
           </div>
           <ThemeSelector />
         </div>
+      </section>
+
+      {/* Vibration */}
+      <section className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <Vibrate className="h-4 w-4 text-muted-foreground" />
+          <h2 className="text-sm font-semibold">Tipo de alerta</h2>
+        </div>
+        <p className="text-xs text-muted-foreground -mt-1">Patrón de vibración para notificaciones push. Se guarda en este dispositivo.</p>
+        <VibrationSelector />
       </section>
 
       {/* Heartbeat */}

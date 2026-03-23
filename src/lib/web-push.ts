@@ -17,6 +17,9 @@ type PushPayload = {
   body: string;
   tag?: string;
   url?: string;
+  alarm?: boolean;
+  vibration?: string;
+  zoneId?: number;
 };
 
 export type PushResult = {
@@ -29,15 +32,18 @@ export type PushResult = {
 export async function sendPushToAll(payload: PushPayload): Promise<PushResult[]> {
   const { data: subs } = await supabaseAdmin
     .from("push_subscriptions")
-    .select("id, endpoint, keys_p256dh, keys_auth");
+    .select("id, endpoint, keys_p256dh, keys_auth, vibration");
 
   if (!subs || subs.length === 0) return [];
-
-  const body = JSON.stringify(payload);
 
   const results = await Promise.allSettled(
     subs.map((sub) => {
       const isApple = sub.endpoint.includes("web.push.apple.com");
+      const perDevicePayload = {
+        ...payload,
+        vibration: payload.vibration || sub.vibration || "normal",
+      };
+      const body = JSON.stringify(perDevicePayload);
       const options: webPush.RequestOptions = {
         TTL: 60 * 60,
         urgency: "high",

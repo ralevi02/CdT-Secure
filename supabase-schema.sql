@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS push_subscriptions (
   endpoint    TEXT UNIQUE NOT NULL,
   keys_p256dh TEXT NOT NULL,
   keys_auth   TEXT NOT NULL,
+  vibration   TEXT NOT NULL DEFAULT 'normal',
   created_at  TIMESTAMPTZ DEFAULT now()
 );
 

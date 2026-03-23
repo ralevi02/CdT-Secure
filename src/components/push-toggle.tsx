@@ -48,10 +48,11 @@ export function PushNotificationToggle() {
             return;
           }
           const sub = await subscribeToPush(reg);
+          const vibration = localStorage.getItem("cdt-vibration-pattern") || "normal";
           await fetch("/api/push-subscribe", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ subscription: sub.toJSON() }),
+            body: JSON.stringify({ subscription: sub.toJSON(), vibration }),
           });
         } else {
           const sub = await getExistingSubscription(reg);

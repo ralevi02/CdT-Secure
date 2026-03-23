@@ -8,7 +8,7 @@ const supabaseAdmin = createClient(
 
 export async function POST(req: NextRequest) {
   try {
-    const { subscription } = await req.json();
+    const { subscription, vibration } = await req.json();
 
     if (!subscription?.endpoint || !subscription?.keys?.p256dh || !subscription?.keys?.auth) {
       return NextResponse.json({ error: "Invalid subscription" }, { status: 400 });
@@ -19,11 +19,31 @@ export async function POST(req: NextRequest) {
         endpoint: subscription.endpoint,
         keys_p256dh: subscription.keys.p256dh,
         keys_auth: subscription.keys.auth,
+        ...(vibration ? { vibration } : {}),
       },
       { onConflict: "endpoint" }
     );
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    return NextResponse.json({ ok: true });
+  } catch {
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const { endpoint, vibration } = await req.json();
+
+    if (!endpoint || !vibration) {
+      return NextResponse.json({ error: "Missing endpoint or vibration" }, { status: 400 });
+    }
+
+    await supabaseAdmin
+      .from("push_subscriptions")
+      .update({ vibration })
+      .eq("endpoint", endpoint);
 
     return NextResponse.json({ ok: true });
   } catch {

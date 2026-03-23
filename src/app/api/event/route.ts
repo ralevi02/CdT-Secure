@@ -95,6 +95,8 @@ export async function POST(req: NextRequest) {
           body: `Zona ${zone_id} (${zone.name}) — sensor abierto`,
           tag: `alarm-${zone.id}`,
           url: "/",
+          alarm: true,
+          zoneId: zone_id,
         })
       );
 

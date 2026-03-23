@@ -37,7 +37,7 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
       className={cn(
         "relative flex items-center rounded-[10px] py-2 text-sm overflow-hidden",
         "transition-all duration-300 ease-in-out",
-        collapsed ? "justify-center px-2" : "gap-2.5 px-2.5",
+        collapsed ? "justify-center px-0 gap-0" : "gap-2.5 px-2.5",
         isActive
           ? "font-medium text-foreground bg-primary/10"
           : "text-muted-foreground hover:text-foreground"
@@ -45,8 +45,8 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
     >
       <Icon className="h-4 w-4 shrink-0" />
       <span
-        className="whitespace-nowrap relative z-10 overflow-hidden transition-all duration-300 ease-in-out"
-        style={{ maxWidth: collapsed ? 0 : 140, opacity: collapsed ? 0 : 1 }}
+        className="whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out"
+        style={{ maxWidth: collapsed ? 0 : 120, opacity: collapsed ? 0 : 1 }}
       >{label}</span>
     </Link>
   );
@@ -68,16 +68,20 @@ export function DesktopSidebar() {
     >
       <aside
         data-glass="panel"
-        className="flex flex-col h-full bg-card border-r"
+        className={cn(
+          "flex flex-col h-full bg-card border-r overflow-hidden",
+          "transition-[width] duration-300 ease-in-out",
+          collapsed ? "w-[52px]" : "w-48"
+        )}
       >
         <div className={cn(
-          "flex h-12 items-center border-b border-border/50 overflow-hidden transition-all duration-300 ease-in-out",
-          collapsed ? "justify-center px-2" : "gap-2 px-2.5"
+          "flex h-12 items-center border-b border-border/50 transition-all duration-300 ease-in-out",
+          collapsed ? "justify-center px-0 gap-0" : "gap-2 px-2.5"
         )}>
           <GlassLogo />
           <span
             className="font-semibold text-sm whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out"
-            style={{ maxWidth: collapsed ? 0 : 120, opacity: collapsed ? 0 : 1 }}
+            style={{ maxWidth: collapsed ? 0 : 100, opacity: collapsed ? 0 : 1 }}
           >CdT Secure</span>
         </div>
 
@@ -88,8 +92,8 @@ export function DesktopSidebar() {
         </nav>
 
         <div className={cn(
-          "flex items-center border-t border-border/50 py-2 overflow-hidden transition-all duration-300 ease-in-out",
-          collapsed ? "justify-center px-2" : "justify-between px-2.5"
+          "flex items-center border-t border-border/50 py-2 transition-all duration-300 ease-in-out",
+          collapsed ? "justify-center px-0" : "justify-between px-2.5"
         )}>
           <span
             className="text-xs text-muted-foreground whitespace-nowrap overflow-hidden transition-all duration-300 ease-in-out"

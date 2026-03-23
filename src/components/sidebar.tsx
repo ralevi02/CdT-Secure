@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
   LayoutDashboard, MapPin, Bell, Settings, Terminal, History, Phone,
-  ChevronLeft, ChevronRight, X, Menu,
+  X, Menu,
 } from "lucide-react";
 import { CdtLogo } from "@/components/cdt-logo";
 
@@ -35,15 +35,18 @@ function NavLink({ href, label, icon: Icon, collapsed, onClick }: {
       onClick={onClick}
       {...(isActive ? { "data-glass": "nav" } : {})}
       className={cn(
-        "relative flex items-center gap-2.5 rounded-[10px] px-2.5 py-2 text-sm transition-all overflow-hidden",
-        collapsed && "justify-center px-0 py-2",
+        "relative flex items-center gap-2.5 rounded-[10px] px-2.5 py-2 text-sm overflow-hidden",
+        "transition-colors duration-200",
         isActive
           ? "font-medium text-foreground bg-primary/10"
           : "text-muted-foreground hover:text-foreground"
       )}
     >
-      <Icon className={cn("shrink-0", collapsed ? "h-[18px] w-[18px]" : "h-4 w-4")} />
-      {!collapsed && <span className="whitespace-nowrap relative z-10">{label}</span>}
+      <Icon className="h-4 w-4 shrink-0" />
+      <span className={cn(
+        "whitespace-nowrap relative z-10 transition-opacity duration-200",
+        collapsed ? "opacity-0" : "opacity-100"
+      )}>{label}</span>
     </Link>
   );
 }
@@ -53,48 +56,48 @@ function GlassLogo() {
 }
 
 export function DesktopSidebar() {
-  const [collapsed, setCollapsed] = useState(false);
-
-  useEffect(() => {
-    const stored = localStorage.getItem("sidebar-collapsed");
-    if (stored !== null) setCollapsed(stored === "true");
-  }, []);
-
-  const toggle = () =>
-    setCollapsed((prev) => { localStorage.setItem("sidebar-collapsed", String(!prev)); return !prev; });
+  const [hovered, setHovered] = useState(false);
+  const collapsed = !hovered;
 
   return (
-    <div className={cn("relative hidden md:flex shrink-0 transition-all duration-300 ease-in-out", collapsed ? "w-[52px]" : "w-52")}>
+    <div
+      className="relative hidden md:flex shrink-0"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <aside
         data-glass="panel"
-        className="flex flex-col w-full h-full bg-card border-r overflow-hidden"
+        className={cn(
+          "flex flex-col h-full bg-card border-r overflow-hidden",
+          "transition-[width] duration-300 ease-in-out",
+          collapsed ? "w-[52px]" : "w-48"
+        )}
       >
-        <div className={cn("flex h-12 items-center gap-2 overflow-hidden px-2.5 border-b border-border/50", collapsed && "justify-center px-0")}>
-          <GlassLogo />
-          {!collapsed && <span className="font-semibold text-sm">CdT Secure</span>}
-        </div>
+        {/* Inner content always at expanded width so text never wraps */}
+        <div className="flex flex-col h-full w-48">
+          <div className="flex h-12 items-center gap-2 px-2.5 border-b border-border/50">
+            <GlassLogo />
+            <span className={cn(
+              "font-semibold text-sm whitespace-nowrap transition-opacity duration-200",
+              collapsed ? "opacity-0" : "opacity-100"
+            )}>CdT Secure</span>
+          </div>
 
-        <nav className="flex flex-col gap-[3px] p-2 flex-1">
-          {MAIN_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
-          <div className={cn("my-2 border-t border-border/50", collapsed && "mx-1")} />
-          {SETTINGS_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
-        </nav>
+          <nav className="flex flex-col gap-[3px] p-2 flex-1">
+            {MAIN_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
+            <div className="my-2 border-t border-border/50" />
+            {SETTINGS_NAV.map((item) => <NavLink key={item.href} {...item} collapsed={collapsed} />)}
+          </nav>
 
-        <div className={cn("flex items-center border-t border-border/50 p-2", collapsed ? "justify-center" : "justify-between px-2.5")}>
-          {!collapsed && <span className="text-xs text-muted-foreground">Tema</span>}
-          <ThemeToggle />
+          <div className="flex items-center justify-between border-t border-border/50 px-2.5 py-2">
+            <span className={cn(
+              "text-xs text-muted-foreground whitespace-nowrap transition-opacity duration-200",
+              collapsed ? "opacity-0" : "opacity-100"
+            )}>Tema</span>
+            <ThemeToggle />
+          </div>
         </div>
       </aside>
-
-      {/* Collapse button — outside aside so overflow:hidden doesn't clip it */}
-      <button
-        onClick={toggle}
-        aria-label={collapsed ? "Expandir" : "Colapsar"}
-        data-glass="btn"
-        className="absolute -right-3 top-14 z-20 flex h-6 w-6 items-center justify-center rounded-full transition-all hover:scale-105 active:scale-95 overflow-hidden"
-      >
-        {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
-      </button>
     </div>
   );
 }
